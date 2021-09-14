@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+/* width */
+.width-100 {
+	width : 100%;	
+}
+
+/* display */
+.d-flex {
+	display : flex;
+}
+.d-none {
+	display : none;
+}
+
+/* display related */
+.justify-space-bw {
+	justify-content : space-between;
+}
+
+/* following top */ 
+.following-top {
+	width: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}

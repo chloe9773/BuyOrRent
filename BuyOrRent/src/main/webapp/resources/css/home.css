@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.width-100 {
+	width : 100%;	
+}
+
+.d-flex {
+	display : flex;
+}
+
+.justify-space-bw {
+	justify-content : space-between;
+}
