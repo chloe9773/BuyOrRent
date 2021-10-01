@@ -1,0 +1,87 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body{
+    margin : 0;
+    padding : 0;
+    color: #212529;
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+}
+
+button {
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button:disabled {
+    pointer-events: none;
+}
+
+input {
+    border: 0;
+    font-size: 16px;
+}
+
+input::placeholder {
+    color: #D1D3D8;
+}
+
+input:focus {
+    outline: none;
+}
+
+ul {
+    list-style: none;
+}
+
+h2 {
+    margin: 0;
+}
+
+a {
+    text-decoration: none; 
+    outline: none;
+    color: inherit;
+}
+
+a:hover, a:active {
+    text-decoration: none;
+}
+
+hr {
+    border: 1px solid rgba(233, 236, 239, 0.7);
+}
+
+th, tr{
+    font-weight: normal;
+}
+
+textarea {
+    vertical-align: top;
+    resize: vertical;
+    font-size: 100%; /* 1 */
+    margin: 0; /* 2 */
+    overflow-wrap: break-word;
+    border: 1px solid transparent;
+    padding: 2px;
+    width: 99%;
+    resize: none;
+    font-size: 13px;
+    height: 80px;
+}
+
+textarea::placeholder {
+    color: #c1c1c1;
+}
+
+textarea:focus {
+    outline: none;
+}
+

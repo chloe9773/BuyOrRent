@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.login-input-wrap {
+	border: 1px solid #D6D6D6;
+	padding: 10px;
+}
+
+.login-input {
+	width: 92%;
+}
+
+.login-submit-btn {
+	width: 100%;
+	background-color: #D4CCC2;
+	color: #fff;
+	font-size: 16px;
+	padding: 10px;
+}
+
+.remember-id {
+	width: 15px;
+	height: 15px;
+}
+
+body {
+	overflow: hidden;
+}
+
+.userid-wrap, .userpw-wrap {
+	background-color: rgba(236, 236, 236, 0.5);
+}
+
+.userid-wrap input, .userpw-wrap input {
+	background-color: rgba(236, 236, 236, 0.1);
+	width: 80%;
+}
+
+.register-box-wrap {
+	position: fixed;
+	top: calc(100% - 75%);
+	right: calc(100% - 75%);
+}
+
+/* .userid-desc i, .userpw-desc i {
+	padding-left: 15px;
+} */
