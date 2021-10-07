@@ -1,26 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Home</title>
-	<link href="${path}/css/reset.css" rel="stylesheet"/>
-	<link href="${path}/css/common.css" rel="stylesheet"/>
-	<link href="${path}/css/login.css" rel="stylesheet"/>
-	<script src="https://kit.fontawesome.com/64f7ef32af.js" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="${path}/js/common.js"></script>
-</head>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
+<link href="${path}/css/login.css" rel="stylesheet"/>
 <body class="bg-gray-lighter">
 	<div class="login-page-wrap w-100">
 		<div class="login-box-wrap w-50 bg-white m-center pb-30p">
 			<div class="login-box w-80 m-center pt-30p">
 				<div class="logo-wrap t-center mb-30">
-					<a href="${path}">
-						<p class="logo">로고로고</p>
-					</a>
+					<%@ include file="/WEB-INF/views/include/logo.jsp" %>
 				</div>
 				<div class="login-extra cursor font-15 t-right mb-10">
 					<i class="fas fa-undo-alt"></i>
@@ -53,7 +40,7 @@
 					</span>
 					<span class="mlr-10 icon-color">|</span>
 					<span class="join-member">
-						<a href="join.html">회원가입</a>
+						<a href="${path}/join">회원가입</a>
 					</span>
 				</div>
 			</div>

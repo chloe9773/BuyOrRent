@@ -1,93 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Home</title>
-	<link href="${path}/css/reset.css" rel="stylesheet"/>
-	<link href="${path}/css/common.css" rel="stylesheet"/>
-	<link href="${path}/css/home.css" rel="stylesheet"/>
-	<script src="https://kit.fontawesome.com/64f7ef32af.js" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="${path}/js/common.js"></script>
-	<script type="text/javascript" src="${path}/js/home.js"></script>
-	<script>
-		const body = document.querySelector('body');
-		const modal = document.querySelector('.modal');
-		const btnOpenPopup = document.querySelector('.modal-open-btn');
-  
-		btnOpenPopup.addEventListener('click', () => {
-		  modal.classList.toggle('show');
-  
-		  if (modal.classList.contains('show')) {
-			body.style.overflow = 'hidden';
-		  }
-		});
-  
-		modal.addEventListener('click', (event) => {
-		  if (event.target === modal) {
-			modal.classList.toggle('show');
-  
-			if (!modal.classList.contains('show')) {
-			  body.style.overflow = 'auto';
-			}
-		  }
-		});
-	  </script>
-</head>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
 <body>
-	<div class="following-top-wrap w-100 d-flex bg-white">
-		<div class="following-top-content d-flex justify-bw w-50 m-center">
-			<div class="following-top-left-wrap d-flex w-70">
-				<div class="following-top-left mr-30">
-					<a href="#">
-						<div class="following-top-title weight-700 font-r-logo">로고로고</div>
-					</a>
-				</div>
-				<div class="following-top-middle d-flex w-70">
-					<div class="following-top-search-wrap d-flex border-1 border-r-6 p-5 w-100 bg-white">
-						<input class="search w-95 gray-light"  placeholder="동네 이름, 물품명 등을 검색해보세요!"/>
-						<div class="search-btn">
-							<i class="fas fa-search gray-middle cursor"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="following-top-right d-flex">
-				<div class="following-top-menu p-30 cursor pos-r" onclick="toggleMenu();">
-					<span class="menu-title">메뉴</span>
-					<i class="fas fa-angle-down"></i>
-				</div>
-				<ul class="following-menu-drop bg-gray-v-light border-r-6 pos-ab d-none p-24">
-					<a href="login.html">
-						<li class="pb-12"><i class="fas fa-sign-in-alt mr-10"></i>로그인</li>
-					</a>
-					<a href="mypage.html" class=""> <!-- d-none -->
-						<li class="pb-12"><i class="fas fa-address-card mr-10"></i>마이페이지</li>
-					</a>
-					<a href="rent.html">
-						<li class="pb-12"><i class="fas fa-truck-loading mr-10"></i>대여</li>
-					</a>
-					<a href="sell.html">
-						<li class="pb-12"><i class="fas fa-hand-holding-usd mr-10"></i>중고거래</li>
-					</a>
-					<a href="freeboard.html">
-						<li class="pb-12"><i class="fas fa-comments mr-10"></i>자유게시판</li>
-					</a>
-					<a href="#" class="d-none">
-						<li class="pb-12"><i class="fas fa-sign-out-alt mr-10"></i>로그아웃</li>
-					</a>
-				</ul>
-				<div class="following-top-chat">
-					<a href="chat.html">
-						<div class="chat-title border-1 border-r-6 cursor">실시간 채팅</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@ include file="/WEB-INF/views/include/followingTopMenu.jsp" %>
 	<div class="main-content w-100">
 		<div class="section-wrap bg-cream ptb-r-4">
 			<div class="section-1 w-50 m-center d-flex justify-bw ptb-r-4">
@@ -426,9 +341,7 @@
 		</div>
 	</div>
 	<div id="modal" class="modal"></div>
-	<footer class="footer bg-gray-middle white ptb-r-4">
-		<div class="footer-wrap w-50 m-center">푸터푸터푸터푸터푸터푸터</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>
 
