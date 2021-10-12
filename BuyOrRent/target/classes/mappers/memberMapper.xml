@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="joinlog">
+	<!-- 회원가입 insert -->
 	<insert id="setJoin" parameterType="membervo">
 		INSERT INTO member SET 
 		username = #{username}, 
@@ -8,7 +9,13 @@
 		regDate = now()
 	</insert>
 	
+	<!-- 아이디 중복체크 select -->
 	<select id="chkDuplicateId" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM member WHERE username = #{username}
+	</select>
+	
+	<!-- 로그인 정보 확인 -->
+	<select id="chkMemberOne" parameterType="membervo" resultType="int">
+		SELECT COUNT(*) FROM member WHERE username = #{username} and password = #{password}
 	</select>
 </mapper>

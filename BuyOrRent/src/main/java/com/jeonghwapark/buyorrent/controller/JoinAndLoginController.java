@@ -15,9 +15,23 @@ public class JoinAndLoginController {
 	@Autowired
 	JoinAndLoginSrv jSrv;
 	
+	// 로그인 페이지 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String getLogin() {
 		return "login";
+	}
+	
+	// 로그인
+	@ResponseBody
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String setLogin(@ModelAttribute MemberVO mvo) {
+		int validation = jSrv.chkMemberOne(mvo);
+		String msg = "";
+		
+		if(validation > 0) msg = "success";
+		else msg = "failure";
+		
+		return msg;
 	}
 
 	// 회원가입 페이지 뛰우기

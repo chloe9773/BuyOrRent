@@ -11,11 +11,18 @@ public class JoinAndLoginDao {
 	@Autowired
 	SqlSession sql;
 	
+	// 회원가입 
 	public void setJoin(MemberVO mvo) {
 		sql.insert("joinlog.setJoin", mvo);
 	}
 	
+	// 아이디 중복 체크 
 	public int chkDuplicateId(String username) {
 		return sql.selectOne("joinlog.chkDuplicateId", username);
+	}
+	
+	// 로그인 정보 확인
+	public int chkMemberOne(MemberVO mvo) {
+		return sql.selectOne("joinlog.chkMemberOne",mvo);
 	}
 }

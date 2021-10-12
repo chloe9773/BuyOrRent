@@ -11,11 +11,18 @@ public class JoinAndLoginSrv {
 	@Autowired
 	JoinAndLoginDao jDao;
 	
+	// 회원가입 
 	public void setJoin(MemberVO mvo) {
 		jDao.setJoin(mvo);
 	}
 	
+	// 아이디 중복 확인 
 	public int chkDuplicateId(String username) {
 		return jDao.chkDuplicateId(username);
+	}
+	
+	// 로그인 정보 체크 
+	public int chkMemberOne(MemberVO mvo) {
+		return jDao.chkMemberOne(mvo);
 	}
 }
