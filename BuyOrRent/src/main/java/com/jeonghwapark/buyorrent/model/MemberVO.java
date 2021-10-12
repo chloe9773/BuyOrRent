@@ -1,9 +1,12 @@
 package com.jeonghwapark.buyorrent.model;
 
+import java.util.Date;
+
 public class MemberVO {
 	private int userId;
 	private String username;
 	private String password;
+	private Date regDate;
 	
 	public int getUserId() {
 		return userId;
@@ -22,5 +25,11 @@ public class MemberVO {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 }

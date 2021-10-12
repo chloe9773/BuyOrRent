@@ -163,19 +163,6 @@ function modalLayer(bool) {
     }
 }
 
-/* join page */
-function showHidePw(choice) {
-    if(choice == 'show') {
-        $('#show-pw').addClass('d-none');
-        $('#hide-pw').removeClass('d-none');
-        $('.passwd').prop('type', 'text');
-    } else{
-        $('#hide-pw').addClass('d-none');
-        $('#show-pw').removeClass('d-none');
-        $('.passwd').prop('type', 'password');
-    }
-}
-
 /* delete d-none by classname */
 function deleteDNone(classname) {
     $("." + classname).removeClass("d-none");
