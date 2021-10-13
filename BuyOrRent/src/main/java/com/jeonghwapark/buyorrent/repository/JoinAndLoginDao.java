@@ -25,4 +25,9 @@ public class JoinAndLoginDao {
 	public int chkMemberOne(MemberVO mvo) {
 		return sql.selectOne("joinlog.chkMemberOne",mvo);
 	}
+	
+	// 세션 설정 
+	public MemberVO loginChk(MemberVO mvo) {
+		return sql.selectOne("joinlog.loginChk", mvo);
+	}
 }

@@ -18,4 +18,9 @@
 	<select id="chkMemberOne" parameterType="membervo" resultType="int">
 		SELECT COUNT(*) FROM member WHERE username = #{username} AND password = #{password}
 	</select>
+	
+	<!-- 세션 -->
+	<select id="loginChk" parameterType="membervo" resultType="membervo">
+		SELECT user_id as userId, regDate, level FROM member WHERE username = #{username} and password = #{password}
+	</select>
 </mapper>

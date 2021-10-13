@@ -1,5 +1,7 @@
 package com.jeonghwapark.buyorrent.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,12 +26,21 @@ public class JoinAndLoginController {
 	// 로그인
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String setLogin(@ModelAttribute MemberVO mvo) {
+	public String setLogin(@ModelAttribute MemberVO mvo, HttpSession httpSession) {
 		int validation = jSrv.chkMemberOne(mvo);
 		String msg = "";
 		
-		if(validation > 0) msg = "success";
-		else msg = "failure";
+		int authLevel = 10; // tmp
+		int userAuth = mvo.getLevel();
+		
+		if(validation > 0) {
+			if(userAuth < authLevel) {
+				jSrv.loginChk(mvo, httpSession);
+				msg = "success";
+			} else {} // admin
+		} else {
+			msg = "failure";
+		}
 		
 		return msg;
 	}

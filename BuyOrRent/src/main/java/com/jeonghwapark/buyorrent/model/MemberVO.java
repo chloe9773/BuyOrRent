@@ -7,6 +7,7 @@ public class MemberVO {
 	private String username;
 	private String password;
 	private Date regDate;
+	private int level;
 	
 	public int getUserId() {
 		return userId;
@@ -31,5 +32,11 @@ public class MemberVO {
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

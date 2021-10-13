@@ -1,5 +1,7 @@
 package com.jeonghwapark.buyorrent.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +26,19 @@ public class JoinAndLoginSrv {
 	// 로그인 정보 체크 
 	public int chkMemberOne(MemberVO mvo) {
 		return jDao.chkMemberOne(mvo);
+	}
+	
+	// 세션 설정 
+	public MemberVO loginChk(MemberVO mvo, HttpSession httpSession) {
+		MemberVO result = jDao.loginChk(mvo);
+		
+		if(result != null) {
+			httpSession.setAttribute("userId", result.getUserId());
+			httpSession.setAttribute("username", result.getUsername());
+			httpSession.setAttribute("regDate", result.getRegDate());
+			httpSession.setAttribute("level", result.getLevel());
+		}
+		
+		return result;
 	}
 }
