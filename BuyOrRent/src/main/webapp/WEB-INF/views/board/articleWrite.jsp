@@ -2,12 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <link href="${path}/css/article.css" rel="stylesheet"/>
-<script src="${path}/ckeditor/ckeditor.js"></script>
-<script>
-	window.onload = function(){
-       ck = CKEDITOR.replace("editor");
-    };
-</script>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenuWithOutSearch.jsp" %>
 	<div class="main-content w-100">
@@ -20,22 +14,24 @@
 				</div>
 				<hr class="mb-40"/>
 				<div class="board-content">
-					<div class="title-wrap pb-10 mb-10">
-						<input type="text" class="title font-20" maxlength="" autocomplete="off" placeholder="제목을 입력하세요."/>
-					</div>
-					<div class="editor">
-						<textarea name="content" id="editor"></textarea>
-					</div>
-					<div class="btn-grp d-flex justify-bw pb-r-4">
-						<div class="btn-grp-left">
-							<a href="freeboard.html">
-								<button class="cancel bg-white">취소</button>
-							</a>
+					<form id="article">
+						<div class="title-wrap pb-10 mb-10">
+							<input type="text" name="title" class="title font-20" maxlength="" autocomplete="off" placeholder="제목을 입력하세요."/>
 						</div>
-						<div class="btn-grp-right">
-							<button class="submit bg-highlight white">등록</button>
+						<div class="editor mb-10">
+							<textarea name="content" id="editor"></textarea>
 						</div>
-					</div>
+						<div class="btn-grp d-flex justify-bw pb-r-4">
+							<div class="btn-grp-left">
+								<a href="${path}/board/freeboard">
+									<button class="cancel bg-white">취소</button>
+								</a>
+							</div>
+							<div class="btn-grp-right">
+								<button type="button" class="submit bg-highlight white" onclick="submitArticle();">등록</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -45,4 +41,14 @@
 	</footer>
 </body>
 </html>
-
+<script src="${path}/ckeditor/ckeditor.js"></script>
+<script>
+	window.onload = function(){
+       ck = CKEDITOR.replace("editor");
+    };
+</script>
+<script>
+ function submitArticle() {
+	 alert("alerrr");
+ }
+</script>
