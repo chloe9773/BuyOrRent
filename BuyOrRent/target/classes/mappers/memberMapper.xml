@@ -16,6 +16,6 @@
 	
 	<!-- 로그인 정보 확인 -->
 	<select id="chkMemberOne" parameterType="membervo" resultType="int">
-		SELECT COUNT(*) FROM member WHERE username = #{username} and password = #{password}
+		SELECT COUNT(*) FROM member WHERE username = #{username} AND password = #{password}
 	</select>
 </mapper>
