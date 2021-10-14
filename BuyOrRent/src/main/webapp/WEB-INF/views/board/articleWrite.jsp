@@ -80,7 +80,9 @@
 					if(resData != "success") {
 						alert("w재시도 안내멘트트");
 					} else {
-						location.href = "${pageContext.request.contextPath}";
+						//var tmp = "${pageContext.request.contextPath}/board?board_id=" + document.getElementById("boardId").value;
+						//console.log(tmp);
+						location.href = "${pageContext.request.contextPath}/board?board_id=" + document.getElementById("boardId").value;
 					}
 				},
 				error: function() {
