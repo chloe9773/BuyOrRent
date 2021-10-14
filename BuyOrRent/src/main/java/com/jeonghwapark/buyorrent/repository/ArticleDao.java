@@ -4,15 +4,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.jeonghwapark.buyorrent.model.BoardVO;
+import com.jeonghwapark.buyorrent.model.ArticleVO;
 
 @Repository
-public class BoardDao {
+public class ArticleDao {
 	@Autowired
 	SqlSession sql;
 	
-	// 한 게시판 정보 불러오기 
-	public BoardVO getBoardOne(int id) {
-		return sql.selectOne("board.getBoardOne", id);
+	// 게시글 작성 
+	public void setArticleWrite(ArticleVO avo) {
+		sql.insert("article.setArticle",avo);
 	}
 }

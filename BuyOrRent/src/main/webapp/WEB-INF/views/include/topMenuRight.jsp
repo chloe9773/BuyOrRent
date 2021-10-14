@@ -20,7 +20,7 @@
 		<a href="sell.html">
 			<li class="pb-12"><i class="fas fa-hand-holding-usd mr-10"></i>중고거래</li>
 		</a>
-		<a href="${path}/board/freeboard">
+		<a href="${path}/board?board_id=1">
 			<li class="pb-12"><i class="fas fa-comments mr-10"></i>자유게시판</li>
 		</a>
 		<c:if test = "${sessionScope.username != null}">

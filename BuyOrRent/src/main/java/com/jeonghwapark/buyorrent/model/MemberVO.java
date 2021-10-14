@@ -8,6 +8,7 @@ public class MemberVO {
 	private String password;
 	private Date regDate;
 	private int level;
+	private String userNick;
 	
 	public int getUserId() {
 		return userId;
@@ -38,5 +39,11 @@ public class MemberVO {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public String getUserNick() {
+		return userNick;
+	}
+	public void setUserNick(String userNick) {
+		this.userNick = userNick;
 	}
 }

@@ -8,7 +8,7 @@
 		<div class="section-wrap bg-white">
 			<div class="board-wrap w-50 m-center pt-r-8">
 				<div class="board-top">
-					<h1 class="mb-40">자유게시판</h1>
+					<h1 class="mb-40">${boardName}</h1>
 				</div>
 				<div class="board-extra d-flex justify-bw mb-4 font-13">
 					<div class="extra-left">
@@ -125,7 +125,7 @@
 					<div class="page-grp pb-r-2 table w-100">
 						<div class="table-cell">
 						<c:if test = "${sessionScope.username != null}">
-							<a href="${path}/board/article-write">
+							<a href="${path}/article/article-write?board_id=${boardId}">
 								<button class="to-write highlight bg-white">글쓰기</button>
 							</a>
 						</c:if>
