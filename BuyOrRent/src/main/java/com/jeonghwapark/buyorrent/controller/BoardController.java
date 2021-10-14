@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jeonghwapark.buyorrent.model.ArticleVO;
 import com.jeonghwapark.buyorrent.model.BoardVO;
+import com.jeonghwapark.buyorrent.service.ArticleSrv;
 import com.jeonghwapark.buyorrent.service.BoardSrv;
 
 @Controller
@@ -16,6 +16,9 @@ import com.jeonghwapark.buyorrent.service.BoardSrv;
 public class BoardController {
 	@Autowired
 	BoardSrv bSrv;
+	
+	@Autowired
+	ArticleSrv aSrv;
 	
 	// 자유게시판 화면 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -27,34 +30,9 @@ public class BoardController {
 		mav.setViewName("board/freeboard");
 		mav.addObject("boardId", bvo.getBoardId());
 		mav.addObject("boardName", bvo.getBoardName());
-		
+		mav.addObject("notiList", aSrv.getNotiArticleForBoard(id));
+		mav.addObject("articleList", aSrv.getAllArticleForBoard(id));
 		
 		return mav;
 	}
-	
-	// 게시글 작성 화면 
-//	@RequestMapping(value = "/article-write", method = RequestMethod.GET)
-//	public String getArticleWrite(HttpServletRequest request, @RequestParam("board_id") int id) {
-//		HttpSession session = request.getSession();
-//		BoardVO bvo = bSrv.getBoardOne(id);
-//		ModelAndView mav = new ModelAndView();
-//		
-//		String username = (String)session.getAttribute("username");
-//		
-//		if(username != null) {
-//			mav.addObject("username", username);
-//			mav.addObject("boardName", bvo.getBoardName());
-//			mav.setViewName("/board/articleWrite");
-//		} else {
-//			mav.setViewName("/board/freeboard");
-//		}
-//		return "board/articleWrite";
-//	}
-	
-	// 게시글 작성 화면 
-		@RequestMapping(value = "/article-write", method = RequestMethod.POST)
-		public String setArticleWrite(ArticleVO avo) {
-			
-			return "board/articleWrite";
-		}
 }

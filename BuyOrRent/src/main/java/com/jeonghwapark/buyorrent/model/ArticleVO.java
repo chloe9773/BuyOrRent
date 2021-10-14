@@ -1,5 +1,6 @@
 package com.jeonghwapark.buyorrent.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,6 +17,8 @@ public class ArticleVO {
 	private int hit;
 	private int commentTotal;
 	private String content;
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.mm.dd");
 	
 	public int getArticleId() {
 		return articleId;
@@ -47,8 +50,9 @@ public class ArticleVO {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public Date getUploadDate() {
-		return uploadDate;
+	public String getUploadDate() {
+		
+		return sdf.format(uploadDate);
 	}
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;

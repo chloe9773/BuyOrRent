@@ -32,94 +32,32 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach var="noti" items="${notiList}">
 							<tr class="board-row t-center noti">
 								<td>
 									<div class="noti-box">공지</div>
 								</td>
 								<td class="t-left t-title">
-									<a href="article-detail.html" class="">공지 공지 공지 공지입니다 공지예여</a>
+									<a href="article-detail.html" class="">${noti.title}</a>
 								</td>
 								<td>
-									<a href="#" class="">박정화</a>
+									<a href="#" class="">${noti.author}</a>
 								</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
+								<td>${noti.uploadDate}</td>
+								<td>${noti.hit}</td>
+								<td>${noti.commentTotal}</td>
 							</tr>
-							<tr class="board-row t-center noti">
-								<td>
-									<div class="noti-box">공지</div>
-								</td>
-								<td class="t-left t-title">공지 공지 공지 공지입니다 공지예여</td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>3</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>4</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>5</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>1</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>2</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>3</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>4</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
-							<tr class="board-row t-center">
-								<td>5</td>
-								<td class="t-left t-title">후참 신메뉴 나왔다며 ... </td>
-								<td>박정화</td>
-								<td>2021.09.17</td>
-								<td>1</td>
-								<td>2</td>
-							</tr>
+							</c:forEach>
+							<c:forEach var="article" items="${articleList}">
+								<tr class="board-row t-center">
+									<td>${article.articleId}</td>
+									<td class="t-left t-title">${article.title}</td>
+									<td>박정화</td>
+									<td>${article.uploadDate}</td>
+									<td>${article.hit}</td>
+									<td>${article.commentTotal}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div class="page-grp pb-r-2 table w-100">
