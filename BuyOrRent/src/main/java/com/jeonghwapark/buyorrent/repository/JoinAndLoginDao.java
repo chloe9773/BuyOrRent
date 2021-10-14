@@ -27,7 +27,7 @@ public class JoinAndLoginDao {
 	}
 	
 	// 세션 설정 
-	public MemberVO loginChk(MemberVO mvo) {
-		return sql.selectOne("joinlog.loginChk", mvo);
+	public MemberVO setSessionLogin(MemberVO mvo) {
+		return sql.selectOne("joinlog.setSessionLogin", mvo);
 	}
 }

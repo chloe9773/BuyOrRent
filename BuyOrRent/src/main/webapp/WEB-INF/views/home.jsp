@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenu.jsp" %>
+	<c:if test = "${sessionScope.name == null}">
+		<span>${sessionScope.username}</span>
+	</c:if>
 	<div class="main-content w-100">
 		<div class="section-wrap bg-cream ptb-r-4">
 			<div class="section-1 w-50 m-center d-flex justify-bw ptb-r-4">

@@ -17,6 +17,7 @@
 					<form id="article">
 						<div class="title-wrap pb-10 mb-10">
 							<input type="text" name="title" class="title font-20" maxlength="" autocomplete="off" placeholder="제목을 입력하세요."/>
+							<input type="hidden" name="username" value="" />
 						</div>
 						<div class="editor mb-10">
 							<textarea name="content" id="editor"></textarea>

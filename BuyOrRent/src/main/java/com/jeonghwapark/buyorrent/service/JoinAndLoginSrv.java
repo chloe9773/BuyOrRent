@@ -29,8 +29,8 @@ public class JoinAndLoginSrv {
 	}
 	
 	// 세션 설정 
-	public MemberVO loginChk(MemberVO mvo, HttpSession httpSession) {
-		MemberVO result = jDao.loginChk(mvo);
+	public MemberVO setSessionLogin(MemberVO mvo, HttpSession httpSession) {
+		MemberVO result = jDao.setSessionLogin(mvo);
 		
 		if(result != null) {
 			httpSession.setAttribute("userId", result.getUserId());
@@ -40,5 +40,10 @@ public class JoinAndLoginSrv {
 		}
 		
 		return result;
+	}
+	
+	// 로그아웃 
+	public void logout(HttpSession session) {
+		session.invalidate();
 	}
 }

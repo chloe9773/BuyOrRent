@@ -35,7 +35,7 @@ public class JoinAndLoginController {
 		
 		if(validation > 0) {
 			if(userAuth < authLevel) {
-				jSrv.loginChk(mvo, httpSession);
+				MemberVO svo = jSrv.setSessionLogin(mvo, httpSession);
 				msg = "success";
 			} else {} // admin
 		} else {
@@ -43,6 +43,15 @@ public class JoinAndLoginController {
 		}
 		
 		return msg;
+	}
+	
+	// 로그아웃 
+	@ResponseBody
+	@RequestMapping(value="/logout", method=RequestMethod.POST)
+	public String logout(HttpSession session) {
+		jSrv.logout(session);
+		
+		return "success";
 	}
 
 	// 회원가입 페이지 뛰우기

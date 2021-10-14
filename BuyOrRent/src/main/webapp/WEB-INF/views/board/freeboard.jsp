@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<link href="/WEB-INF/css/article.css" rel="stylesheet"/>
+<link href="${path}/css/article.css" rel="stylesheet"/>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenuWithOutSearch.jsp" %>
 	<div class="main-content w-100">
@@ -124,9 +124,14 @@
 					</table>
 					<div class="page-grp pb-r-2 table w-100">
 						<div class="table-cell">
+						<c:if test = "${sessionScope.username != null}">
 							<a href="${path}/board/article-write">
 								<button class="to-write highlight bg-white">글쓰기</button>
 							</a>
+						</c:if>
+						<c:if test = "${sessionScope.username == null}">
+							<button class="to-write bg-white" disabled>글쓰기</button>
+						</c:if>
 						</div>
 						<div class="paging icon-color t-center font-13 table-cell">
 							<span class="page-btn to-first">

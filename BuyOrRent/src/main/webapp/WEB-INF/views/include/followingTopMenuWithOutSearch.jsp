@@ -30,9 +30,9 @@
 			<a href="${path}/board/freeboard">
 				<li class="pb-12"><i class="fas fa-comments mr-10"></i>자유게시판</li>
 			</a>
-			<a href="#" class="d-none">
+			<span id="logout" class="cursor">
 				<li class="pb-12"><i class="fas fa-sign-out-alt mr-10"></i>로그아웃</li>
-			</a>
+			<span/>
 		</ul>
 		<div class="following-top-chat">
 			<div class="chat-title border-1 border-r-6 cursor">실시간 채팅</div>
@@ -40,3 +40,22 @@
 	</div>
 </div>		
 </div>
+<script>
+/* 로그아웃 */
+$(function(){
+	$("#logout").click(function(){
+		$.ajax({
+			url : "${path}/logout",
+			type : "POST",
+			data : "",
+			success : function(resData){
+				alert("로그아웃 되었습니다.");
+				window.location.href = "${path}";
+			},
+			error : function(){
+				alert("시스템 오류");
+			}
+		});
+	});
+});
+</script>

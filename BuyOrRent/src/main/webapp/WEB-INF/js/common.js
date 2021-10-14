@@ -211,3 +211,4 @@ function enterChat() {
 function toggle(classname) {
     $("." + classname).toggle();
 }
+

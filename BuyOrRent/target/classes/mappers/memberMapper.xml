@@ -20,7 +20,7 @@
 	</select>
 	
 	<!-- 세션 -->
-	<select id="loginChk" parameterType="membervo" resultType="membervo">
-		SELECT user_id as userId, regDate, level FROM member WHERE username = #{username} and password = #{password}
+	<select id="setSessionLogin" parameterType="membervo" resultType="membervo">
+		SELECT user_id as userId, username, regDate, level FROM member WHERE username = #{username} and password = #{password}
 	</select>
 </mapper>
