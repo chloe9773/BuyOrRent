@@ -37,4 +37,9 @@ public class ArticleDao {
 	public void setArticleModify(ArticleVO avo) {
 		sql.update("article.updateArticleOne", avo);
 	}
+	
+	// 게시글 삭제 
+	public void deleteArticleOne(int aid) {
+		sql.delete("article.deleteArticleOne", aid);
+	}
 }

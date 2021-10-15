@@ -37,4 +37,9 @@ public class ArticleSrv {
 	public void setArticleModify(ArticleVO avo) {
 		aDao.setArticleModify(avo);
 	}
+	
+	// 게시글 삭제 
+	public void deleteArticleOne(int aid) {
+		aDao.deleteArticleOne(aid);
+	}
 }

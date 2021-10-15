@@ -41,6 +41,7 @@ public class ArticleController {
 	@ResponseBody
 	@RequestMapping(value = "/article-write", method = RequestMethod.POST)
 	public String setArticleWrite(ArticleVO avo) {
+		System.out.println(avo.getTitle());
 		aSrv.setArticleWrite(avo);
 		
 		return "success";
@@ -83,5 +84,19 @@ public class ArticleController {
 		aSrv.setArticleModify(avo);
 		
 		return "success";
+	}
+	
+	// 게시글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/article-delete", method = RequestMethod.POST)
+	public String deleteArticleOne(int articleId) {
+		ArticleVO avo = aSrv.getArticleOne(articleId);
+		int boardId = avo.getBoardId();
+//		System.out.println("art " + articleId);
+//		System.out.println(boardId);
+		aSrv.deleteArticleOne(articleId);
+		
+		
+		return "redirect:/board";
 	}
 }

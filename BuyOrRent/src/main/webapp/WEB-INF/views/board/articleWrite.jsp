@@ -25,7 +25,7 @@
 							</c:if>
 							<input type="hidden" id="author" name="author" value="${sessionScope.username}" />
 							<input type="hidden" id="boardId" name="boardId" value="${boardId}" />
-							<c:if test="${sessionScope.level == 1}"> <!-- auth로 변경 -->
+							<c:if test="${sessionScope.level eq 1}"> <!-- auth로 변경 -->
 							    <input type="hidden" id="articleType" name="articleType" value="general" />
 							</c:if>
 						</div>
@@ -92,10 +92,10 @@
 			author : $("#author").val(),
 			boardId : $("#boardId").val(),
 			articleType: $("#articleType").val(),
-			content: content,
-			articleId : id
+			content: content
 		 };
-		 
+		 if(type != 1) formData['articleId']=id;
+		 console.log(formData);
 		 $.ajax({
 			 type: "POST",
 				url: url, //"${pageContext.request.contextPath}/article/article-write",

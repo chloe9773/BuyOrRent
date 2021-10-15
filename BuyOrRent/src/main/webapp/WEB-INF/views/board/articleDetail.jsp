@@ -4,6 +4,7 @@
 <link href="${path}/css/article.css" rel="stylesheet"/>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenuWithOutSearch.jsp" %>
+	<input type="hidden" id="artiId" value="${article.articleId}" />
 	<div class="main-content w-100">
 		<div class="section-wrap bg-white">
 			<div class="board-wrap w-50 m-center pt-r-8">
@@ -35,6 +36,9 @@
 							<c:if test="${sessionScope.username eq article.author}">
 								<button class="btn-to-modify">
 									<a href="${path}/article/article-modify?article_id=${article.articleId}">수정</a>
+								</button>
+								<button id="deleteBtn" class="btn-to-delete highlight">
+									삭제
 								</button>
 							</c:if>
 							<c:if test="${sessionScope.username ne article.author}">
@@ -250,5 +254,30 @@
 $("#back").click(function(e){
 	history.back();
 	e.preventDefault();
+});
+
+$("#deleteBtn").click(function(e){
+	if(confirm("정말로 삭제하시겠습니까?")) {
+		var id = $("#artiId").val();
+		var url = "${path}/article/article-delete?" + id;
+		
+		$.ajax({
+			 type: "POST",
+				url: url,
+				data: {
+					articleId : id
+				},
+				success: function(resData) {
+					/* if(resData != "success") {
+						alert("w재시도 안내멘트트");
+					} else {
+						location.href = "${path}/board?board_id=" + document.getElementById("boardId").value;
+					} */
+				},
+				error: function() {
+					alert("작성 실패 에러 에러에ㅓ");
+				}
+		 });
+	}
 });
 </script>
