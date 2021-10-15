@@ -268,11 +268,7 @@ $("#deleteBtn").click(function(e){
 					articleId : id
 				},
 				success: function(resData) {
-					/* if(resData != "success") {
-						alert("w재시도 안내멘트트");
-					} else {
-						location.href = "${path}/board?board_id=" + document.getElementById("boardId").value;
-					} */
+					location.href = "${path}/board?board_id=" + resData;
 				},
 				error: function() {
 					alert("작성 실패 에러 에러에ㅓ");
