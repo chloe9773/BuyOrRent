@@ -37,11 +37,50 @@ public class ArticleController {
 		return mav;
 	}
 	
-	// 게시글 작성 화면 
+	// 게시글 작성  
 	@ResponseBody
 	@RequestMapping(value = "/article-write", method = RequestMethod.POST)
 	public String setArticleWrite(ArticleVO avo) {
 		aSrv.setArticleWrite(avo);
+		
+		return "success";
+	}
+	
+	// 게시글 보기   
+	@ResponseBody
+	@RequestMapping(value = "/article-detail", method = RequestMethod.GET)
+	public ModelAndView getArticleOne(@RequestParam("article_id") int id) {
+		ArticleVO avo = aSrv.getArticleOne(id);
+		BoardVO bvo = bSrv.getBoardOne(avo.getBoardId());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("article", avo);
+		mav.addObject("boardName", bvo.getBoardName());
+		mav.setViewName("/board/articleDetail");
+		
+		return mav;
+	}
+	
+	// 게시글 수정 화면 
+	@RequestMapping(value = "/article-modify", method = RequestMethod.GET)
+	public ModelAndView getArticleModify(HttpServletRequest request, @RequestParam("article_id") int aid) {
+		ArticleVO avo = aSrv.getArticleOne(aid);
+		BoardVO bvo = bSrv.getBoardOne(avo.getBoardId());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("article", avo);
+		mav.addObject("boardId", bvo.getBoardId());
+		mav.addObject("boardName", bvo.getBoardName());
+		mav.setViewName("board/articleWrite");
+			
+		return mav;
+	}
+	
+	// 게시글 수정 화면 
+	@ResponseBody
+	@RequestMapping(value = "/article-modify", method = RequestMethod.POST)
+	public String setArticleModify(ArticleVO avo) {
+		aSrv.setArticleModify(avo);
 		
 		return "success";
 	}

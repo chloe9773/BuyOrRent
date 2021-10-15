@@ -18,6 +18,11 @@ public class ArticleSrv {
 		aDao.setArticleWrite(avo);
 	}
 	
+	// 게시글 하나 불러오기 
+	public ArticleVO getArticleOne(int id) {
+		return aDao.getArticleOne(id);
+	}
+	
 	// 게시판별 게시글 불러오기 (공지) 
 	public List<ArticleVO> getNotiArticleForBoard(int id) {
 		return aDao.getNotiArticleForBoard(id);
@@ -26,5 +31,10 @@ public class ArticleSrv {
 	// 게시판별 게시글 불러오기 (일반) 
 	public List<ArticleVO> getAllArticleForBoard(int id) {
 		return aDao.getAllArticleForBoard(id);
+	}
+	
+	// 게시글 수정
+	public void setArticleModify(ArticleVO avo) {
+		aDao.setArticleModify(avo);
 	}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <link href="${path}/css/article.css" rel="stylesheet"/>
 <body>
@@ -38,12 +39,12 @@
 									<div class="noti-box">공지</div>
 								</td>
 								<td class="t-left t-title">
-									<a href="article-detail.html" class="">${noti.title}</a>
+									<a href="${path}/article/article-detail?article_id=${noti.articleId}" class="">${noti.title}</a>
 								</td>
 								<td>
 									<a href="#" class="">${noti.author}</a>
 								</td>
-								<td>${noti.uploadDate}</td>
+								<td>${fn:substring(noti.uploadDate,0,10)}</td>
 								<td>${noti.hit}</td>
 								<td>${noti.commentTotal}</td>
 							</tr>
@@ -51,9 +52,11 @@
 							<c:forEach var="article" items="${articleList}">
 								<tr class="board-row t-center">
 									<td>${article.articleId}</td>
-									<td class="t-left t-title">${article.title}</td>
-									<td>박정화</td>
-									<td>${article.uploadDate}</td>
+									<td class="t-left t-title">
+										<a href="${path}/article/article-detail?article_id=${article.articleId}" class="">${article.title}</a>
+									</td>
+									<td>${article.author}</td>
+									<td>${fn:substring(article.uploadDate,0,10)}</td>
 									<td>${article.hit}</td>
 									<td>${article.commentTotal}</td>
 								</tr>

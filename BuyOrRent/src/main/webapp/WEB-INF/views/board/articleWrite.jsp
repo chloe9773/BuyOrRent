@@ -8,7 +8,7 @@
 		<div class="section-wrap bg-white">
 			<div class="board-wrap w-50 m-center pt-r-8">
 				<div class="board-top">
-					<a href="${path}/board/freeboard">
+					<a href="${path}/board?board_id=1">
 						<h1 class="mb-40">${boardName}</h1>
 					</a>
 				</div>
@@ -16,7 +16,13 @@
 				<div class="board-content">
 					<form id="article">
 						<div class="title-wrap pb-10 mb-10">
-							<input type="text" id="title" name="title" class="title font-20" maxlength="" autocomplete="off" placeholder="제목을 입력하세요."/>
+							<c:if test="${article.articleId eq null}">
+								<input type="text" id="title" name="title" class="title font-20" maxlength="200" autocomplete="off" placeholder="제목을 입력하세요."/>
+							</c:if>
+							<c:if test="${article.articleId ne null}">
+								<input type="hidden" id="artiId" name="artiId" value="${article.articleId}"/>
+								<input type="text" id="title" name="title" class="title font-20" maxlength="200" autocomplete="off" value="${article.title}"/>
+							</c:if>
 							<input type="hidden" id="author" name="author" value="${sessionScope.username}" />
 							<input type="hidden" id="boardId" name="boardId" value="${boardId}" />
 							<c:if test="${sessionScope.level == 1}"> <!-- auth로 변경 -->
@@ -24,7 +30,9 @@
 							</c:if>
 						</div>
 						<div class="editor mb-10">
-							<textarea name="content" id="editor"></textarea>
+							<textarea name="content" id="editor">
+								<c:if test="${article.articleId ne null}">${article.content}</c:if>
+							</textarea>
 						</div>
 						<div class="btn-grp d-flex justify-bw pb-r-4">
 							<div class="btn-grp-left">
@@ -33,7 +41,12 @@
 								</a>
 							</div>
 							<div class="btn-grp-right">
-								<button type="button" class="submit bg-highlight white" onclick="submitArticle();">등록</button>
+								<c:if test="${article.articleId ne null}">
+									<button type="button" class="submit bg-highlight white" onclick="submitArticle(2);">등록</button>
+								</c:if>
+								<c:if test="${article.articleId eq null}">
+									<button type="button" class="submit bg-highlight white" onclick="submitArticle(1);">등록</button>
+								</c:if>
 							</div>
 						</div>
 					</form>
@@ -53,9 +66,19 @@
     };
 </script>
 <script>
- function submitArticle() {
+ function submitArticle(type) {
 	 var content = CKEDITOR.instances.editor.getData();
 	 var title = $("#title").val();
+	 
+	 var url = "";
+	 var id = "";
+	 if(type == 1) {
+		 url = "${pageContext.request.contextPath}/article/article-write";
+	 }
+	 else {
+		 url = "${pageContext.request.contextPath}/article/article-modify";
+		 id = $("#artiId").val();
+	 }
 	 
 	 if(title.length == 0 || (title.length == 0 && content.length == 0)) {
 		 alert("제목을 입력해주세요.");
@@ -69,12 +92,13 @@
 			author : $("#author").val(),
 			boardId : $("#boardId").val(),
 			articleType: $("#articleType").val(),
-			content: content
+			content: content,
+			articleId : id
 		 };
 		 
 		 $.ajax({
 			 type: "POST",
-				url: "${pageContext.request.contextPath}/article/article-write",
+				url: url, //"${pageContext.request.contextPath}/article/article-write",
 				data: formData,
 				success: function(resData) {
 					if(resData != "success") {

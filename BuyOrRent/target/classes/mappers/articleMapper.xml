@@ -12,6 +12,22 @@
 			content = #{content}
 	</insert>
 	
+	<!-- 게시글 하나 불러오기 -->
+	<select id="getArticleOne" parameterType="int" resultType="articlevo">
+		SELECT
+			board_id as boardId,  
+			article_id as articleId,
+			article_type as articleType,
+			article_title as title,
+			article_author as author,
+			article_date as uploadDate,
+			article_update as updateDate,
+			article_hit as hit,
+			article_comments as commentTotal,
+			content 
+		FROM article WHERE article_id = #{articleId}
+	</select>
+	
 	<!-- 게시판별 게시글 불러오기(공지게시글) -->
 	<select id="getNotiArticleForBoard" parameterType="int" resultType="articlevo">
 		SELECT 
@@ -39,4 +55,18 @@
 			content 
 		FROM article WHERE board_id = #{boardId} and article_type != 'noti' ORDER BY article_id DESC LIMIT 10
 	</select>
-</mapper>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteArticleOne" parameterType="int">
+		DELETE FROM article WHERE article_id = #{articleId}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateArticleOne" parameterType="articlevo">
+		UPDATE article SET 
+			article_title = #{title},
+			article_update = now(),
+			content = #{content} 
+		WHERE article_id = #{articleId}
+	</update>
+</mapper> 

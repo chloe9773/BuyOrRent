@@ -14,11 +14,12 @@ public class ArticleVO {
 	private String title;
 	private String author;
 	private Date uploadDate;
+	private Date updateDate;
 	private int hit;
 	private int commentTotal;
 	private String content;
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.mm.dd");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 	
 	public int getArticleId() {
 		return articleId;
@@ -74,5 +75,11 @@ public class ArticleVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getUpdateDate() {
+		return sdf.format(updateDate);
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 }
