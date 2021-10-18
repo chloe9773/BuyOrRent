@@ -55,4 +55,9 @@ public class ArticleDao {
 	public void setCommentOne(CommentVO cvo) {
 		sql.insert("article.setComment", cvo);
 	}
+	
+	// 댓글 불러오기 
+	public List<CommentVO> getArticleComments(int id) {
+		return sql.selectList("article.getArticleComments", id);
+	}
 }

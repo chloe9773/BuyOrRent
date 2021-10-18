@@ -24,36 +24,36 @@
 			article_update as updateDate,
 			article_hit as hit,
 			article_comments as commentTotal,
-			content 
+			content, 
 		FROM article WHERE article_id = #{articleId}
 	</select>
 	
 	<!-- 게시판별 게시글 불러오기(공지게시글) -->
 	<select id="getNotiArticleForBoard" parameterType="int" resultType="articlevo">
 		SELECT 
-			article_id as articleId,
-			article_type as articleType,
-			article_title as title,
-			article_author as author,
-			article_date as uploadDate,
-			article_hit as hit,
-			article_comments as commentTotal,
+			a.article_id as articleId,
+			a.article_type as articleType,
+			a.article_title as title,
+			a.article_author as author,
+			a.article_date as uploadDate,
+			a.article_hit as hit,
+			(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
 			content 
-		FROM article WHERE board_id = #{boardId} and article_type != 'general' ORDER BY article_id
+		FROM article a WHERE a.board_id = #{boardId} and a.article_type != 'general' ORDER BY a.article_id
 	</select>
 	
 	<!-- 게시판별 게시글 불러오기(일반게시글) -->
 	<select id="getAllArticleForBoard" parameterType="hashmap" resultType="articlevo">
 		SELECT 
-			article_id as articleId,
-			article_type as articleType,
-			article_title as title,
-			article_author as author,
-			article_date as uploadDate,
-			article_hit as hit,
-			article_comments as commentTotal,
+			a.article_id as articleId,
+			a.article_type as articleType,
+			a.article_title as title,
+			a.article_author as author,
+			a.article_date as uploadDate,
+			a.article_hit as hit,
+			(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
 			content 
-		FROM article WHERE board_id = #{id} and article_type != 'noti' ORDER BY article_id DESC LIMIT #{start}, #{end}
+		FROM article a WHERE a.board_id = #{id} and a.article_type != 'noti' ORDER BY a.article_id DESC LIMIT #{start}, #{end}
 	</select>
 	
 	<!-- 게시글 삭제 -->
@@ -89,7 +89,7 @@
 	<!-- 게시글 댓글 카운트 -->
 	<select id="getArticleCommentsTotal" parameterType="int" resultType="int">
 		SELECT 
-			cid, aid, author, content, regdate as regDate 
+			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate 
 		FROM comments WHERE aid = #{articleId}
 	</select>
 	

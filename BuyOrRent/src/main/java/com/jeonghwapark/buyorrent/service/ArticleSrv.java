@@ -48,4 +48,9 @@ public class ArticleSrv {
 	public void setCommentOne(CommentVO cvo) {
 		aDao.setCommentOne(cvo);
 	}
+	
+	// 댓글 불러오기 
+	public List<CommentVO> getArticleComments(int id) {
+		return aDao.getArticleComments(id);
+	}
 }
