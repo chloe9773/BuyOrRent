@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jeonghwapark.buyorrent.model.ArticleVO;
+import com.jeonghwapark.buyorrent.model.CommentVO;
 
 @Repository
 public class ArticleDao {
@@ -48,5 +49,10 @@ public class ArticleDao {
 	// 게시글 삭제 
 	public void deleteArticleOne(int aid) {
 		sql.delete("article.deleteArticleOne", aid);
+	}
+	
+	// 댓글 작성
+	public void setCommentOne(CommentVO cvo) {
+		sql.insert("article.setComment", cvo);
 	}
 }

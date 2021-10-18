@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jeonghwapark.buyorrent.model.ArticleVO;
 import com.jeonghwapark.buyorrent.model.BoardVO;
+import com.jeonghwapark.buyorrent.model.CommentVO;
 import com.jeonghwapark.buyorrent.service.ArticleSrv;
 import com.jeonghwapark.buyorrent.service.BoardSrv;
 
@@ -96,5 +97,14 @@ public class ArticleController {
 		
 		//return "redirect:/board";
 		return boardId;
+	}
+	
+	// 댓글 작성
+	@ResponseBody
+	@RequestMapping(value="/comment-write", method = RequestMethod.POST)
+	public String setCommentOne(CommentVO cvo) {
+		aSrv.setCommentOne(cvo);
+		
+		return "success";
 	}
 }

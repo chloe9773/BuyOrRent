@@ -69,4 +69,39 @@
 			content = #{content} 
 		WHERE article_id = #{articleId}
 	</update>
+	
+	<!-- 게시글 등록 -->
+	<insert id="setComment" parameterType="commentvo">
+		INSERT INTO comments SET 
+			aid = #{aid},
+			author = #{author},
+			content = #{cContent},
+			regdate = NOW()
+	</insert>	
+	
+	<!-- 게시글 댓글 가져오기 -->
+	<select id="getArticleComments" parameterType="int" resultType="commentvo">
+		SELECT 
+			cid, aid, author, content, regdate as regDate 
+		FROM comments WHERE aid = #{articleId}
+	</select>
+	
+	<!-- 게시글 댓글 카운트 -->
+	<select id="getArticleCommentsTotal" parameterType="int" resultType="int">
+		SELECT 
+			cid, aid, author, content, regdate as regDate 
+		FROM comments WHERE aid = #{articleId}
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM comments WHERE cid = #{cid}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateComment" parameterType="commentvo">
+		UPDATE comments SET 
+			content = #{content},
+			update_date = NOW()
+	</update>
 </mapper> 

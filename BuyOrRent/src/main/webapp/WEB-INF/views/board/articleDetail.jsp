@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<div id="comment-box" class="board-main-bottom bg-gray-v-light p-24 mb-r-4">
-							<div class="comments-wrap">
+							<div id="comments-wrap" class="comments-wrap">
 								<div class="comment-wrap mb-30">
 									<div class="comment-1 mb-10">
 										<div class="comment-info font-13 d-flex justify-bw mb-5">
@@ -118,27 +118,6 @@
 										<div class="comment font-13 pb-10">
 											<p class="w-80">코멘트 코멘트 코멘트 코멘트</p>
 										</div>
-										<div class="comment-edit-wrap comment-edit-2 border-1 p-5 bg-white d-none">
-											<textarea class="textarea" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
-											<div class="comment-sub-item-wrap d-flex justify-bw">
-												<div class="comment-sub-item-left table">
-													<input type="file" class="fileUpload d-none"/>
-													<span class="cursor table-cell" onclick="fileUpload();">
-														<i class="far fa-image icon-color"></i>
-													</span>
-												</div>
-												<div class="comment-sub-item-right d-flex">
-													<div class="comment-count font-11 mr-10 table" style="display: table;">
-														<span class="comment-total table-cell">0</span>
-														<span class="gray table-cell">/</span>
-														<span class="comment-max table-cell">600</span>
-													</div>
-													<div class="submit-wrap">
-														<button class="bg-highlight white">등록</button>
-													</div>
-												</div>
-											</div>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -167,25 +146,29 @@
 								</span>
 							</div>
 							<div class="comment-edit-wrap border-1 p-5 bg-white">
-								<textarea class="textarea" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
-								<div class="comment-sub-item-wrap d-flex justify-bw">
-									<div class="comment-sub-item-left table">
-										<input type="file" class="fileUpload d-none"/>
-										<span class="cursor table-cell" onclick="fileUpload();">
-											<i class="far fa-image icon-color"></i>
-										</span>
-									</div>
-									<div class="comment-sub-item-right d-flex">
-										<div class="comment-count font-11 mr-10 table" style="display: table;">
-											<span class="comment-total table-cell">0</span>
-											<span class="gray table-cell">/</span>
-											<span class="comment-max table-cell">600</span>
+								<form id="comment-form">
+									<input type="hidden" name="aid" value="${article.articleId}"/>
+									<input type="hidden" id="author" name="author" value="${sessionScope.username}" />
+									<textarea class="textarea" id="comment_content" name="cContent" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
+									<div class="comment-sub-item-wrap d-flex justify-bw">
+										<div class="comment-sub-item-left table">
+											<input type="file" class="fileUpload d-none"/>
+											<span class="cursor table-cell" onclick="fileUpload();">
+												<i class="far fa-image icon-color"></i>
+											</span>
 										</div>
-										<div class="submit-wrap">
-											<button class="bg-highlight white">등록</button>
+										<div class="comment-sub-item-right d-flex">
+											<div class="comment-count font-11 mr-10 table" style="display: table;">
+												<span class="comment-total table-cell">0</span>
+												<span class="gray table-cell">/</span>
+												<span class="comment-max table-cell">600</span>
+											</div>
+											<div class="submit-wrap">
+												<button type="button" id="commentSubmitBtn" class="bg-highlight white">등록</button>
+											</div>
 										</div>
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -274,6 +257,34 @@ $("#deleteBtn").click(function(e){
 					alert("작성 실패 에러 에러에ㅓ");
 				}
 		 });
+	}
+});
+
+$("#commentSubmitBtn").click(function(e){
+	var content = $("#comment_content").val();
+	
+	if(content.length > 0) {
+		var formData = $("#comment-form").serialize();
+		
+		$.ajax({
+			 type: "POST",
+				url: "${pageContext.request.contextPath}/article/comment-write",
+				data: formData,
+				success: function(resData) {
+					if(resData != "success") {
+						alert("w재시도 안내멘트트");
+					} else {
+						$("textarea#comment_content").attr("placeholder", "인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요.");
+						// $("#comments-wrap").load(window.location.href + "#comments-wrap"); // 코멘트 박스 새로고침 
+					}
+				},
+				error: function() {
+					alert("작성 실패 에러 에러에ㅓ");
+				}
+		});
+	} else {
+		alert("내용을 입력해주세요.");
+		$("#comment_content").focus();
 	}
 });
 </script>

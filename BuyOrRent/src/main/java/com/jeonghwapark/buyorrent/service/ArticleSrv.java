@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeonghwapark.buyorrent.model.ArticleVO;
+import com.jeonghwapark.buyorrent.model.CommentVO;
 import com.jeonghwapark.buyorrent.repository.ArticleDao;
 
 @Service
@@ -41,5 +42,10 @@ public class ArticleSrv {
 	// 게시글 삭제 
 	public void deleteArticleOne(int aid) {
 		aDao.deleteArticleOne(aid);
+	}
+	
+	// 댓글 작성
+	public void setCommentOne(CommentVO cvo) {
+		aDao.setCommentOne(cvo);
 	}
 }
