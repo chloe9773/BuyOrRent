@@ -18,6 +18,8 @@ public class ArticleVO {
 	private int hit;
 	private int commentTotal;
 	private String content;
+	private int start;
+	private int end;
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 	
@@ -81,5 +83,17 @@ public class ArticleVO {
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
+	}
+	public int getEnd() {
+		return end;
+	}
+	public void setEnd(int end) {
+		this.end = end;
 	}
 }

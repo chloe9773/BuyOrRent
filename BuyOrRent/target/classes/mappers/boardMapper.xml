@@ -13,4 +13,9 @@
 			board_updated as boardUpdated 
 		 FROM board where board_id = #{boardId}
 	</select>
+	
+	<!-- 게시판별 게시글 수 -->
+	<select id="getArticlesCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM article WHERE board_id = #{boardId} and article_type != 'noti'
+	</select>
 </mapper>

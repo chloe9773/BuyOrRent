@@ -29,8 +29,8 @@ public class ArticleSrv {
 	}
 		
 	// 게시판별 게시글 불러오기 (일반) 
-	public List<ArticleVO> getAllArticleForBoard(int id) {
-		return aDao.getAllArticleForBoard(id);
+	public List<ArticleVO> getAllArticleForBoard(int id, int start, int end) {
+		return aDao.getAllArticleForBoard(id, start, end);
 	}
 	
 	// 게시글 수정

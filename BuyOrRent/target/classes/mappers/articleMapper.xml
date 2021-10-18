@@ -43,7 +43,7 @@
 	</select>
 	
 	<!-- 게시판별 게시글 불러오기(일반게시글) -->
-	<select id="getAllArticleForBoard" parameterType="int" resultType="articlevo">
+	<select id="getAllArticleForBoard" parameterType="hashmap" resultType="articlevo">
 		SELECT 
 			article_id as articleId,
 			article_type as articleType,
@@ -53,7 +53,7 @@
 			article_hit as hit,
 			article_comments as commentTotal,
 			content 
-		FROM article WHERE board_id = #{boardId} and article_type != 'noti' ORDER BY article_id DESC LIMIT 10
+		FROM article WHERE board_id = #{id} and article_type != 'noti' ORDER BY article_id DESC LIMIT #{start}, #{end}
 	</select>
 	
 	<!-- 게시글 삭제 -->

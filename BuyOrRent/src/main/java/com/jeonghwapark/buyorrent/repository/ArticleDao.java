@@ -1,6 +1,8 @@
 package com.jeonghwapark.buyorrent.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,13 @@ public class ArticleDao {
 	}
 	
 	// 게시판별 게시글 불러오기 (일반) 
-	public List<ArticleVO> getAllArticleForBoard(int id) {
-		return sql.selectList("article.getAllArticleForBoard", id);
+	public List<ArticleVO> getAllArticleForBoard(int id, int start, int end) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("start", start);
+		map.put("end", end);
+		
+		return sql.selectList("article.getAllArticleForBoard", map);
 	}
 	
 	// 게시글 수정

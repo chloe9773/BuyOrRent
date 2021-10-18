@@ -15,4 +15,9 @@ public class BoardDao {
 	public BoardVO getBoardOne(int id) {
 		return sql.selectOne("board.getBoardOne", id);
 	}
+	
+	// 게시판 총 게시글 수 
+	public int getArticlesCount(int id) {
+		return sql.selectOne("board.getArticlesCount", id);
+	}
 }

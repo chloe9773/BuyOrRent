@@ -13,7 +13,7 @@
 				</div>
 				<div class="board-extra d-flex justify-bw mb-4 font-13">
 					<div class="extra-left">
-						<span class="article-total">총 10건의 게시물</span> <!-- 새글 오늘게시글 / 토탈 도 괜찮아 보였음-->
+						<span class="article-total">총 ${count}건의 게시물</span> <!-- 새글 오늘게시글 / 토탈 도 괜찮아 보였음-->
 					</div>
 					<div class="extra-right d-flex">
 						<input type="checkbox" id="notiChk" class="mr-5" onclick="hideNoti();"/>
@@ -49,9 +49,10 @@
 								<td>${noti.commentTotal}</td>
 							</tr>
 							</c:forEach>
-							<c:forEach var="article" items="${articleList}">
+							<c:forEach var="article" items="${articleList}" varStatus="status">
 								<tr class="board-row t-center">
-									<td>${article.articleId}</td>
+									<%-- <td>${article.articleId}</td> --%>
+									<td>${(count - status.index) - ((currPage - 1) * end)}</td>
 									<td class="t-left t-title">
 										<a href="${path}/article/article-detail?article_id=${article.articleId}" class="">${article.title}</a>
 									</td>
@@ -74,30 +75,82 @@
 							<button class="to-write bg-white" disabled>글쓰기</button>
 						</c:if>
 						</div>
-						<div class="paging icon-color t-center font-13 table-cell">
-							<span class="page-btn to-first">
-								<i class="fas fa-angle-double-left"></i>
-							</span>
-							<span class="page-btn to-left">
-								<i class="fas fa-angle-left"></i>
-							</span>
-							<span class="page-btn active">1</span>
-							<span class="page-btn">2</span>
-							<span class="page-btn">3</span>
-							<span class="page-btn">4</span>
-							<span class="page-btn">5</span>
-							<span class="page-btn">6</span>
-							<span class="page-btn">7</span>
-							<span class="page-btn">8</span>
-							<span class="page-btn">9</span>
-							<span class="page-btn">10</span>
-							<span class="page-btn to-right">
-								<i class="fas fa-angle-right"></i>
-							</span>
-							<span class="page-btn to-left">
-								<i class="fas fa-angle-double-right"></i>
-							</span>
-						</div>
+						<c:if test="${count>0}">
+							<div class="paging icon-color t-center font-13 table-cell">
+								<!-- 제일 앞 페이지로 -->
+								<c:choose> 
+									<c:when test="${currPage > 1}">
+										<span class="page-btn to-first">
+											<a href="${path}/board?board_id=1&1">
+												<i class="fas fa-angle-double-left"></i>
+											</a>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<span class="page-btn to-first">
+											<i class="fas fa-angle-double-left"></i>
+										</span>
+									</c:otherwise>
+								</c:choose>
+								<!-- 한 페이지 앞으로 -->
+								<c:choose> 
+									<c:when test="${currPage > 1}">
+										<span class="page-btn to-left">
+											<a href="${path}/board?board_id&currPage=${currPage - 1}">
+												<i class="fas fa-angle-left"></i>
+											</a>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<span class="page-btn to-left">
+											<i class="fas fa-angle-left"></i>
+										</span>
+									</c:otherwise>
+								</c:choose>
+								<!--  페이지 번호 출력 -->
+								<c:forEach begin="${blockBegin}" end="${blockEnd}" var="num">
+									<c:if test="${selected == num}">
+										<span class="page-btn active">
+											<a herf="#">${num}</a>
+										</span>
+									</c:if>
+									<c:if test="${selected != num}">
+										<span class="page-btn">
+											<a href="${path}/board?board_id=1&currPage=${num}">${num}</a>
+										</span>
+									</c:if>
+								</c:forEach>
+								<!-- 페이지 번호 출력 끝 -->
+								<c:choose>
+									<c:when test="${currPage != totalPage}">
+										<span class="page-btn to-right">
+											<a herf="${path}/board?board_id=1&currPage=${currPage + 1}">
+												<i class="fas fa-angle-right"></i>
+											</a>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<span class="page-btn to-right">
+											<i class="fas fa-angle-right"></i>
+										</span>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${currPage != totalPage}">
+										<span class="page-btn to-left">
+											<a href="${path}/board?board_id=1&currPage=${totalPage}">
+												<i class="fas fa-angle-double-right"></i>
+											</a>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<span class="page-btn to-left">
+											<i class="fas fa-angle-double-right"></i>
+										</span>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</c:if>
 						<div class="table-cell t-right">
 							<a href="article-my-article.html">
 								<button class="my-article bg-white">내글보기</button>
