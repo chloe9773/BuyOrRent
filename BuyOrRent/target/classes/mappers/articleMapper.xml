@@ -93,12 +93,12 @@
 		FROM comments WHERE aid = #{articleId}
 	</select>
 	
-	<!-- 게시글 삭제 -->
-	<delete id="deleteComment" parameterType="int">
+	<!-- 댓글 삭제 -->
+	<delete id="deleteCommentOne" parameterType="int">
 		DELETE FROM comments WHERE cid = #{cid}
 	</delete>
 	
-	<!-- 게시글 수정 -->
+	<!-- 댓글 수정 -->
 	<update id="updateComment" parameterType="commentvo">
 		UPDATE comments SET 
 			content = #{content},

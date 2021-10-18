@@ -60,4 +60,9 @@ public class ArticleDao {
 	public List<CommentVO> getArticleComments(int id) {
 		return sql.selectList("article.getArticleComments", id);
 	}
+	
+	// 댓글 삭제 
+	public void deleteCommentOne(int cid) {
+		sql.delete("article.deleteCommentOne", cid);
+	}
 }

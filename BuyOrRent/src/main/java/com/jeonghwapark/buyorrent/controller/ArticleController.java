@@ -108,4 +108,14 @@ public class ArticleController {
 		
 		return "success";
 	}
+	
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/comment-delete", method = RequestMethod.POST)
+	public String deleteCommentOne(int cid) {
+		aSrv.deleteCommentOne(cid);
+			
+		//return "redirect:/board";
+		return "success";
+	}
 }

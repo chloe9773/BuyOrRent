@@ -53,4 +53,9 @@ public class ArticleSrv {
 	public List<CommentVO> getArticleComments(int id) {
 		return aDao.getArticleComments(id);
 	}
+	
+	// 댓글 삭제 
+	public void deleteCommentOne(int cid) {
+		aDao.deleteCommentOne(cid);
+	}
 }

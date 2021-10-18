@@ -93,7 +93,7 @@
 													<span class="opt-open-${status.index}" onclick="optToggle(${status.index});"><i class="fas fa-ellipsis-v cursor"></i></span>
 													<div class="opt opt-${status.index} d-none">
 														<div class="opt-mod">수정</div>
-														<div class="opt-delete">삭제</div>
+														<div class="opt-delete" onclick="deleteCmt(${commentList.cid});">삭제</div>
 													</div>
 												</div>
 											</div>
@@ -234,6 +234,29 @@
 					alert("작성 실패 에러 에러에ㅓ");
 				}
 		 });	 
+	 }
+ }
+ 
+ // 댓글 삭제 
+ function deleteCmt(cid) {
+	 if(confirm("정말로 삭제하시겠습니까?")) {
+		 $.ajax({
+			 type: "POST",
+				url: "${path}/article/comment-delete",
+				data: {
+					cid : cid
+				},
+				success: function(resData) {
+					if(resData == "success") {
+						/* $("#comments-wrap").load(location.href + "#comments-wrap"); */
+					} else {
+						alert("잠시 후 다시 어쩌고 저쩌고 ");
+					}
+				},
+				error: function() {
+					alert("작성 실패 에러 에러에ㅓ");
+				}
+		 });
 	 }
  }
 </script>
