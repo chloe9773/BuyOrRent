@@ -4,12 +4,10 @@
 <link href="${path}/css/chat.css" rel="stylesheet"/>
 <body class="bg-g" style="height: 100vh; overflow: hidden;">
 	<div class="following-top-wrap chat-head w-100 bg-white">
-		<div class="following-top-content w-50 m-center">
+		<div class="following-top-content w-60 m-center">
 			<div class="following-top-left-wrap w-70">
 				<div class="following-top-left">
-					<a href="home.html" class="weight-700 font-r-logo">
-						<%@ include file="/WEB-INF/views/include/logo.jsp" %>
-					</a>
+					<%@ include file="/WEB-INF/views/include/logo.jsp" %>
 				</div>
 			</div>
 		</div>

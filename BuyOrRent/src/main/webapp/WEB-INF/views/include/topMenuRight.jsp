@@ -30,7 +30,7 @@
 		</c:if>
 	</ul>
 	<div class="following-top-chat">
-		<a href="chat.html">
+		<a href="${path}/chat">
 			<div class="chat-title border-1 border-r-6 cursor">실시간 채팅</div>
 		</a>
 	</div>

@@ -9,8 +9,7 @@
 				</div>
 			</div>
 			<div class="following-top-middle d-flex w-70">
-				<div
-					class="following-top-search-wrap d-flex border-1 border-r-6 p-5 w-100 bg-white">
+				<div class="following-top-search-wrap d-flex border-1 border-r-6 p-5 w-100 bg-white">
 					<input class="search w-95 gray-light"
 						placeholder="동네 이름, 물품명 등을 검색해보세요!" />
 					<div class="search-btn">

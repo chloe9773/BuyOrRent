@@ -113,18 +113,18 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>  
 		
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-		<dependency>
+		<dependency> <!-- mysql 라이브러 -->
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.26</version>
 		</dependency>
 		
-		<!-- Spring-jdbc -->
+		<!-- Spring-jdbc 라이브러 -->
 	    <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 	    <dependency>
 	        <groupId>org.springframework</groupId>
@@ -132,7 +132,7 @@
 	        <version>${org.springframework-version}</version>
 	    </dependency>
 	
-	    <!-- Spring-test -->
+	    <!-- Spring-test 스피링과 mybitis가 정상적으로 연동되었는지 확인하기 위해 필요한 라이브러리-->
 	    <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 	    <dependency>
 	        <groupId>org.springframework</groupId>
@@ -140,7 +140,7 @@
 	        <version>${org.springframework-version}</version>
 	    </dependency>
 		
-		<!-- MyBatis 3.4.1 -->
+		<!-- MyBatis 3.4.1 프레임워크 -->
 	    <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 	    <dependency>
 	        <groupId>org.mybatis</groupId>
@@ -148,7 +148,7 @@
 	        <version>3.4.1</version>
 	    </dependency>
 	
-	    <!-- MyBatis-Spring -->
+	    <!-- MyBatis-Spring springr가 mybitis를 연결하는 라이브러리 -->
 	    <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
 	    <dependency>
 	        <groupId>org.mybatis</groupId>
