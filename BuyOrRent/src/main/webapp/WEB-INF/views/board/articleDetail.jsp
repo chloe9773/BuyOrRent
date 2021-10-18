@@ -79,46 +79,50 @@
 						<div id="comment-box" class="board-main-bottom bg-gray-v-light p-24 mb-r-4">
 							<div id="comments-wrap" class="comments-wrap">
 								<div class="comment-wrap mb-30">
-									<div class="comment-1 mb-10">
-										<div class="comment-info font-13 d-flex justify-bw mb-5">
-											<div class="comment-info-left">
-												<span class="userid font-14 mr-5">유저명임</span>
-												<span class="icon-color">21.09.24 12:48</span>
+									<c:forEach var="commentList" items="${commentList}" varStatus="status">
+										<div class="comment-${status.index} mb-10">
+											<div class="comment-info font-13 d-flex justify-bw mb-5">
+												<div class="comment-info-left">
+													<span class="userid font-14 mr-5">${commentList.author}</span>
+													<span class="icon-color">${commentList.regDate}</span>
+												</div>
+												<div class="comment-info-right icon-color ">
+													<span class="comment-reply comment-reply-open-${status.index} mr-5 cursor" onclick="replyCommentOpen(${status.index});">답글</span>
+													<span class="comment-reply comment-reply-close-${status.index} mr-5 cursor d-none" onclick="replyCommentClose(${status.index});">답글 접기</span>
+													<!-- 수정 권한 없는 유저들에게는 신고 버튼으로 -->
+													<span class="opt-open-${status.index}" onclick="optToggle(${status.index});"><i class="fas fa-ellipsis-v cursor"></i></span>
+													<div class="opt opt-${status.index} d-none">
+														<div class="opt-mod">수정</div>
+														<div class="opt-delete">삭제</div>
+													</div>
+												</div>
 											</div>
-											<div class="comment-info-right icon-color ">
-												<span class="mr-5">답글</span>
-												<!-- 수정 권한 없는 유저들에게는 신고 버튼으로 -->
-												<span class="opt-open-1" onclick="optToggle(1);"><i class="fas fa-ellipsis-v cursor"></i></span>
-												<div class="opt opt-1 d-none">
-													<div class="opt-mod">수정</div>
-													<div class="opt-delete">삭제</div>
+											<div class="comment font-13 pb-10">
+												<p>${commentList.cContent}</p>
+											</div>
+											<div class="comment-edit-wrap comment-edit-${status.index} border-1 p-5 bg-white d-none">
+												<textarea class="textarea" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
+												<div class="comment-sub-item-wrap d-flex justify-bw">
+													<div class="comment-sub-item-left table">
+														<input type="file" class="fileUpload d-none"/>
+														<span class="cursor table-cell" onclick="fileUpload();">
+															<i class="far fa-image icon-color"></i>
+														</span>
+													</div>
+													<div class="comment-sub-item-right d-flex">
+														<div class="comment-count font-11 mr-10 table" style="display: table;">
+															<span class="comment-total table-cell">0</span>
+															<span class="gray table-cell">/</span>
+															<span class="comment-max table-cell">600</span>
+														</div>
+														<div class="submit-wrap">
+															<button class="bg-highlight white">등록</button>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
-										<div class="comment font-13 pb-10">
-											<p>코멘트 코멘트 코멘트 코멘트</p>
-										</div>
-									</div>
-									<div class="comment-2 mb-10">
-										<div class="comment-info font-13 d-flex justify-bw mb-5">
-											<div class="comment-info-left">
-												<span class="userid font-14 mr-5">유저명임</span>
-												<span class="icon-color">21.09.24 12:48</span>
-											</div>
-											<div class="comment-info-right icon-color ">
-												<span class="comment-reply comment-reply-open-2 mr-5 cursor" onclick="replyCommentOpen(2);">답글</span>
-												<span class="comment-reply comment-reply-close-2 mr-5 cursor d-none" onclick="replyCommentClose(2);">답글 접기</span>
-												<span class="opt-open-2" onclick="optToggle(2);"><i class="fas fa-ellipsis-v cursor"></i></span>
-												<div class="opt opt-2 d-none">
-													<div class="opt-mod">수정</div>
-													<div class="opt-delete">삭제</div>
-												</div>
-											</div>
-										</div>
-										<div class="comment font-13 pb-10">
-											<p class="w-80">코멘트 코멘트 코멘트 코멘트</p>
-										</div>
-									</div>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="paging icon-color mb-30 t-center font-13">

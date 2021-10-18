@@ -15,17 +15,17 @@
 	<!-- 게시글 하나 불러오기 -->
 	<select id="getArticleOne" parameterType="int" resultType="articlevo">
 		SELECT
-			board_id as boardId,  
-			article_id as articleId,
-			article_type as articleType,
-			article_title as title,
-			article_author as author,
-			article_date as uploadDate,
-			article_update as updateDate,
-			article_hit as hit,
-			article_comments as commentTotal,
-			content, 
-		FROM article WHERE article_id = #{articleId}
+			a.board_id as boardId,  
+			a.article_id as articleId,
+			a.article_type as articleType,
+			a.article_title as title,
+			a.article_author as author,
+			a.article_date as uploadDate,
+			a.article_update as updateDate,
+			a.article_hit as hit,
+			(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
+			content 
+		FROM article a WHERE a.article_id = #{articleId}
 	</select>
 	
 	<!-- 게시판별 게시글 불러오기(공지게시글) -->
@@ -82,7 +82,7 @@
 	<!-- 게시글 댓글 가져오기 -->
 	<select id="getArticleComments" parameterType="int" resultType="commentvo">
 		SELECT 
-			cid, aid, author, content, regdate as regDate 
+			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate  
 		FROM comments WHERE aid = #{articleId}
 	</select>
 	
