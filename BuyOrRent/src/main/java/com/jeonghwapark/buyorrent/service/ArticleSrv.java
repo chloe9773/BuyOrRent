@@ -58,4 +58,9 @@ public class ArticleSrv {
 	public void deleteCommentOne(int cid) {
 		aDao.deleteCommentOne(cid);
 	}
+	
+	// 댓글 수정 
+	public void updateComment(int cid, String content) {
+		aDao.updateComment(cid, content);
+	}
 }

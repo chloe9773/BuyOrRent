@@ -99,9 +99,10 @@
 	</delete>
 	
 	<!-- 댓글 수정 -->
-	<update id="updateComment" parameterType="commentvo">
+	<update id="updateComment" parameterType="hashmap">
 		UPDATE comments SET 
 			content = #{content},
-			update_date = NOW()
+			update_date = NOW() 
+		WHERE cid = #{cid}
 	</update>
 </mapper> 

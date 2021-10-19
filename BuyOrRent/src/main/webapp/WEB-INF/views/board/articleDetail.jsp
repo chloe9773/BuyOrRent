@@ -92,16 +92,17 @@
 													<!-- 수정 권한 없는 유저들에게는 신고 버튼으로 -->
 													<span class="opt-open-${status.index}" onclick="optToggle(${status.index});"><i class="fas fa-ellipsis-v cursor"></i></span>
 													<div class="opt opt-${status.index} d-none">
-														<div class="opt-mod">수정</div>
-														<div class="opt-delete" onclick="deleteCmt(${commentList.cid});">삭제</div>
+														<div class="opt-mod cursor" onclick="modifyCmtView(${status.index}, ${commentList.cid});">수정</div>
+														<div class="opt-delete cursor" onclick="deleteCmt(${commentList.cid});">삭제</div>
 													</div>
 												</div>
 											</div>
 											<div class="comment font-13 pb-10">
-												<p>${commentList.cContent}</p>
+												<%-- <p id="comment-origin-${status.index}">${commentList.cContent}</p> --%>
+												<input type="text" id="comment-origin-${status.index}" value="${commentList.cContent}"/ >
 											</div>
 											<div class="comment-edit-wrap comment-edit-${status.index} border-1 p-5 bg-white d-none">
-												<textarea class="textarea" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
+												<textarea class="textarea" id="comment-area-${status.index}" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
 												<div class="comment-sub-item-wrap d-flex justify-bw">
 													<div class="comment-sub-item-left table">
 														<input type="file" class="fileUpload d-none"/>
@@ -116,7 +117,7 @@
 															<span class="comment-max table-cell">600</span>
 														</div>
 														<div class="submit-wrap">
-															<button class="bg-highlight white">등록</button>
+															<button type="button" class="bg-highlight white" onclick="modifyCmtBtn(${status.index},${commentList.cid});">등록</button>
 														</div>
 													</div>
 												</div>
@@ -248,7 +249,7 @@
 				},
 				success: function(resData) {
 					if(resData == "success") {
-						/* $("#comments-wrap").load(location.href + "#comments-wrap"); */
+						$("#comments-wrap").load(location.href + " #comments-wrap");
 					} else {
 						alert("잠시 후 다시 어쩌고 저쩌고 ");
 					}
@@ -258,6 +259,35 @@
 				}
 		 });
 	 }
+ }
+ 
+ function modifyCmtView(idx, cid) {
+	 $(".comment-edit-" + idx).removeClass("d-none");
+	 //alert(document.getElementById("comment-origin-" + idx).innerTEXT);
+	 document.getElementById("comment-area-" + idx).value = document.getElementById("comment-origin-" + idx).value;
+ }
+ 
+ function modifyCmtBtn(idx, cid) {
+	 var content = $("#comment-area-" + idx).val();
+	 
+	 $.ajax({
+		 type: "POST",
+			url: "${path}/article/comment-modify",
+			data: {
+				cid : cid,
+				content : content
+			},
+			success: function(resData) {
+				if(resData == "success") {
+					$("#comments-wrap").load(location.href + " #comments-wrap");
+				} else {
+					alert("잠시 후 다시 어쩌고 저쩌고 ");
+				}
+			},
+			error: function() {
+				alert("작성 실패 에러 에러에ㅓ");
+			}
+	 });
  }
 </script>
 <script>
@@ -301,8 +331,7 @@ $("#commentSubmitBtn").click(function(e){
 					if(resData != "success") {
 						alert("w재시도 안내멘트트");
 					} else {
-						$("textarea#comment_content").attr("placeholder", "인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요.");
-						// $("#comments-wrap").load(window.location.href + "#comments-wrap"); // 코멘트 박스 새로고침 
+						$("#comments-wrap").load(window.location.href + " #comments-wrap"); // 코멘트 박스 새로고침 
 					}
 				},
 				error: function() {

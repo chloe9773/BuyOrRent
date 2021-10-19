@@ -118,4 +118,13 @@ public class ArticleController {
 		//return "redirect:/board";
 		return "success";
 	}
+	
+	// 댓글 수정 
+	@ResponseBody
+	@RequestMapping(value="/comment-modify", method = RequestMethod.POST)
+	public String updateComment(@RequestParam("cid") int cid, @RequestParam("content") String content) {
+		aSrv.updateComment(cid, content);
+			
+		return "success";
+	}
 }

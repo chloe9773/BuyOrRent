@@ -65,4 +65,14 @@ public class ArticleDao {
 	public void deleteCommentOne(int cid) {
 		sql.delete("article.deleteCommentOne", cid);
 	}
+	
+	// 댓글 수정 
+	public void updateComment(int cid, String content) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("cid", cid);
+		map.put("content", content);
+		
+		sql.update("article.updateComment", map);
+		
+	}
 }

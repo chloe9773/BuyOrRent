@@ -67,12 +67,14 @@ $(document).on('keyup', '.textarea', function(e){
     $(".comment-total").html(count);
 });
 
+/* 답글창 오픈 */
 function replyCommentOpen(classNum) {
     $(".comment-edit-" + classNum).removeClass("d-none");
     $(".comment-reply-close-" + classNum).removeClass("d-none");
     $(".comment-reply-open-" + classNum).addClass("d-none");
 }
 
+/* 답글창 클로즈 */
 function replyCommentClose(classNum) {
     $(".comment-edit-" + classNum).addClass("d-none");
     $(".comment-reply-close-" + classNum).addClass("d-none");
