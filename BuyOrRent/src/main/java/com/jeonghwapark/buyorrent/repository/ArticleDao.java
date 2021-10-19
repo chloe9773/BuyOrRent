@@ -73,6 +73,25 @@ public class ArticleDao {
 		map.put("content", content);
 		
 		sql.update("article.updateComment", map);
-		
+	}
+	
+	// 대댓글 순서 등록 
+	public void setReplyComment(CommentVO cvo) {
+		sql.update("article.setReplyComment", cvo);
+	}
+	
+	// 대댓글 순서 조회 
+	public int getReplyCommentRefOrder(int ref) {
+		return sql.selectOne("article.getReplyCommentRefOrder", ref);
+	}
+	
+	// 댓글 정보 가져오기 
+	public CommentVO getCommentOne(int cid) {
+		return sql.selectOne("article.getCommentOne", cid);
+	}
+	
+	// 연결 댓글 카운트 
+	public int getCommentOneCount(int ref) {
+		return sql.selectOne("article.getCommentOneCount", ref);
 	}
 }

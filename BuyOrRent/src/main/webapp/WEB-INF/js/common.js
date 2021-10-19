@@ -68,10 +68,13 @@ $(document).on('keyup', '.textarea', function(e){
 });
 
 /* 답글창 오픈 */
-function replyCommentOpen(classNum) {
+function replyCommentOpen(classNum, cmtId) {
     $(".comment-edit-" + classNum).removeClass("d-none");
     $(".comment-reply-close-" + classNum).removeClass("d-none");
     $(".comment-reply-open-" + classNum).addClass("d-none");
+    
+    $("#comment-reply-btn-" + classNum).removeAttr("onclick");
+    $("#comment-reply-btn-" + classNum).attr("onclick", "commentReplySubmit(" + classNum + ", " +  cmtId + ");");
 }
 
 /* 답글창 클로즈 */
@@ -79,6 +82,8 @@ function replyCommentClose(classNum) {
     $(".comment-edit-" + classNum).addClass("d-none");
     $(".comment-reply-close-" + classNum).addClass("d-none");
     $(".comment-reply-open-" + classNum).removeClass("d-none");
+    
+    $("#comments-wrap").load(window.location.href + " #comments-wrap");
 }
 
 function optToggle(classNum) {

@@ -70,20 +70,58 @@
 		WHERE article_id = #{articleId}
 	</update>
 	
-	<!-- 게시글 등록 -->
+	<!-- 모댓글 등록 -->
 	<insert id="setComment" parameterType="commentvo">
+		<selectKey resultType="int" keyProperty="ref" order="BEFORE">
+			SELECT IFNULL(MAX(ref), 0) + 1 FROM comments
+		</selectKey>
 		INSERT INTO comments SET 
 			aid = #{aid},
 			author = #{author},
 			content = #{cContent},
-			regdate = NOW()
-	</insert>	
+			regdate = NOW(),
+			ref = #{ref},
+			ref_order = 0 
+	</insert>
+	
+	<!-- 자식 댓글 순서 조회 -->
+	<select id="getReplyCommentRefOrder" parameterType="int" resultType="int">
+		SELECT MAX(ref_order) FROM comments WHERE ref = #{ref}
+	</select>
+	
+	<!-- 자식 댓글 등록 -->
+	<insert id="setReplyComment" parameterType="commentvo">
+		INSERT INTO comments SET 
+			aid = #{aid},
+			author = #{author},
+			content = #{cContent},
+			regdate = NOW(),
+			ref = #{ref},
+			ref_order = #{refOrder} + 1 
+	</insert>
+	
+	<!-- 대댓글 순서 수정 -->
+	<!-- <update id="setCommentsRelpyOrder" parameterType="int">
+		UPDATE comments SET ref_order = ref_order + 1 WHERE ref = #{ref}
+	</update> -->
 	
 	<!-- 게시글 댓글 가져오기 -->
 	<select id="getArticleComments" parameterType="int" resultType="commentvo">
 		SELECT 
-			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate  
-		FROM comments WHERE aid = #{articleId}
+			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate, ref, ref_order as refOrder    
+		FROM comments WHERE aid = #{articleId} ORDER BY ref, ref_order ASC 
+	</select>
+	
+	<!-- 댓글 정보 가져오기 -->
+	<select id="getCommentOne" parameterType="int" resultType="commentvo">
+		SELECT 
+			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate, ref, ref_order as refOrder    
+		FROM comments WHERE cid = #{cid} 
+	</select>
+	
+	<!-- 연결 댓글 카운트 -->
+	<select id="getCommentOneCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM comments WHERE ref = #{ref} 
 	</select>
 	
 	<!-- 게시글 댓글 카운트 -->

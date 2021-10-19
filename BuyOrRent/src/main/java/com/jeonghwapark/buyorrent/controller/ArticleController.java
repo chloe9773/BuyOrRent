@@ -109,14 +109,31 @@ public class ArticleController {
 		return "success";
 	}
 	
+	// 대댓글 작성
+	@ResponseBody
+	@RequestMapping(value="/comment-reply-write", method = RequestMethod.POST)
+	public String setReplyCommentOne(CommentVO cvo) {
+		aSrv.setReplyComment(cvo);
+			
+		return "success";
+	}
+	
 	// 댓글 삭제
 	@ResponseBody
 	@RequestMapping(value = "/comment-delete", method = RequestMethod.POST)
 	public String deleteCommentOne(int cid) {
+		CommentVO cvo = aSrv.getCommentOne(cid);
+		int refCount = aSrv.getCommentOneCount(cvo.getRef());
+		int refOrder = cvo.getRefOrder();
+		String msg = "";
+		
 		aSrv.deleteCommentOne(cid);
+		
+		if(refCount != 1 && refOrder == 0) msg = "1";
+		else msg = "2";
 			
 		//return "redirect:/board";
-		return "success";
+		return msg;
 	}
 	
 	// 댓글 수정 

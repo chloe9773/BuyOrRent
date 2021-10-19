@@ -80,49 +80,68 @@
 							<div id="comments-wrap" class="comments-wrap">
 								<div class="comment-wrap mb-30">
 									<c:forEach var="commentList" items="${commentList}" varStatus="status">
-										<div class="comment-${status.index} mb-10">
-											<div class="comment-info font-13 d-flex justify-bw mb-5">
-												<div class="comment-info-left">
-													<span class="userid font-14 mr-5">${commentList.author}</span>
-													<span class="icon-color">${commentList.regDate}</span>
-												</div>
-												<div class="comment-info-right icon-color ">
-													<span class="comment-reply comment-reply-open-${status.index} mr-5 cursor" onclick="replyCommentOpen(${status.index});">답글</span>
-													<span class="comment-reply comment-reply-close-${status.index} mr-5 cursor d-none" onclick="replyCommentClose(${status.index});">답글 접기</span>
-													<!-- 수정 권한 없는 유저들에게는 신고 버튼으로 -->
-													<span class="opt-open-${status.index}" onclick="optToggle(${status.index});"><i class="fas fa-ellipsis-v cursor"></i></span>
-													<div class="opt opt-${status.index} d-none">
-														<div class="opt-mod cursor" onclick="modifyCmtView(${status.index}, ${commentList.cid});">수정</div>
-														<div class="opt-delete cursor" onclick="deleteCmt(${commentList.cid});">삭제</div>
+										<c:if test="${commentList.refOrder ne 0}">
+											<div class="comment-${status.index} mb-10 pl-30">
+										</c:if>
+										<c:if test="${commentList.refOrder eq 0}">
+											<div class="comment-${status.index} mb-10">
+										</c:if>
+												<div class="comment-info font-13 d-flex justify-bw mb-5">
+													<div class="comment-info-left">
+														<span class="userid font-14 mr-5">${commentList.author}</span>
+														<span class="icon-color">${commentList.regDate}</span>
+													</div>
+													<div class="comment-info-right icon-color ">
+														<c:if test="${commentList.refOrder eq 0}">
+															<span class="comment-reply comment-reply-open-${status.index} mr-5 cursor" onclick="replyCommentOpen(${status.index}, ${commentList.cid});">답글</span>
+															<span class="comment-reply comment-reply-close-${status.index} mr-5 cursor d-none" onclick="replyCommentClose(${status.index});">답글 접기</span>
+															<!-- 수정 권한 없는 유저들에게는 신고 버튼으로 -->
+															<span class="opt-open-${status.index}" onclick="optToggle(${status.index});"><i class="fas fa-ellipsis-v cursor"></i></span>
+															<div class="opt opt-${status.index} d-none">
+																<div class="opt-mod cursor" onclick="modifyCmtView(${status.index}, ${commentList.cid});">수정</div>
+																<div class="opt-delete cursor" onclick="deleteCmt(${commentList.cid});">삭제</div>
+															</div>
+														</c:if>
+														<c:if test="${commentList.refOrder ne 0}">
+															<span class="opt-open-${status.index}" onclick="optToggle(${status.index});"><i class="fas fa-ellipsis-v cursor"></i></span>
+															<div class="opt opt-${status.index} d-none">
+																<div class="opt-mod cursor" onclick="modifyCmtView(${status.index}, ${commentList.cid});">수정</div>
+																<div class="opt-delete cursor" onclick="deleteCmt(${commentList.cid});">삭제</div>
+															</div>
+														</c:if>
 													</div>
 												</div>
-											</div>
-											<div class="comment font-13 pb-10">
-												<%-- <p id="comment-origin-${status.index}">${commentList.cContent}</p> --%>
-												<input type="text" id="comment-origin-${status.index}" value="${commentList.cContent}"/ >
-											</div>
-											<div class="comment-edit-wrap comment-edit-${status.index} border-1 p-5 bg-white d-none">
-												<textarea class="textarea" id="comment-area-${status.index}" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
-												<div class="comment-sub-item-wrap d-flex justify-bw">
-													<div class="comment-sub-item-left table">
-														<input type="file" class="fileUpload d-none"/>
-														<span class="cursor table-cell" onclick="fileUpload();">
-															<i class="far fa-image icon-color"></i>
-														</span>
-													</div>
-													<div class="comment-sub-item-right d-flex">
-														<div class="comment-count font-11 mr-10 table" style="display: table;">
-															<span class="comment-total table-cell">0</span>
-															<span class="gray table-cell">/</span>
-															<span class="comment-max table-cell">600</span>
+												<div class="comment font-13 pb-10">
+													<%-- <p id="comment-origin-${status.index}">${commentList.cContent}</p> --%>
+													<input type="text" id="comment-origin-${status.index}" value="${commentList.cContent}"/ >
+												</div>
+												<div class="comment-edit-wrap comment-edit-${status.index} border-1 p-5 bg-white d-none">
+												<form id="comment-reply-form-${commentList.cid}">
+													<input type="hidden" id="comment-ref-${status.index}" name="ref" value="${commentList.ref}" />
+													<input type="hidden" name="aid" value="${commentList.aid}"/>
+													<input type="hidden" name="author" value="${sessionScope.username}"/>
+													<textarea class="textarea" id="comment-area-${status.index}" name="cContent" maxlength="600" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 댓글 작성 시 타인에 대한 배려와 책임을 담아주세요." onchange="countChar();"></textarea>
+													<div class="comment-sub-item-wrap d-flex justify-bw">
+														<div class="comment-sub-item-left table">
+															<input type="file" class="fileUpload d-none"/>
+															<span class="cursor table-cell" onclick="fileUpload();">
+																<i class="far fa-image icon-color"></i>
+															</span>
 														</div>
-														<div class="submit-wrap">
-															<button type="button" class="bg-highlight white" onclick="modifyCmtBtn(${status.index},${commentList.cid});">등록</button>
+														<div class="comment-sub-item-right d-flex">
+															<div class="comment-count font-11 mr-10 table" style="display: table;">
+																<span class="comment-total table-cell">0</span>
+																<span class="gray table-cell">/</span>
+																<span class="comment-max table-cell">600</span>
+															</div>
+															<div class="submit-wrap">
+																<button type="button" id="comment-reply-btn-${status.index}" class="bg-highlight white" onclick="modifyCmtBtn(${status.index},${commentList.cid});">등록</button>
+															</div>
 														</div>
 													</div>
+												</form>
 												</div>
 											</div>
-										</div>
 									</c:forEach>
 								</div>
 							</div>
@@ -277,6 +296,26 @@
 				cid : cid,
 				content : content
 			},
+			success: function(resData) {
+				if(resData == "success") {
+					$("#comments-wrap").load(location.href + " #comments-wrap");
+				} else {
+					alert("잠시 후 다시 어쩌고 저쩌고 ");
+				}
+			},
+			error: function() {
+				alert("작성 실패 에러 에러에ㅓ");
+			}
+	 });
+ }
+ 
+ function commentReplySubmit(idx, cid) {
+	 var formData = $("#comment-reply-form-" + cid).serialize();
+	 
+	 $.ajax({
+		 type: "POST",
+			url: "${path}/article/comment-reply-write",
+			data: formData,
 			success: function(resData) {
 				if(resData == "success") {
 					$("#comments-wrap").load(location.href + " #comments-wrap");

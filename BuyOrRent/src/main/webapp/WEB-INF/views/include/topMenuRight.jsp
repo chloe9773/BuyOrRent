@@ -14,10 +14,10 @@
 		<a href="mypage.html" class=""> <!-- d-none -->
 			<li class="pb-12"><i class="fas fa-address-card mr-10"></i>마이페이지</li>
 		</a>
-		<a href="rent.html">
+		<a href="${path}/trade?board_id=3">
 			<li class="pb-12"><i class="fas fa-truck-loading mr-10"></i>대여</li>
 		</a>
-		<a href="sell.html">
+		<a href="${path}/trade?board_id=2">
 			<li class="pb-12"><i class="fas fa-hand-holding-usd mr-10"></i>중고거래</li>
 		</a>
 		<a href="${path}/board?board_id=1">

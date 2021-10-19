@@ -63,4 +63,20 @@ public class ArticleSrv {
 	public void updateComment(int cid, String content) {
 		aDao.updateComment(cid, content);
 	}
+	
+	// 대댓글 등록  
+	public void setReplyComment(CommentVO cvo) {
+		cvo.setRefOrder(aDao.getReplyCommentRefOrder(cvo.getRef()));
+		aDao.setReplyComment(cvo);
+	}
+	
+	// 댓글 정보 가져오기 
+	public CommentVO getCommentOne(int cid) {
+		return aDao.getCommentOne(cid);
+	}
+	
+	// 연결 댓글 카운트 
+	public int getCommentOneCount(int ref) {
+		return aDao.getCommentOneCount(ref);
+	}
 }

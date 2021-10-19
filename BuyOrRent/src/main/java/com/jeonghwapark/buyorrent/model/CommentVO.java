@@ -10,6 +10,8 @@ public class CommentVO {
 	private String cContent;
 	private Date regDate;
 	private Date updateDate;
+	private int ref;
+	private int refOrder;
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 	
@@ -49,5 +51,17 @@ public class CommentVO {
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	public int getRef() {
+		return ref;
+	}
+	public void setRef(int ref) {
+		this.ref = ref;
+	}
+	public int getRefOrder() {
+		return refOrder;
+	}
+	public void setRefOrder(int refOrder) {
+		this.refOrder = refOrder;
 	}
 }
