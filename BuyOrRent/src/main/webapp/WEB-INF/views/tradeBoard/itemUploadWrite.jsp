@@ -14,9 +14,11 @@
 				</div>
 				<hr class="mb-16"/>
 				<div class="board-content">
-					<form id="item-upload-form" method="post" enctype="multipart/form-data">
+					<form id="item-upload-form" method="post" enctype="multipart/form-data" action="${path}/trade/item-upload">
+						<!--  <input type="hidden" name="bid" value="${bid}" />-->
+						<input type="hidden" name="author" value="${sessionScope.username}" />
 						<div class="photo-upload-wrap d-flex mb-16">
-							<input type="file" id="file" class="fileUpload d-none" multiple/>
+							<input type="file" name="files" id="file" class="fileUpload d-none" multiple/>
 							<div class="item-photo-wrap icon-color t-center cursor" onclick="fileUpload();">
 								<div class="item-photo-box">
 									<div class="">
@@ -32,11 +34,11 @@
 							<div class="photo-preview-wrap d-flex"></div>
 						</div>
 						<div class="title-wrap pb-10 mb-10">
-							<input type="text" class="title font-20" maxlength="" autocomplete="off" placeholder="제목을 입력하세요."/>
+							<input type="text" name="title" class="title font-20" maxlength="" autocomplete="off" placeholder="제목을 입력하세요."/>
 						</div>
 						<div class="item-info-wrap font-16 d-flex justify-bw pb-10 mb-10">
 							<div class="category-wrap">
-								<select name="" class="category-select">
+								<select name="category" class="category-select">
 									<option value="">카테고리</option>
 								</select>
 							</div>
@@ -54,7 +56,7 @@
 							</div>
 						</div>
 						<div class="editor">
-							<textarea placeholder="ㅇㅇ동에 올릴 게시글 내용을 작성해주세요."></textarea>
+							<textarea name="content" placeholder="ㅇㅇ동에 올릴 게시글 내용을 작성해주세요."></textarea>
 						</div>
 						<div class="btn-grp d-flex justify-bw pb-r-4">
 							<div class="btn-grp-left">

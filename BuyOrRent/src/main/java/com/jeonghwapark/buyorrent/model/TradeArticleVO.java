@@ -10,9 +10,9 @@ public class TradeArticleVO {
 	private String title;
 	private String author;
 	private String content;
-	private String address_city;
-	private String address_gu;
-	private String address_dong;
+	private String addressCity;
+	private String addressGu;
+	private String addressDong;
 	private int likes;
 	private int chat;
 	private Date regDate;
@@ -69,29 +69,28 @@ public class TradeArticleVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public String getAddress_city() {
-		return address_city;
+	public String getAddressCity() {
+		return addressCity;
 	}
 
-	public void setAddress_city(String address_city) {
-		this.address_city = address_city;
+	public void setAddressCity(String addressCity) {
+		this.addressCity = addressCity;
 	}
 
-	public String getAddress_gu() {
-		return address_gu;
+	public String getAddressGu() {
+		return addressGu;
 	}
 
-	public void setAddress_gu(String address_gu) {
-		this.address_gu = address_gu;
+	public void setAddressGu(String addressGu) {
+		this.addressGu = addressGu;
 	}
 
-	public String getAddress_dong() {
-		return address_dong;
+	public String getAddressDong() {
+		return addressDong;
 	}
 
-	public void setAddress_dong(String address_dong) {
-		this.address_dong = address_dong;
+	public void setAddressDong(String addressDong) {
+		this.addressDong = addressDong;
 	}
 
 	public int getLikes() {

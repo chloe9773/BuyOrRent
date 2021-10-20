@@ -158,7 +158,7 @@
 			<a href="#" title="위로이동"><i class="fas fa-chevron-circle-up"></i></a>
 		</div>
 		<div class="to-write">
-			<a href="${path}/trade/item-upload?board_id=3" title="중고거래"><i class="fas fa-plus-circle"></i></a>
+			<a href="${path}/trade/article/item-upload?board_id=3" title="중고거래"><i class="fas fa-plus-circle"></i></a>
 		</div>
 		<div class="to-bottom">
 			<a href="#footer" title="아래로이동"><i class="fas fa-chevron-circle-down"></i></a>
