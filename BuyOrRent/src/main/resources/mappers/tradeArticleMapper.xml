@@ -23,7 +23,7 @@
 	</delete>
 	
 	<!-- 게시글 수정 -->
-	<delete id="updateArticle" parameterType="int">
+	<update id="updateArticle" parameterType="int">
 		UPDATE trad_article SET 
 			price  = #{price},
 			title  = #{title},
@@ -32,5 +32,5 @@
 			file_ori_name = #{fileOriName},
 			update_date = now() 
 		WHERE tid = #{tid}
-	</delete>
+	</update>
 </mapper> 
