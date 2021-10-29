@@ -15,4 +15,9 @@ public class TradeArticleSrv {
 	public void setTradeArticle(TradeArticleVO tvo) {
 		tDao.setTradeArticle(tvo);
 	}
+	
+	// 게시글 삭제 
+	public void deleteArticleOne(int tid) {
+		tDao.deleteArticleOne(tid);
+	}
 }

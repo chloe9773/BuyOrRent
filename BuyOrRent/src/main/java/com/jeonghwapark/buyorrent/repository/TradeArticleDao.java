@@ -15,4 +15,9 @@ public class TradeArticleDao {
 	public void setTradeArticle(TradeArticleVO tvo) {
 		sql.insert("trade.setTradeArticle", tvo);
 	}
+	
+	// 게시글 삭제 
+	public void deleteArticleOne(int tid) {
+		sql.delete("trade.deleteArticleOne", tid);
+	}
 }
