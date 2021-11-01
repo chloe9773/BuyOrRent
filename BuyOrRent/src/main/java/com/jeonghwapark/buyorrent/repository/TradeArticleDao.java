@@ -20,4 +20,9 @@ public class TradeArticleDao {
 	public void deleteArticleOne(int tid) {
 		sql.delete("trade.deleteArticleOne", tid);
 	}
+	
+	// 게시글 수정
+	public void updateArticle(TradeArticleVO tvo) {
+		sql.update("trade.updateArticle", tvo);
+	}
 }
