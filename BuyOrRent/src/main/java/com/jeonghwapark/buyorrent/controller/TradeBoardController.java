@@ -55,4 +55,12 @@ public class TradeBoardController {
 		
 		return mav;
 	}
+	
+	// 게시글 삭제
+	@RequestMapping(value="/article/item-delete", method=RequestMethod.POST)
+	public String deleteArticleOne(@RequestParam("board_id") int bid) {
+		tSrv.deleteArticleOne(bid);
+		
+		return "success";
+	}
 }
