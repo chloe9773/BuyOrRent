@@ -161,6 +161,18 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.11.1</version>
 		</dependency>
+		
+		<!-- poi 엑셀 읽기용 -->
+		<dependency> 
+			<groupId>org.apache.poi</groupId> 
+			<artifactId>poi</artifactId> 
+			<version>3.7</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>org.apache.poi</groupId> 
+			<artifactId>poi-ooxml</artifactId> 
+			<version>3.7</version> 
+		</dependency>
 		 
 	</dependencies>
     <build>
