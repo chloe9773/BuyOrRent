@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <link href="${path}/css/chat.css" rel="stylesheet"/>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <body class="bg-g" style="height: 100vh; overflow: hidden;">
 	<div class="following-top-wrap chat-head w-100 bg-white">
 		<div class="following-top-content w-60 m-center">
@@ -35,7 +37,7 @@
 						</div>
 					</div>
 					<div class="chatroom-wrap">
-						<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();">
+						<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();openSocket();">
 							<div class="user-img-wrap mr-8 w-20">
 
 							</div>
@@ -189,29 +191,56 @@
 				</div>
 				<div class="chat-after-bottom">
 					<div class="chat-input-wrap border-1 p-10 bg-white m-16">
-						<textarea class="textarea" maxlength="1000" placeholder="메세지를 입력해주세요"></textarea>
-						<div class="chat-extra-wrap d-flex justify-bw">
-							<div class="chat-extra-left table">
-								<input type="file" class="fileUpload d-none"/>
-								<span class="cursor table-cell" onclick="fileUpload();">
-									<i class="far fa-image icon-color"></i>
-								</span>
-							</div>
-							<div class="chat-extra-right d-flex">
-								<div class="chat-count font-11 mr-10 table icon-color" style="display: table;">
-									<span class="chat-total table-cell">0</span>
-									<span class="gray table-cell">/</span>
-									<span class="chat-max table-cell">1000</span>
+						<form id="chatForm">
+							<textarea id="message-input" class="textarea" maxlength="1000" placeholder="메세지를 입력해주세요"></textarea>
+							<div class="chat-extra-wrap d-flex justify-bw">
+								<div class="chat-extra-left table">
+									<input type="file" class="fileUpload d-none"/>
+									<span class="cursor table-cell" onclick="fileUpload();">
+										<i class="far fa-image icon-color"></i>
+									</span>
 								</div>
-								<div class="submit-wrap">
-									<button class="bg-highlight white">전송</button>
+								<div class="chat-extra-right d-flex">
+									<div class="chat-count font-11 mr-10 table icon-color" style="display: table;">
+										<span class="chat-total table-cell">0</span>
+										<span class="gray table-cell">/</span>
+										<span class="chat-max table-cell">1000</span>
+									</div>
+									<input type="hidden" id="sender" value="${sessionScope.username}" /> 
+									<div class="submit-wrap">
+										<button type="button" id="send-btn" class="bg-highlight white">전송</button>
+									</div>
+									<div id="chat"></div>
 								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	$("#send-btn").click(function(){
+		sendMessage();
+		$("#message-input").val("");
+	});
+	
+	let sock = new SockJS("http://localhost:8080/buyorrent/echo");
+	sock.onmessage = onMessage;
+	sock.onclose = onClose;
+	
+	function sendMessage() {
+		sock.send($("#message-input").val());
+	}
+	
+	function onMessage(msg) {
+		var data = msg.data;
+		$("#chat").append(data + "<br/>");
+	}
+	
+	function onClose(event) {
+		$("#chat").append("연결 끊김");
+	}
+</script>
 </html>

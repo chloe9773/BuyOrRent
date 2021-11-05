@@ -14,9 +14,10 @@ public class SigunguDB {
 			FileInputStream file = new FileInputStream("/Users/jeonghwapark/Desktop/tmp/admin_division.xlsx");
 			XSSFWorkbook wb = new XSSFWorkbook(file);
 			
-			XSSFSheet sheet = sheet = wb.getSheetAt(1);
+			XSSFSheet sheet = sheet = wb.getSheetAt(0);
 			
-			int i, j;
+			int i = 0;
+			int j = 0;
 			
 			int rows = sheet.getPhysicalNumberOfRows();
 			for(i = 0; i < rows; i++) {
@@ -25,7 +26,7 @@ public class SigunguDB {
 				if(row != null) {
 					int cells = row.getPhysicalNumberOfCells();
 					
-					for(j = 1; j <= 3; j++) {
+					for(j = 0; j <= cells; j++) {
 						XSSFCell cell = row.getCell(j);
 						String val = "";
 						

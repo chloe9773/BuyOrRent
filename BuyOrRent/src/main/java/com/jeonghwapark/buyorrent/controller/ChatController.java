@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeonghwapark.buyorrent.service.JoinAndLoginSrv;
-
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
