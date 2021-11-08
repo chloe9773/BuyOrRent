@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.follow-navigation {
+    position: fixed;
+    right: 15%;
+    bottom: 10rem;
+    font-size: 25px;
+}
+
+.username:hover {
+    text-decoration: underline;
+}

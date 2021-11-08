@@ -78,7 +78,7 @@
 					<c:forEach var="i" begin="1" end="2">
 						<div class="item-row-${i} d-flex w-100 justify-bw mb-r-4">
 							<div class="rent-col-1 w-20">
-								<a href="item_detail.html">
+								<a href="${path}/trade/item-detail">
 									<div class="item-wrap w-100">
 										<div class="item-img-wrap">
 											<img src="${path}/images/bicycle.jpeg" class="w-100 border-r-6 border-1" alt="img1"/>

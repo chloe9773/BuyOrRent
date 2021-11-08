@@ -64,6 +64,12 @@ public class TradeBoardController {
 		return mav;
 	}
 	
+	// 게시판 첫 뷰
+	@RequestMapping(value="/item-detail", method=RequestMethod.GET)
+	public String getItemDetail() {
+		return "/tradeBoard/itemDetail";
+	}
+	
 	// 게시글 삭제
 	@RequestMapping(value="/article/item-delete", method=RequestMethod.POST)
 	public String deleteArticleOne(@RequestParam("board_id") int bid) {
