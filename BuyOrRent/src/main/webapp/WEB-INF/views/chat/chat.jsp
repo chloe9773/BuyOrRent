@@ -243,4 +243,43 @@
 		$("#chat").append("연결 끊김");
 	}
 </script>
+<script type="text/javascript">
+	var ws;
+	var userid = "";
+	
+	function connect() {
+		// 웹소켓 객체 생성 
+		// 핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
+		
+		ws = new WebSocket();
+		
+		ws.open = function() {
+			console.log("연결 생성");
+			register();
+		};
+		ws.onmessage = function(e) {
+			console.log("메시지 받음");
+			var data = e.data;
+			
+			addMsg(data);ß
+		};
+		
+		// 메세지 수신을 위한 id 서버에 등록 
+		function register(){
+			var msg = {
+					type : "register",
+					userid : userid
+			};
+			
+			ws.send(JSON.stringify(msg));
+		}
+		
+		// 방금 받은 메세지 더해서 채팅방 설정 
+		function addMsg(msg) {
+			var chat = $("#").val();
+			chat = chat + "\n상대방 : " + msg;
+			$("").val(chat);
+		}
+	}
+</script>
 </html>
