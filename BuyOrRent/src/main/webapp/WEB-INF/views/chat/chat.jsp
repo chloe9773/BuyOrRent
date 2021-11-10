@@ -23,6 +23,7 @@
 				<div class="chat-div-wrap bg-white w-80">
 					<div class="username-wrap">
 						<span class="username font-16 weight-700 ml-20">해봄이</span>
+						<input type="hidden" id="username" value="${sesscionScope.username}" />
 					</div>
 					<div class="unread-wrap t-right">
 						<div class="unread p-10 icon-color">
@@ -37,13 +38,14 @@
 						</div>
 					</div>
 					<div class="chatroom-wrap">
-						<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();openSocket();">
+						<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();"><!-- openSocket(); -->
 							<div class="user-img-wrap mr-8 w-20">
 
 							</div>
 							<div class="chat-prev-wrap w-80">
 								<div class="prev-top mb-2">
 									<span class="chat-username font-13 weight-700 mr-3">백현이</span>
+									<input type="hidden" id="target-user" value="test1@test.com" />
 									<span class="userposition font-12 chat-sub mr-3">백현동</span>
 									<span class="chat-sub font-12 mr-3">·</span>
 									<span class="time font-12 chat-sub">09월 29일</span>
@@ -184,7 +186,7 @@
 						</div>
 						<div class="chat-main-wrap w-40">
 							<div class="main">
-								<p class="">채팅 내용 채팅 내용 채팅 내용 채팅 내용 채팅 내용 채팅 내용 채팅 내용</p>
+								<p class="" id="msg-area">내용</p>
 							</div>
 						</div>
 					</div>
@@ -192,7 +194,7 @@
 				<div class="chat-after-bottom">
 					<div class="chat-input-wrap border-1 p-10 bg-white m-16">
 						<form id="chatForm">
-							<textarea id="message-input" class="textarea" maxlength="1000" placeholder="메세지를 입력해주세요"></textarea>
+							<textarea id="chat-msg" class="textarea" maxlength="1000" placeholder="메세지를 입력해주세요"></textarea>
 							<div class="chat-extra-wrap d-flex justify-bw">
 								<div class="chat-extra-left table">
 									<input type="file" class="fileUpload d-none"/>
@@ -208,7 +210,7 @@
 									</div>
 									<input type="hidden" id="sender" value="${sessionScope.username}" /> 
 									<div class="submit-wrap">
-										<button type="button" id="send-btn" class="bg-highlight white">전송</button>
+										<button type="button" id="btn-send" class="bg-highlight white">전송</button>
 									</div>
 									<div id="chat"></div>
 								</div>
@@ -220,7 +222,7 @@
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$("#send-btn").click(function(){
 		sendMessage();
 		$("#message-input").val("");
@@ -242,16 +244,16 @@
 	function onClose(event) {
 		$("#chat").append("연결 끊김");
 	}
-</script>
+</script> -->
 <script type="text/javascript">
 	var ws;
-	var userid = "";
+	var userid = $("#username").val();
 	
 	function connect() {
 		// 웹소켓 객체 생성 
 		// 핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
 		
-		ws = new WebSocket();
+		ws = new WebSocket("ws://localhost:8080/buyorrent/echo");
 		
 		ws.open = function() {
 			console.log("연결 생성");
@@ -261,25 +263,52 @@
 			console.log("메시지 받음");
 			var data = e.data;
 			
-			addMsg(data);ß
+			addMsg(data);
+		};
+		ws.onclose = function() {
+			console.log("연결 끊김");
+		};
+	}
+	
+	// 메세지 수신을 위한 id 서버에 등록 
+	function register(){
+		var msg = {
+				type : "register",
+				userid : userid
 		};
 		
-		// 메세지 수신을 위한 id 서버에 등록 
-		function register(){
-			var msg = {
-					type : "register",
-					userid : userid
-			};
-			
-			ws.send(JSON.stringify(msg));
-		}
-		
-		// 방금 받은 메세지 더해서 채팅방 설정 
-		function addMsg(msg) {
-			var chat = $("#").val();
-			chat = chat + "\n상대방 : " + msg;
-			$("").val(chat);
-		}
+		ws.send(JSON.stringify(msg));
 	}
+	
+	// 방금 받은 메세지 더해서 채팅방 설정 
+	function addMsg(msg) {
+		var chat = $("#msg-area").val();
+		chat = chat + "\n상대방 : " + msg;
+		$("#msg-area").val(chat);
+	}
+	
+	function sendMsg() {
+		var msg = {
+				type : "chat",
+				target : $("#target-user").val(),
+				message : $("#chat-msg").val()
+		};
+		
+		ws.send(JSON.stringify(msg));
+	}
+	
+	$(function(){
+		connect();
+		
+		$("#btn-send").on("click", function(){
+			var chat = $("#msg-area").val();
+			
+			chat = chat + "\n나 : " + $("#chat-msg").val();
+			
+			sendMsg();
+			
+			$("#chat-msg").val("");
+		})
+	});
 </script>
 </html>
