@@ -265,9 +265,9 @@
 			
 			addMsg(data);
 		};
-		ws.onclose = function() {
+		/* ws.onclose = function() {
 			console.log("연결 끊김");
-		};
+		}; */
 	}
 	
 	// 메세지 수신을 위한 id 서버에 등록 
