@@ -9,5 +9,7 @@
 		<typeAlias type="com.jeonghwapark.buyorrent.model.BoardVO" alias="boardvo" />
 		<typeAlias type="com.jeonghwapark.buyorrent.model.CommentVO" alias="commentvo" />
 		<typeAlias type="com.jeonghwapark.buyorrent.model.TradeArticleVO" alias="tradevo" />
+		<typeAlias type="com.jeonghwapark.buyorrent.model.MessageVO" alias="messagevo" />
+		<typeAlias type="com.jeonghwapark.buyorrent.model.ChatroomVO" alias="chatroomvo" />
 	</typeAliases>
 </configuration>

@@ -245,7 +245,7 @@
 		$("#chat").append("연결 끊김");
 	}
 </script> -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var ws;
 	var userid = $("#username").val();
 	
@@ -254,6 +254,7 @@
 		// 핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
 		
 		ws = new WebSocket("ws://localhost:8080/buyorrent/echo");
+		//ws = new SockJS("http://localhost:8080/buyorrent/echo");
 		
 		ws.open = function() {
 			console.log("연결 생성");
@@ -265,9 +266,9 @@
 			
 			addMsg(data);
 		};
-		/* ws.onclose = function() {
+		ws.onclose = function() {
 			console.log("연결 끊김");
-		}; */
+		};
 	}
 	
 	// 메세지 수신을 위한 id 서버에 등록 
@@ -310,5 +311,58 @@
 			$("#chat-msg").val("");
 		})
 	});
+</script> -->
+<script type="text/javascript">
+	connect();
+	
+	function connect() {
+		sock = new SockJS("http://localhost:8080/buyorrent/echo");
+	    sock.onopen = function() {
+	        console.log('open');
+	    };
+	    sock.onmessage = function(evt) {
+    	 var data = evt.data;
+    	   console.log(data)
+  		   var obj = JSON.parse(data)  	   
+    	   console.log(obj)
+    	   appendMsg(obj.message_content);
+	    };
+	    sock.onclose = function() {
+	    	appendMsg("연결을 끊었습니다.");
+	        console.log('close');
+	    };
+	}
+	
+	function send() {
+		var msg = $("#chat-msg").val();
+		alert(msg);
+		  if(msg != ""){
+			  message = {};
+			  message.message = $("#chat-msg").val()
+		  	  message.messageSender = 2//'${TUTOR_USER_user_id}'
+		  	  message.messageReceiver = 1//'${profile.user_id}'
+		  }
+
+		  sock.send(JSON.stringify(message));
+		  $("#chat-msg").val("");
+	}
+	
+	function appendMsg(msg) {
+		if(msg == ''){
+			 return false;
+		 }else{
+
+
+		 //var t = getTimeStamp();
+		 //$("#chatMessageArea").append("<div class='col-12 row' style = 'height : auto; margin-top : 5px;'><div class='col-2' style = 'float:left; padding-right:0px; padding-left : 0px;'><img id='profileImg' class='img-fluid' src='/displayFile?fileName=${userImage}&directory=profile' style = 'width:50px; height:50px; '><div style='font-size:9px; clear:both;'>${user_name}</div></div><div class = 'col-10' style = 'overflow : y ; margin-top : 7px; float:right;'><div class = 'col-12' style = ' background-color:#ACF3FF; padding : 10px 5px; float:left; border-radius:10px;'><span style = 'font-size : 12px;'>"+msg+"</span></div><div col-12 style = 'font-size:9px; text-align:right; float:right;'><span style ='float:right; font-size:9px; text-align:right;' >"+t+"</span></div></div></div>")		 
+
+		  /* var chatAreaHeight = $("#chatArea").height();
+		  var maxScroll = $("#chatMessageArea").height() - chatAreaHeight;
+		  $("#chatArea").scrollTop(maxScroll); */
+
+		 }
+	}
+	
+	$('#btn-send').click(function() { send(); });
 </script>
 </html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chat">
+	<insert id="createRoom" parameterType="chatroomvo">
+		INSERT INTO chatroom SET 
+			user_a_id = #{userAId},
+			user_b_id = #{userBId}
+	</insert>
+	
+	<select id="isRoom" parameterType="chatroomvo" resultType="chatroomvo">
+		SELECT * FROM chatroom WHERE user_a_id = #{userAId} and user_b_id = #{userBId}
+	</select>
+	
+	<insert id="insertMessage" parameterType="messagevo">
+		INSERT INTO message  
+			message_sender = #{messageSender},
+			message_receiver = #{messeageReceiver},
+			message = #{message},
+			message_send_time = NOW(),
+			chatroom_id = #{chatroomId}
+	</insert>
+</mapper>
