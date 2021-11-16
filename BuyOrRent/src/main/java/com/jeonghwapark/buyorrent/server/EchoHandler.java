@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,12 +16,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.google.gson.Gson;
 import com.jeonghwapark.buyorrent.model.ChatroomVO;
-import com.jeonghwapark.buyorrent.model.MemberVO;
 import com.jeonghwapark.buyorrent.model.MessageVO;
 import com.jeonghwapark.buyorrent.repository.ChatDao;
 
 @RequestMapping("/echo")
-//@Component
+@Component
 public class EchoHandler extends TextWebSocketHandler{
 	@Autowired
 	private ChatDao cDao;
@@ -63,7 +63,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		ChatroomVO cvo = null;
 		if(mvo.getMessageReceiver() != mvo.getMessageSender()) {
-			if(cDao.isRoom(rvo) == null) {
+			if(cDao.cntRoom(rvo) == 0) {
 				cDao.createRoom(rvo);
 				
 				cvo = cDao.isRoom(rvo);
@@ -74,28 +74,33 @@ public class EchoHandler extends TextWebSocketHandler{
 		} else {
 			cvo = cDao.isRoom(rvo);
 		}
-		
-		mvo.setChatroomId(cvo.getChatroomId());
-		
 		if(cvo.getUserAId() == mvo.getMessageSender()) {
 			mvo.setMessageReceiver(rvo.getUserBId());
 		} else {
 			mvo.setMessageReceiver(rvo.getUserAId());
 		}
 		
+		mvo.setChatroomId(cvo.getChatroomId());
+		mvo.setMessageId(cDao.getLastMessageId()); // 필요한가 .. ?
 		for(WebSocketSession websocketSession : connectedUsers) {
-			map = websocketSession.getAttributes();
-			
-			MemberVO login = (MemberVO) map.get("login");
-			// 수신자
-			if(login.getUserId() == mvo.getMessageSender()) {
-				Gson gson = new Gson();
-				String msgJson = gson.toJson(mvo);
-				websocketSession.sendMessage(new TextMessage(msgJson));
-			}
+			Gson gson = new Gson();
+			String msgJson = gson.toJson(mvo);
+			websocketSession.sendMessage(new TextMessage(msgJson));
+//			map = websocketSession.getAttributes();
+//			//MemberVO login = (MemberVO) map.get("login");
+//			MemberVO login = (MemberVO) map.get("username");
+//			System.out.println("10");
+//			System.out.println(login);
+//			// 수신자
+//			if(login.getUserId() == mvo.getMessageSender()) {
+//				System.out.println("10-1");
+//				Gson gson = new Gson();
+//				String msgJson = gson.toJson(mvo);
+//				websocketSession.sendMessage(new TextMessage(msgJson));
+//			}
+//			System.out.println("10-2");
 		}
 		
-		System.out.println(mvo.getChatroomId());
 		try {
 			cDao.insertMessage(mvo);
 		} catch(Exception e) {

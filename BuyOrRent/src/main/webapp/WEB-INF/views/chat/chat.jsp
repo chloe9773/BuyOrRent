@@ -37,96 +37,39 @@
 							</span>
 						</div>
 					</div>
-					<div class="chatroom-wrap">
-						<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();"><!-- openSocket(); -->
-							<div class="user-img-wrap mr-8 w-20">
-
-							</div>
-							<div class="chat-prev-wrap w-80">
-								<div class="prev-top mb-2">
-									<span class="chat-username font-13 weight-700 mr-3">백현이</span>
-									<input type="hidden" id="target-user" value="test1@test.com" />
-									<span class="userposition font-12 chat-sub mr-3">백현동</span>
-									<span class="chat-sub font-12 mr-3">·</span>
-									<span class="time font-12 chat-sub">09월 29일</span>
+					<div id="chatroom-wrap" class="chatroom-wrap">
+						<c:forEach var="chatroom" items="${chatroomList}" varStatus="status">
+							<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();"><!-- openSocket(); -->
+								<div class="user-img-wrap mr-8 w-20">
+	
 								</div>
-								<div class="prev-bottom">
-									<p class="prev-content font-13">백현이님, 백현동 근처에서 쉽고 편하게...어쩌구</p>
-								</div>
-								<div class="chat-opt-wrap">
-									<div class="chat-opt-btn chat-opt-btn-1 d-none chat-in" onclick="chatLeaveOpt('chat-leave-1','chat-1','chat-opt-btn-1');">
-										<i class="fas fa-ellipsis-h chat-in"></i>
+								<div class="chat-prev-wrap w-80">
+									<div class="prev-top mb-2">
+										<c:if test="${chatroom.userAId eq sessionScope.userId}">
+											<span class="chat-username font-13 weight-700 mr-3">${chatroom.userBNick}</span>
+										</c:if>
+										<c:if test="${chatroom.userAId ne sessionScope.userId}">
+											<span class="chat-username font-13 weight-700 mr-3">${chatroom.userANick}</span>
+										</c:if>	
+										<input type="hidden" id="target-user" value="test1@test.com" />
+										<span class="userposition font-12 chat-sub mr-3">백현동</span>
+										<span class="chat-sub font-12 mr-3">·</span>
+										<span class="time font-12 chat-sub">09월 29일</span>
 									</div>
-									<div class="chat-in chat-leave chat-leave-1 d-none">
-										<span class="chat-in">채팅방 나가기</span>
+									<div class="prev-bottom">
+										<p class="prev-content font-13">${previewList[status.index]}</p>
+									</div>
+									<div class="chat-opt-wrap">
+										<div class="chat-opt-btn chat-opt-btn-1 d-none chat-in" onclick="chatLeaveOpt('chat-leave-1','chat-1','chat-opt-btn-1');">
+											<i class="fas fa-ellipsis-h chat-in"></i>
+										</div>
+										<div class="chat-in chat-leave chat-leave-1 d-none">
+											<span class="chat-in">채팅방 나가기</span>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="chat-box chat-2 d-flex">
-							<div class="user-img-wrap mr-8 w-20">
-
-							</div>
-							<div class="chat-prev-wrap w-80">
-								<div class="prev-top mb-2">
-									<span class="username font-13 weight-700 mr-3">백현이</span>
-									<span class="userposition font-12 chat-sub mr-3">백현동</span>
-									<span class="chat-sub font-12 mr-3">·</span>
-									<span class="time font-12 chat-sub">09월 29일</span>
-								</div>
-								<div class="prev-bottom">
-									<p class="prev-content font-13">백현이님, 백현동 근처에서 쉽고 편하게...어쩌구</p>
-								</div>
-							</div>
-						</div>
-						<div class="chat-box chat-2 d-flex">
-							<div class="user-img-wrap mr-8 w-20">
-
-							</div>
-							<div class="chat-prev-wrap w-80">
-								<div class="prev-top mb-2">
-									<span class="username font-13 weight-700 mr-3">백현이</span>
-									<span class="userposition font-12 chat-sub mr-3">백현동</span>
-									<span class="chat-sub font-12 mr-3">·</span>
-									<span class="time font-12 chat-sub">09월 29일</span>
-								</div>
-								<div class="prev-bottom">
-									<p class="prev-content font-13">백현이님, 백현동 근처에서 쉽고 편하게...어쩌구</p>
-								</div>
-							</div>
-						</div>
-						<div class="chat-box chat-2 d-flex">
-							<div class="user-img-wrap mr-8 w-20">
-
-							</div>
-							<div class="chat-prev-wrap w-80">
-								<div class="prev-top mb-2">
-									<span class="username font-13 weight-700 mr-3">백현이</span>
-									<span class="userposition font-12 chat-sub mr-3">백현동</span>
-									<span class="chat-sub font-12 mr-3">·</span>
-									<span class="time font-12 chat-sub">09월 29일</span>
-								</div>
-								<div class="prev-bottom">
-									<p class="prev-content font-13">백현이님, 백현동 근처에서 쉽고 편하게...어쩌구</p>
-								</div>
-							</div>
-						</div>
-						<div class="chat-box chat-2 d-flex">
-							<div class="user-img-wrap mr-8 w-20">
-
-							</div>
-							<div class="chat-prev-wrap w-80">
-								<div class="prev-top mb-2">
-									<span class="username font-13 weight-700 mr-3">백현이</span>
-									<span class="userposition font-12 chat-sub mr-3">백현동</span>
-									<span class="chat-sub font-12 mr-3">·</span>
-									<span class="time font-12 chat-sub">09월 29일</span>
-								</div>
-								<div class="prev-bottom">
-									<p class="prev-content font-13">백현이님, 백현동 근처에서 쉽고 편하게...어쩌구</p>
-								</div>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 					<div class="footer">
 						<div class="font-14 ml-20">푸터푸터푸터푸터</div>
@@ -322,9 +265,9 @@
 	    };
 	    sock.onmessage = function(evt) {
     	 var data = evt.data;
-    	   console.log(data)
+    	   console.log("data : " + data)
   		   var obj = JSON.parse(data)  	   
-    	   console.log(obj)
+    	   console.log("obj : " + obj)
     	   appendMsg(obj.message_content);
 	    };
 	    sock.onclose = function() {
@@ -335,23 +278,23 @@
 	
 	function send() {
 		var msg = $("#chat-msg").val();
-		alert(msg);
-		  if(msg != ""){
-			  message = {};
-			  message.message = $("#chat-msg").val()
-		  	  message.messageSender = 2//'${TUTOR_USER_user_id}'
-		  	  message.messageReceiver = 1//'${profile.user_id}'
-		  }
+		
+		if(msg != ""){
+			message = {};
+			message.message = $("#chat-msg").val()
+		  	message.messageSender = 2//'${TUTOR_USER_user_id}'
+		  	message.messageReceiver = 1//'${profile.user_id}'
+		}
 
-		  sock.send(JSON.stringify(message));
-		  $("#chat-msg").val("");
+		sock.send(JSON.stringify(message));
+		$("#chat-msg").val("");
 	}
 	
 	function appendMsg(msg) {
 		if(msg == ''){
 			 return false;
 		 }else{
-
+		alert(msg);
 
 		 //var t = getTimeStamp();
 		 //$("#chatMessageArea").append("<div class='col-12 row' style = 'height : auto; margin-top : 5px;'><div class='col-2' style = 'float:left; padding-right:0px; padding-left : 0px;'><img id='profileImg' class='img-fluid' src='/displayFile?fileName=${userImage}&directory=profile' style = 'width:50px; height:50px; '><div style='font-size:9px; clear:both;'>${user_name}</div></div><div class = 'col-10' style = 'overflow : y ; margin-top : 7px; float:right;'><div class = 'col-12' style = ' background-color:#ACF3FF; padding : 10px 5px; float:left; border-radius:10px;'><span style = 'font-size : 12px;'>"+msg+"</span></div><div col-12 style = 'font-size:9px; text-align:right; float:right;'><span style ='float:right; font-size:9px; text-align:right;' >"+t+"</span></div></div></div>")		 
@@ -363,6 +306,9 @@
 		 }
 	}
 	
-	$('#btn-send').click(function() { send(); });
+	$('#btn-send').click(function() { 
+		send(); 
+		// 부분 새로 고침 왜 안되나옹..? ㅠㅠㅠ 
+	});
 </script>
 </html>

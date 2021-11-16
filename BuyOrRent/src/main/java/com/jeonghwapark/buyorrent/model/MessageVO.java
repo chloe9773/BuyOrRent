@@ -12,6 +12,7 @@ public class MessageVO {
 	private Date sendTime;
 	private Date readTime;
 	private int chatroomId;
+	
 	public int getMessageId() {
 		return messageId;
 	}

@@ -46,4 +46,9 @@ public class JoinAndLoginSrv {
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}
+	
+	// 유저명 가져오기 
+	public MemberVO getUsernick(int userId) {
+		return jDao.getUsernick(userId);
+	}
 }

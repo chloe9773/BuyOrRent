@@ -7,16 +7,60 @@
 			user_b_id = #{userBId}
 	</insert>
 	
+	<select id="cntRoom" parameterType="chatroomvo" resultType="int">
+		SELECT COUNT(*) FROM chatroom WHERE user_a_id = #{userAId} AND user_b_id = #{userBId}
+	</select>
+	
 	<select id="isRoom" parameterType="chatroomvo" resultType="chatroomvo">
-		SELECT * FROM chatroom WHERE user_a_id = #{userAId} and user_b_id = #{userBId}
+		SELECT chatroom_id as chatroomId, user_a_id as userAId, user_b_id as userBId FROM chatroom WHERE user_a_id = #{userAId} AND user_b_id = #{userBId}
 	</select>
 	
 	<insert id="insertMessage" parameterType="messagevo">
-		INSERT INTO message  
+		INSERT INTO message SET 
 			message_sender = #{messageSender},
-			message_receiver = #{messeageReceiver},
+			message_receiver = #{messageReceiver},
 			message = #{message},
-			message_send_time = NOW(),
+			message_send_time = now(),
 			chatroom_id = #{chatroomId}
 	</insert>
+	
+	<select id="getMessageList" parameterType="int" resultType="messagevo">
+		SELECT 
+			message_id AS messageId, 
+			message_sender AS messageSender, 
+			message_receiver AS messageReceiver, 
+			message, 
+			message_send_time AS messageSendTime, 
+			message_read_time AS messageReadTime, 
+			chatroom_id AS chatroomId 
+		FROM message WHERE chatroomId = #{chatroomId}
+	</select>
+	
+	<select id="getLastMessageId" resultType="int">
+		SELECT MAX(message_id) as MessageId FROM message
+	</select>
+	
+	<select id="getChatroomList" parameterType="int" resultType="chatroomvo">
+		SELECT 
+			chatroom_id AS chatroomId, 
+			user_a_id AS userAId, 
+			user_b_id AS userBId, 
+			(SELECT m.usernick FROM chatroom c, member m WHERE c.user_a_id = m.user_id) AS userANick,
+            (SELECT m.usernick FROM chatroom c, member m WHERE c.user_b_id = m.user_id) AS userBNick 
+		FROM chatroom WHERE user_a_id = #{userId} OR user_b_id = #{userId}
+	</select>
+	
+	<select id="getLastMessageContent" parameterType="int" resultType="messagevo">
+		SELECT 
+			message_id AS messageId, 
+			message_sender AS messageSender, 
+			message_receiver AS messageReceiver, 
+			message, 
+			message_send_time AS messageSendTime, 
+			message_read_time AS messageReadTime, 
+			chatroom_id AS chatroomId 
+		FROM message WHERE chatroom_id = #{chatroomId} 
+		ORDER BY message_id DESC 
+		LIMIT 1;
+	</select>
 </mapper>

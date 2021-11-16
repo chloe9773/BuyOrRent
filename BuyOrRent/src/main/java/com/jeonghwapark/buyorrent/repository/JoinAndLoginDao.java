@@ -30,4 +30,9 @@ public class JoinAndLoginDao {
 	public MemberVO setSessionLogin(MemberVO mvo) {
 		return sql.selectOne("joinlog.setSessionLogin", mvo);
 	}
+	
+	// 유저명 가져오기 
+	public MemberVO getUsernick(int userId) {
+		return sql.selectOne("joinlog.getUsernick", userId);
+	}
 }

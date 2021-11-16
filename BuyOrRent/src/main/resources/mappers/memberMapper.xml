@@ -5,7 +5,8 @@
 	<insert id="setJoin" parameterType="membervo">
 		INSERT INTO member SET 
 		username = #{username}, 
-		password = #{password}, 
+		password = #{password},
+		usernick = SUBSTRING_INDEX(#{username}, '@', 1),  
 		regDate = now()
 	</insert>
 	
@@ -22,5 +23,10 @@
 	<!-- 세션 -->
 	<select id="setSessionLogin" parameterType="membervo" resultType="membervo">
 		SELECT user_id as userId, username, regDate, level FROM member WHERE username = #{username} and password = #{password}
+	</select>
+	
+	<!-- 유저닉 -->
+	<select id="getUsernick" parameterType="int" resultType="membervo">
+		SELECT usernick FROM member WHERE user_id = #{userId}
 	</select>
 </mapper>
