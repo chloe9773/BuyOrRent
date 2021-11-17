@@ -23,6 +23,10 @@ public class ChatDao {
 		return sql.selectOne("chat.cntRoom", cvo);
 	}
 	
+	public int countCntRoom(ChatroomVO cvo) {
+		return sql.selectOne("chat.countCntRoom", cvo);
+	}
+	
 	// 채팅방 확인 
 	public ChatroomVO isRoom(ChatroomVO cvo) {
 		ChatroomVO roomvo = null;

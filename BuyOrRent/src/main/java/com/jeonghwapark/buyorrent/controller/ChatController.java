@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jeonghwapark.buyorrent.model.ChatroomVO;
+import com.jeonghwapark.buyorrent.model.MessageVO;
 import com.jeonghwapark.buyorrent.service.ChatSrv;
 import com.jeonghwapark.buyorrent.service.JoinAndLoginSrv;
 @Controller
@@ -46,4 +48,15 @@ public class ChatController {
 		
 		return mav;
 	}
+	
+	// 채팅 내역 로딩 
+	@RequestMapping(value = "/load_history", method = RequestMethod.POST)
+	@ResponseBody
+	public List<MessageVO> loadHistory(ChatroomVO cvo) {
+		int id = cvo.getChatroomId();
+		
+		return cSrv.getMessageList(id);
+		
+	}
+	
 }

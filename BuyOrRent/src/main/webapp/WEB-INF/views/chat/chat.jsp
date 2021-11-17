@@ -5,6 +5,7 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <body class="bg-g" style="height: 100vh; overflow: hidden;">
+<input type="hidden" id="user-id" value="${sessionScope.userId}" />
 	<div class="following-top-wrap chat-head w-100 bg-white">
 		<div class="following-top-content w-60 m-center">
 			<div class="following-top-left-wrap w-70">
@@ -39,7 +40,7 @@
 					</div>
 					<div id="chatroom-wrap" class="chatroom-wrap">
 						<c:forEach var="chatroom" items="${chatroomList}" varStatus="status">
-							<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();"><!-- openSocket(); -->
+							<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();loadHistory(${chatroom.chatroomId});"><!-- openSocket(); -->
 								<div class="user-img-wrap mr-8 w-20">
 	
 								</div>
@@ -47,11 +48,12 @@
 									<div class="prev-top mb-2">
 										<c:if test="${chatroom.userAId eq sessionScope.userId}">
 											<span class="chat-username font-13 weight-700 mr-3">${chatroom.userBNick}</span>
+											<input type="hidden" id="target-user" value="${chatroom.userBId}" />
 										</c:if>
 										<c:if test="${chatroom.userAId ne sessionScope.userId}">
 											<span class="chat-username font-13 weight-700 mr-3">${chatroom.userANick}</span>
-										</c:if>	
-										<input type="hidden" id="target-user" value="test1@test.com" />
+											<input type="hidden" id="target-user" value="${chatroom.userAId}" />
+										</c:if>
 										<span class="userposition font-12 chat-sub mr-3">백현동</span>
 										<span class="chat-sub font-12 mr-3">·</span>
 										<span class="time font-12 chat-sub">09월 29일</span>
@@ -105,34 +107,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="chat-content-wrap">
-					<div class="day-divider t-center">
-						<div class="date font-13">2021년 9월 29일</div>
+				<div id="chat-content-wrap" class="chat-content-wrap">
+					<div id="init-date" class="init-date mt-16">
+						<input type="hidden" id="date" value="" />
 					</div>
-					<div class="chat-1 plr-20 d-flex left mb-16">
-						<div class="chat-main-wrap w-40 mr-5">
-							<div class="main">
-								<p class="">채팅 내용 채팅 내용 채팅 내용 채팅 내용 채팅 내용 채팅 내용 채팅 내용</p>
-							</div>
-						</div>
-						<div class="chat-time font-12 chat-sub">
-							<span class="afternoon">오후</span>
-							<span class="morning d-none">오전</span>
-							<span class="time">12:48</span>
-						</div>
-					</div>
-					<div class="chat-2 plr-20 d-flex right justify-end mb-16">
-						<div class="chat-time font-12 chat-sub mr-5">
-							<span class="afternoon">오후</span>
-							<span class="morning d-none">오전</span>
-							<span class="time">12:49</span>
-						</div>
-						<div class="chat-main-wrap w-40">
-							<div class="main">
-								<p class="" id="msg-area">내용</p>
-							</div>
-						</div>
-					</div>
+					<div id="chat-left"></div>
+					<div id="chat-right"></div>
 				</div>
 				<div class="chat-after-bottom">
 					<div class="chat-input-wrap border-1 p-10 bg-white m-16">
@@ -165,97 +145,9 @@
 		</div>
 	</div>
 </body>
-<!-- <script type="text/javascript">
-	$("#send-btn").click(function(){
-		sendMessage();
-		$("#message-input").val("");
-	});
-	
-	let sock = new SockJS("http://localhost:8080/buyorrent/echo");
-	sock.onmessage = onMessage;
-	sock.onclose = onClose;
-	
-	function sendMessage() {
-		sock.send($("#message-input").val());
-	}
-	
-	function onMessage(msg) {
-		var data = msg.data;
-		$("#chat").append(data + "<br/>");
-	}
-	
-	function onClose(event) {
-		$("#chat").append("연결 끊김");
-	}
-</script> -->
-<!-- <script type="text/javascript">
-	var ws;
-	var userid = $("#username").val();
-	
-	function connect() {
-		// 웹소켓 객체 생성 
-		// 핸들러 등록(연결 생성, 메세지 수신, 연결 종료)
-		
-		ws = new WebSocket("ws://localhost:8080/buyorrent/echo");
-		//ws = new SockJS("http://localhost:8080/buyorrent/echo");
-		
-		ws.open = function() {
-			console.log("연결 생성");
-			register();
-		};
-		ws.onmessage = function(e) {
-			console.log("메시지 받음");
-			var data = e.data;
-			
-			addMsg(data);
-		};
-		ws.onclose = function() {
-			console.log("연결 끊김");
-		};
-	}
-	
-	// 메세지 수신을 위한 id 서버에 등록 
-	function register(){
-		var msg = {
-				type : "register",
-				userid : userid
-		};
-		
-		ws.send(JSON.stringify(msg));
-	}
-	
-	// 방금 받은 메세지 더해서 채팅방 설정 
-	function addMsg(msg) {
-		var chat = $("#msg-area").val();
-		chat = chat + "\n상대방 : " + msg;
-		$("#msg-area").val(chat);
-	}
-	
-	function sendMsg() {
-		var msg = {
-				type : "chat",
-				target : $("#target-user").val(),
-				message : $("#chat-msg").val()
-		};
-		
-		ws.send(JSON.stringify(msg));
-	}
-	
-	$(function(){
-		connect();
-		
-		$("#btn-send").on("click", function(){
-			var chat = $("#msg-area").val();
-			
-			chat = chat + "\n나 : " + $("#chat-msg").val();
-			
-			sendMsg();
-			
-			$("#chat-msg").val("");
-		})
-	});
-</script> -->
 <script type="text/javascript">
+	var userId = $("#user-id").val();
+
 	connect();
 	
 	function connect() {
@@ -265,10 +157,10 @@
 	    };
 	    sock.onmessage = function(evt) {
     	 var data = evt.data;
-    	   console.log("data : " + data)
+    	   //console.log("data : " + data)
   		   var obj = JSON.parse(data)  	   
-    	   console.log("obj : " + obj)
-    	   appendMsg(obj.message_content);
+    	   //console.log("obj : " + obj['message'])
+    	   appendMsg(obj['message'], obj['messageSender'], new Date.getTime());
 	    };
 	    sock.onclose = function() {
 	    	appendMsg("연결을 끊었습니다.");
@@ -282,26 +174,66 @@
 		if(msg != ""){
 			message = {};
 			message.message = $("#chat-msg").val()
-		  	message.messageSender = 2//'${TUTOR_USER_user_id}'
-		  	message.messageReceiver = 1//'${profile.user_id}'
+		  	message.messageSender = $("#user-id").val()
+		  	message.messageReceiver = $("#target-user").val()
+		  	
+		  	appendMsg(message.message, message.messageSender, message.messageReceiver);
+			$("#chat-content-wrap").scrollTop($("#chat-content-wrap")[0].scrollHeight);
 		}
 
 		sock.send(JSON.stringify(message));
 		$("#chat-msg").val("");
 	}
 	
-	function appendMsg(msg) {
+	function appendMsg(msg, sender, timestamp) {
 		if(msg == ''){
-			 return false;
-		 }else{
-		alert(msg);
-
-		 //var t = getTimeStamp();
-		 //$("#chatMessageArea").append("<div class='col-12 row' style = 'height : auto; margin-top : 5px;'><div class='col-2' style = 'float:left; padding-right:0px; padding-left : 0px;'><img id='profileImg' class='img-fluid' src='/displayFile?fileName=${userImage}&directory=profile' style = 'width:50px; height:50px; '><div style='font-size:9px; clear:both;'>${user_name}</div></div><div class = 'col-10' style = 'overflow : y ; margin-top : 7px; float:right;'><div class = 'col-12' style = ' background-color:#ACF3FF; padding : 10px 5px; float:left; border-radius:10px;'><span style = 'font-size : 12px;'>"+msg+"</span></div><div col-12 style = 'font-size:9px; text-align:right; float:right;'><span style ='float:right; font-size:9px; text-align:right;' >"+t+"</span></div></div></div>")		 
-
-		  /* var chatAreaHeight = $("#chatArea").height();
-		  var maxScroll = $("#chatMessageArea").height() - chatAreaHeight;
-		  $("#chatArea").scrollTop(maxScroll); */
+			return false;
+		}else{
+			//alert(msg);
+			var time = null;
+			if(timestamp == null) {
+				time = new Date().getTime();
+			} else {
+				time = new Date(timestamp);
+			}
+			var hour = time.getHours();
+			var min = time.getMinutes();
+			var dayNight = '오전';
+			
+			if(hour > 12) {
+				hour -= 12
+				dayNight = '오후';
+			}
+			
+			var str = '';
+			if(sender == userId) {
+				str = '<div class="chat plr-20 d-flex right justify-end mb-16">'; 
+					str += '<div class="chat-time font-12 chat-sub mr-5">';
+						str += '<span class="afternoon">' + dayNight + '</span>'
+							str += '<span class="time">' + hour + ':' + min + '</span>';
+					str += '</div>';
+					str += '<div class="chat-main-wrap w-40">';
+						str += '<div class="main">';
+							str += '<p class="" id="msg-area">' + msg + '</p>';
+						str += '</div>';
+					str += '</div>';
+				str += '</div>';
+				
+				/* $("#chat-right").append(str);	 */
+			} else {
+				str = '<div class="chat plr-20 d-flex left mb-16">';
+					str += '<div class="chat-main-wrap w-40 mr-5">';
+						str += '<div class="main">';
+							str += '<p class="">' + msg + '</p>';
+						str += '</div>';
+					str += '</div>';
+					str += '<div class="chat-time font-12 chat-sub">';
+						str += '<span class="afternoon">' + dayNight + '</span>';
+				 		str += '<span class="time">' + hour + ':' + min + '</span>';
+					str += '</div>';
+				str += '</div>';
+			}
+			$("#chat-right").append(str);
 
 		 }
 	}
@@ -310,5 +242,62 @@
 		send(); 
 		// 부분 새로 고침 왜 안되나옹..? ㅠㅠㅠ 
 	});
+</script>
+<script type="text/javascript">
+	function appendDayDivider(timestamp) {
+		var time = new Date(timestamp);
+		var yr = time.getFullYear();
+		var mon = time.getMonth() + 1;
+		var date = time.getDate();
+		
+		var d = new Date($("#date").val());
+		
+		var str = '';
+		if($("#date").val() == '') {
+			str = '<div class="date font-13">' + yr + '년 ' + mon + '월 ' + date + '일</div>';
+			
+			$("#date").val(timestamp);
+			$("#init-date").append(str);
+		} else if(d.getFullYear() != yr || (d.getMonth() + 1) != mon || d.getDate() != date) {
+			str = '<div class="add-date">';
+				str += '<div class="date font-13">' + yr + '년 ' + mon + '월 ' + date + '일</div>';
+			str += '</div>';
+			
+			$("#date").val(timestamp);
+			$("#chat-right").append(str);	
+		}
+	}
+	
+	function loadHistory(chatroomId) {
+		// alert("history");
+		$.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath}/chat/load_history",
+			data: {chatroomId : chatroomId},
+			success: function(msgs) {
+				//console.log(msgs[0]);
+				for(var i = 0; i < Object.keys(msgs).length; i++) {
+					var msg = msgs[i];
+					var time = new Date(msg.sendTime);
+					var hour = time.getHours();
+					var min = time.getMinutes();
+					var dayNight = '오전'
+					
+					if(hour > 12) {
+						hour -= 12
+						dayNight = '오후';
+					}
+					
+					appendDayDivider(time);
+					appendMsg(msg.message, msg.messageSender, msg.sendTime);
+					
+				}
+				$("#chat-content-wrap").scrollTop($("#chat-content-wrap")[0].scrollHeight);
+			},
+			error: function() {
+				alert("대화 내역 조회 실패");
+			}
+		});
+	}
 </script>
 </html>

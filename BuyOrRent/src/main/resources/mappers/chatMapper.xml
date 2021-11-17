@@ -11,6 +11,10 @@
 		SELECT COUNT(*) FROM chatroom WHERE user_a_id = #{userAId} AND user_b_id = #{userBId}
 	</select>
 	
+	<select id="countCntRoom" parameterType="chatroomvo" resultType="int">
+		SELECT COUNT(*) FROM chatroom WHERE user_a_id = #{userBId} AND user_b_id = #{userAId}
+	</select>
+	
 	<select id="isRoom" parameterType="chatroomvo" resultType="chatroomvo">
 		SELECT chatroom_id as chatroomId, user_a_id as userAId, user_b_id as userBId FROM chatroom WHERE user_a_id = #{userAId} AND user_b_id = #{userBId}
 	</select>
@@ -30,10 +34,10 @@
 			message_sender AS messageSender, 
 			message_receiver AS messageReceiver, 
 			message, 
-			message_send_time AS messageSendTime, 
-			message_read_time AS messageReadTime, 
+			message_send_time AS sendTime, 
+			message_read_time AS readTime, 
 			chatroom_id AS chatroomId 
-		FROM message WHERE chatroomId = #{chatroomId}
+		FROM message WHERE chatroom_id = #{chatroomId} ORDER BY message_id ASC 
 	</select>
 	
 	<select id="getLastMessageId" resultType="int">

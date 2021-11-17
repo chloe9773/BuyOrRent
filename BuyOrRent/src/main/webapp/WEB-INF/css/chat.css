@@ -16,6 +16,7 @@ body {
 .right-wrap {
 	border-left: 1px solid #E0E0E0;
 	border-right: 1px solid #E0E0E0;
+	height: 100vh;
 }
 
 .profile-wrap {
@@ -138,6 +139,9 @@ body {
 	padding: 0px 12px;
 	align-items: center;
 	display: flex;
+	width: 19%;
+	margin: 0 auto;
+	margin-bottom: 16px;
 }
 
 .main {
@@ -153,7 +157,7 @@ body {
 
 .chat-content-wrap {
 	overflow-y: auto;
-    height: calc(100% - 170px - 56px);
+    height: calc(100% - 310px);
 }
 
 .tmp {
