@@ -70,6 +70,10 @@ public class EchoHandler extends TextWebSocketHandler{
 				
 			} else {
 				cvo = cDao.isRoom(rvo);
+				
+				if(cvo == null) {
+					cvo = cDao.getRoomById(mvo.getChatroomId());
+				}
 			}
 		} else {
 			cvo = cDao.isRoom(rvo);

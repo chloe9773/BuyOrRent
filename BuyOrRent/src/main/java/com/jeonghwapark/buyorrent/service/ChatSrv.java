@@ -38,4 +38,9 @@ public class ChatSrv {
 	public List<ChatroomVO> getChatroomList(int userId) {
 		return cDao.getChatroomList(userId);
 	}
+	
+	// 채팅방 삭제 
+	public void deleteChatroom(int chatroomId) {
+		cDao.deleteChatroom(chatroomId);
+	}
 }

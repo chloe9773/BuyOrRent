@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jeonghwapark.buyorrent.model.ChatroomVO;
 import com.jeonghwapark.buyorrent.model.MessageVO;
+import com.jeonghwapark.buyorrent.repository.ChatDao;
 import com.jeonghwapark.buyorrent.service.ChatSrv;
 import com.jeonghwapark.buyorrent.service.JoinAndLoginSrv;
 @Controller
@@ -26,6 +28,9 @@ public class ChatController {
 	@Autowired
 	ChatSrv cSrv;
 	
+	@Autowired
+	ChatDao cDao;
+	
 	// 채팅페이지  
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView getChat(HttpServletRequest request) {
@@ -34,17 +39,67 @@ public class ChatController {
 		
 		// 채팅방 불러오기 
 		List<ChatroomVO> chatroomList = cSrv.getChatroomList(userId);
-		
 		List<String> previewList = new ArrayList<>();
-		for(int i = 0; i < chatroomList.size(); i++) {
-			int id = chatroomList.get(i).getChatroomId();
-			previewList.add(cSrv.getLastMessageContent(id).getMessage());
+		ModelAndView mav = new ModelAndView();
+		
+		if(!chatroomList.isEmpty()) {
+			for(int i = 0; i < chatroomList.size(); i++) {
+				int id = chatroomList.get(i).getChatroomId(); 
+				previewList.add(cSrv.getLastMessageContent(id).getMessage());
+			}
 		}
 		
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("chat/chat");
 		mav.addObject("chatroomList", chatroomList);
 		mav.addObject("previewList", previewList);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="", method=RequestMethod.POST)
+	@ResponseBody
+	public int getChat(@RequestParam("messageSender") int messageSender, @RequestParam("messageReceiver") int messageReceiver) {
+		System.out.println("writer :" + messageReceiver);
+		System.out.println("user :" + messageSender);
+		ChatroomVO chkvo = new ChatroomVO();
+		chkvo.setUserAId(messageSender);
+		chkvo.setUserBId(messageReceiver);
+		
+		ChatroomVO cvo = new ChatroomVO();
+		if(cDao.cntRoom(chkvo) == 0 && cDao.countCntRoom(chkvo) == 0) {
+			cDao.createRoom(chkvo);
+			
+			cvo = cDao.isRoom(chkvo);
+			
+		} else {
+			cvo = cDao.isRoom(chkvo);
+		}
+		
+		//return "";
+		return cvo.getChatroomId();
+	}
+	
+	@RequestMapping(value="/room", method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView getChatRoom(HttpServletRequest request, @RequestParam(value="chatroom_id") int chatroomId) {
+		HttpSession session = request.getSession();
+		int userId = (int)session.getAttribute("userId");
+		
+		// 채팅방 불러오기 
+		List<ChatroomVO> chatroomList = cSrv.getChatroomList(userId);
+		List<String> previewList = new ArrayList<>();
+		if(!chatroomList.isEmpty()) {
+			for(int i = 0; i < chatroomList.size(); i++) {
+				int id = chatroomList.get(i).getChatroomId();
+				previewList.add(cSrv.getLastMessageContent(id).getMessage());
+			}
+		}
+				
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("chat/chatRoom");
+		mav.addObject("chatroomList", chatroomList);
+		mav.addObject("previewList", previewList);
+		mav.addObject("chatroomNo", chatroomId);
 		
 		return mav;
 	}

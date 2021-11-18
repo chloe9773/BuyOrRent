@@ -19,6 +19,10 @@
 		SELECT chatroom_id as chatroomId, user_a_id as userAId, user_b_id as userBId FROM chatroom WHERE user_a_id = #{userAId} AND user_b_id = #{userBId}
 	</select>
 	
+	<select id="getRoomById" parameterType="int" resultType="chatroomvo">
+		SELECT chatroom_id as chatroomId, user_a_id as userAId, user_b_id as userBId FROM chatroom WHERE chatroom_id = #{chatroomId} 
+	</select>
+	
 	<insert id="insertMessage" parameterType="messagevo">
 		INSERT INTO message SET 
 			message_sender = #{messageSender},
@@ -49,9 +53,10 @@
 			chatroom_id AS chatroomId, 
 			user_a_id AS userAId, 
 			user_b_id AS userBId, 
-			(SELECT m.usernick FROM chatroom c, member m WHERE c.user_a_id = m.user_id) AS userANick,
-            (SELECT m.usernick FROM chatroom c, member m WHERE c.user_b_id = m.user_id) AS userBNick 
-		FROM chatroom WHERE user_a_id = #{userId} OR user_b_id = #{userId}
+			(SELECT usernick FROM member WHERE user_id = user_a_id) AS userANick,
+			(SELECT usernick FROM member WHERE user_id = user_b_id) AS userBNick 
+		FROM chatroom 
+		WHERE (user_a_id = #{userId} or user_b_id = #{userId}) AND (SELECT COUNT(message_id) FROM message WHERE (message_sender = user_a_id AND message_receiver = user_b_id) OR (message_sender = user_b_id AND message_receiver = user_a_id)) > 0;
 	</select>
 	
 	<select id="getLastMessageContent" parameterType="int" resultType="messagevo">
@@ -67,4 +72,8 @@
 		ORDER BY message_id DESC 
 		LIMIT 1;
 	</select>
+	
+	<delete id="deleteChatroom" parameterType="int">
+		DELETE FROM chatroom WHERE chatroom_id = #{chatroomId}
+	</delete>
 </mapper>

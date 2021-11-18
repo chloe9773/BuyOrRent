@@ -6,6 +6,7 @@ public class ChatroomVO {
 	private int userBId;
 	private String userANick;
 	private String userBNick;
+	private int cnt;
 	
 	public int getChatroomId() {
 		return chatroomId;
@@ -36,6 +37,12 @@ public class ChatroomVO {
 	}
 	public void setUserBNick(String userBNick) {
 		this.userBNick = userBNick;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 	@Override

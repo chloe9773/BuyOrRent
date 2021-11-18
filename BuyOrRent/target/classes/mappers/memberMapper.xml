@@ -4,10 +4,10 @@
 	<!-- 회원가입 insert -->
 	<insert id="setJoin" parameterType="membervo">
 		INSERT INTO member SET 
-		username = #{username}, 
-		password = #{password},
-		usernick = SUBSTRING_INDEX(#{username}, '@', 1),  
-		regDate = now()
+			username = #{username}, 
+			password = #{password},
+			usernick = SUBSTRING_INDEX(#{username}, '@', 1),  
+			regDate = now()
 	</insert>
 	
 	<!-- 아이디 중복체크 select -->

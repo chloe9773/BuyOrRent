@@ -7,6 +7,7 @@
 <body class="bg-g" style="height: 100vh; overflow: hidden;">
 <input type="hidden" id="user-id" value="${sessionScope.userId}" />
 <input type="hidden" id="sock-status" value="" />
+<input type="hidden" id="chatroom-no" value="${chatroomNo}" />
 	<div class="following-top-wrap chat-head w-100 bg-white">
 		<div class="following-top-content w-60 m-center">
 			<div class="following-top-left-wrap w-70">
@@ -40,66 +41,47 @@
 						</div>
 					</div>
 					<div id="chatroom-wrap" class="chatroom-wrap">
-						<c:if test="${fn:length(chatroomList) != 0}">
-							<c:forEach var="chatroom" items="${chatroomList}" varStatus="status">
-								<input type="hidden" id="chatroom-id" value="${chatroom.chatroomId}"/>
-								<a href="${pageContext.request.contextPath}/chat/room?chatroom_id=${chatroom.chatroomId}">
-									<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="enterChat();loadHistory(${chatroom.chatroomId});"><!-- openSocket(); -->
-										<div class="user-img-wrap mr-8 w-20">
-			
+						<c:forEach var="chatroom" items="${chatroomList}" varStatus="status">
+							<input type="hidden" id="chatroom-id" value="${chatroom.chatroomId}"/>
+							<div class="chat-box chat-1 d-flex cursor" onmouseenter="deleteDNone('chat-opt-btn-1');" onmouseleave="addDNone('chat-opt-btn-1');" onclick="loadHistory(${chatroom.chatroomId});"><!-- openSocket(); -->
+								<div class="user-img-wrap mr-8 w-20">
+	
+								</div>
+								<div class="chat-prev-wrap w-80">
+									<div class="prev-top mb-2">
+										<c:if test="${chatroom.userAId eq sessionScope.userId}">
+											<span class="chat-username font-13 weight-700 mr-3">${chatroom.userBNick}</span>
+											<input type="hidden" id="target-user" value="${chatroom.userBId}" />
+										</c:if>
+										<c:if test="${chatroom.userAId ne sessionScope.userId}">
+											<span class="chat-username font-13 weight-700 mr-3">${chatroom.userANick}</span>
+											<input type="hidden" id="target-user" value="${chatroom.userAId}" />
+										</c:if>
+										<span class="userposition font-12 chat-sub mr-3">백현동</span>
+										<span class="chat-sub font-12 mr-3">·</span>
+										<span class="time font-12 chat-sub">09월 29일</span>
+									</div>
+									<div class="prev-bottom">
+										<p class="prev-content font-13">${previewList[status.index]}</p>
+									</div>
+									<div class="chat-opt-wrap">
+										<div class="chat-opt-btn chat-opt-btn-1 d-none chat-in" onclick="chatLeaveOpt('chat-leave-1','chat-1','chat-opt-btn-1');">
+											<i class="fas fa-ellipsis-h chat-in"></i>
 										</div>
-										<div class="chat-prev-wrap w-80">
-											<div class="prev-top mb-2">
-												<c:if test="${chatroom.userAId eq sessionScope.userId}">
-													<span class="chat-username font-13 weight-700 mr-3">${chatroom.userBNick}</span>
-													<input type="hidden" id="target-user" value="${chatroom.userBId}" />
-												</c:if>
-												<c:if test="${chatroom.userAId ne sessionScope.userId}">
-													<span class="chat-username font-13 weight-700 mr-3">${chatroom.userANick}</span>
-													<input type="hidden" id="target-user" value="${chatroom.userAId}" />
-												</c:if>
-												<span class="userposition font-12 chat-sub mr-3">백현동</span>
-												<span class="chat-sub font-12 mr-3">·</span>
-												<span class="time font-12 chat-sub">09월 29일</span>
-											</div>
-											<div class="prev-bottom">
-												<p class="prev-content font-13">${previewList[status.index]}</p>
-											</div>
-											<div class="chat-opt-wrap">
-												<div class="chat-opt-btn chat-opt-btn-1 d-none chat-in" onclick="chatLeaveOpt('chat-leave-1','chat-1','chat-opt-btn-1');">
-													<i class="fas fa-ellipsis-h chat-in"></i>
-												</div>
-												<div class="chat-in chat-leave chat-leave-1 d-none">
-													<span class="chat-in">채팅방 나가기</span>
-												</div>
-											</div>
+										<div class="chat-in chat-leave chat-leave-1 d-none">
+											<span class="chat-in">채팅방 나가기</span>
 										</div>
 									</div>
-								</a>
-							</c:forEach>
-						</c:if>
-						<c:if test="${fn:length(chatroomList) == 0}">
-							<div class="">
-								대화 상대 없
+								</div>
 							</div>
-						</c:if>
+						</c:forEach>
 					</div>
 					<div class="footer">
 						<div class="font-14 ml-20">푸터푸터푸터푸터</div>
 					</div>
 				</div>
 			</div>
-			<div class="right-wrap chat-before bg-white w-65 t-center table">
-				<div class="ico-chat-wrap table-cell">
-					<div class="chat-icon">
-						<i class="fas fa-comments"></i>
-					</div>
-					<div class="chat-direction mt-30 font-14">
-						채팅할 상대를 선택해주세요.
-					</div>
-				</div>
-			</div>
-			<div class="right-wrap chat-after bg-white w-65 d-none">
+			<div class="right-wrap chat-after bg-white w-65">
 				<div class="chatroom-top d-flex justify-bw plr-20">
 					<div class="chat-user-wrap d-flex">
 						<div class="user-img-wrap mr-8 w-20">
@@ -114,7 +96,7 @@
 						<i id="chat-opt-elipsis" class="fas fa-ellipsis-v font-20 icon-color" onclick="toggle('chatroom-opt-box');"></i>
 						<div class="chatroom-opt-box d-none">
 							<div class="block-user p-10 bg-hover">대화상대 차단하기</div>
-							<div class="leave-chat p-10 bg-hover">채팅방 나가기</div>
+							<div class="leave-chat p-10 bg-hover" onclick="leaveChat();">채팅방 나가기</div>
 						</div>
 					</div>
 				</div>
@@ -330,8 +312,10 @@
 	}
 </script>
 <script>
-	function enterChatroom() {
+	$(document).ready(function(){
+		var chatNo = $("#chatroom-no").val();
 		
-	}
+		loadHistory(chatNo);
+	});
 </script>
 </html>

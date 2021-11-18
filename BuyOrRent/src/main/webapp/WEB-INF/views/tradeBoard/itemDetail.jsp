@@ -53,7 +53,7 @@
 						<div class="heart-after d-none" onclick="toggleHeart();"><i class="fas fa-heart highlight"></i></div>
 					</div>
 					<div class="to-chat-wrap">
-						<div class="chat-box bg-highlight white t-center font-14 p-5 border-r-6 cursor">채팅으로 거래하기</div>
+						<div class="chat-box bg-highlight white t-center font-14 p-5 border-r-6 cursor" onclick="toChat(3, ${sessionScope.userId});">채팅으로 거래하기</div>
 					</div>
 				</div>
 			</div>
@@ -189,5 +189,23 @@
 	function toggleHeart() {
 		$(".heart-before").toggle();
 		$(".heart-after").toggle();
+	}
+</script>
+<script>
+	function toChat(writerId, userId) {
+		$.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath}/chat",
+			data: {
+				messageReceiver : writerId,
+				messageSender : userId
+			},
+			success: function(resData) {
+				location.href = "${pageContext.request.contextPath}/chat/room?chatroom_id=" + resData;
+			},
+			error: function() {
+				console.log("채팅방 이동 실패");
+			}
+		});
 	}
 </script>

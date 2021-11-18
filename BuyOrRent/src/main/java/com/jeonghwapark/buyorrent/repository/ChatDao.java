@@ -35,8 +35,17 @@ public class ChatDao {
 		return roomvo;
 	}
 	
+	// 채팅방 정보  
+	public ChatroomVO getRoomById(int chatroomId) {
+		return sql.selectOne("chat.getRoomById", chatroomId);
+	}
+	
 	// 메세지 삽입 
 	public void insertMessage(MessageVO mvo) {
+		System.out.println(mvo.getChatroomId());
+		System.out.println(mvo.getMessageSender());
+		System.out.println(mvo.getMessageReceiver());
+		System.out.println(mvo.getMessage());
 		sql.insert("chat.insertMessage" , mvo);
 	}
 	
@@ -58,5 +67,10 @@ public class ChatDao {
 	// 채팅방 리스트 불러오기 
 	public List<ChatroomVO> getChatroomList(int userId) {
 		return sql.selectList("chat.getChatroomList", userId);
+	}
+	
+	// 채팅방 삭제 
+	public void deleteChatroom(int chatroomId) {
+		sql.delete("chat.deleteChatroom", chatroomId);
 	}
 }
