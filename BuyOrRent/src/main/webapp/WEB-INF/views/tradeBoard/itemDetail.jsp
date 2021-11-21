@@ -201,7 +201,7 @@
 				messageSender : userId
 			},
 			success: function(resData) {
-				location.href = "${pageContext.request.contextPath}/chat/room?chatroom_id=" + resData;
+				location.href = "${pageContext.request.contextPath}/chat/room?chatroom_id=" + resData.chatroomId;
 			},
 			error: function() {
 				console.log("채팅방 이동 실패");

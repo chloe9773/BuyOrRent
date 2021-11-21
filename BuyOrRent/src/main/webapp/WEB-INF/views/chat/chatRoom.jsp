@@ -172,9 +172,9 @@
 			message.message = $("#chat-msg").val()
 		  	message.messageSender = $("#user-id").val()
 		  	message.messageReceiver = $("#target-user").val()
-		  	message.chatroomId = $("#chatroom-id").val()
-		  	
-		  	appendMsg(message.message, message.messageSender, new Date().getTime());
+		  	message.chatroomId = $("#chatroom-no").val()
+		  	console.log(message.chatroomId);
+		  	//appendMsg(message.message, message.messageSender, new Date().getTime());
 			$("#chat-content-wrap").scrollTop($("#chat-content-wrap")[0].scrollHeight);
 		}
 
@@ -183,7 +183,6 @@
 	}
 	
 	function appendMsg(msg, sender, timestamp) {
-		console.log(timestamp);
 		if(msg == ''){
 			return false;
 		}else{
@@ -245,10 +244,10 @@
 		var keycode = (e.keyCode ? e.keyCode : e.which);
 		if(keycode == '13') {
 			alert(sockStat);
-			if(sockStat == 0) {
+			/* if(sockStat == 0) {
 				alert("dfsdf");
 				connect();
-			}
+			} */
 			
 			send();
 		}
@@ -317,5 +316,25 @@
 		
 		loadHistory(chatNo);
 	});
+</script>
+<script>
+	function leaveChat() {
+		var chatroomId = $("#chatroom-no").val();
+		console.log("chat id : " + chatroomId);
+		
+		if(confirm("채팅방을 나가면 채팅 내역을 더이상 확인할 수 없어요. 정말 나가시겠어요?")) {
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath}/chat/delete_chatroom",
+				data: {chatroomId : chatroomId},
+				success: function(resData) {
+					location.href="${pageContext.request.contextPath}/chat";
+				},
+				error: function() {
+					alert("채팅방 삭제 실패");
+				}
+			});
+		}
+	}
 </script>
 </html>

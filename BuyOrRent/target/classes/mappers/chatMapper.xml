@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="isRoom" parameterType="chatroomvo" resultType="chatroomvo">
-		SELECT chatroom_id as chatroomId, user_a_id as userAId, user_b_id as userBId FROM chatroom WHERE user_a_id = #{userAId} AND user_b_id = #{userBId}
+		SELECT chatroom_id as chatroomId, user_a_id as userAId, user_b_id as userBId FROM chatroom WHERE (user_a_id = #{userAId} AND user_b_id = #{userBId}) OR (user_a_id = #{userBId} AND user_b_id = #{userAId})
 	</select>
 	
 	<select id="getRoomById" parameterType="int" resultType="chatroomvo">
@@ -56,7 +56,7 @@
 			(SELECT usernick FROM member WHERE user_id = user_a_id) AS userANick,
 			(SELECT usernick FROM member WHERE user_id = user_b_id) AS userBNick 
 		FROM chatroom 
-		WHERE (user_a_id = #{userId} or user_b_id = #{userId}) AND (SELECT COUNT(message_id) FROM message WHERE (message_sender = user_a_id AND message_receiver = user_b_id) OR (message_sender = user_b_id AND message_receiver = user_a_id)) > 0;
+		WHERE (user_a_id = #{userId} or user_b_id = #{userId}) AND (SELECT COUNT(message_id) FROM message WHERE (message_sender = user_a_id AND message_receiver = user_b_id) OR (message_sender = user_b_id AND message_receiver = user_a_id) AND chatroom_id = chatroom_id) > 0;
 	</select>
 	
 	<select id="getLastMessageContent" parameterType="int" resultType="messagevo">

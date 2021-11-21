@@ -61,6 +61,9 @@ public class EchoHandler extends TextWebSocketHandler{
 		rvo.setUserAId(mvo.getMessageSender());
 		rvo.setUserBId(mvo.getMessageReceiver());
 		
+		if(rvo.getUserBId() == 0) {
+			rvo.setUserBId(cDao.getRoomById(mvo.getChatroomId()).getUserBId());
+		}
 		ChatroomVO cvo = null;
 		if(mvo.getMessageReceiver() != mvo.getMessageSender()) {
 			if(cDao.cntRoom(rvo) == 0 && cDao.countCntRoom(rvo) == 0) {

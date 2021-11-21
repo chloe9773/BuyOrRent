@@ -43,11 +43,12 @@ public class ChatController {
 		ModelAndView mav = new ModelAndView();
 		
 		if(!chatroomList.isEmpty()) {
+			System.out.println("emptyz");
 			for(int i = 0; i < chatroomList.size(); i++) {
 				int id = chatroomList.get(i).getChatroomId(); 
 				previewList.add(cSrv.getLastMessageContent(id).getMessage());
 			}
-		}
+		}		
 		
 		mav.setViewName("chat/chat");
 		mav.addObject("chatroomList", chatroomList);
@@ -58,9 +59,7 @@ public class ChatController {
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
 	@ResponseBody
-	public int getChat(@RequestParam("messageSender") int messageSender, @RequestParam("messageReceiver") int messageReceiver) {
-		System.out.println("writer :" + messageReceiver);
-		System.out.println("user :" + messageSender);
+	public ChatroomVO getChat(@RequestParam("messageSender") int messageSender, @RequestParam("messageReceiver") int messageReceiver) {
 		ChatroomVO chkvo = new ChatroomVO();
 		chkvo.setUserAId(messageSender);
 		chkvo.setUserBId(messageReceiver);
@@ -75,8 +74,9 @@ public class ChatController {
 			cvo = cDao.isRoom(chkvo);
 		}
 		
-		//return "";
-		return cvo.getChatroomId();
+		System.out.println(cvo.getChatroomId());
+		//return cvo.getChatroomId();
+		return cvo;
 	}
 	
 	@RequestMapping(value="/room", method=RequestMethod.GET)
@@ -114,4 +114,15 @@ public class ChatController {
 		
 	}
 	
+	// 채팅방 삭제 
+	@RequestMapping(value = "/delete_chatroom", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView deleteChatroom(@RequestParam("chatroomId") int chatroomId) {
+		cSrv.deleteChatroom(chatroomId);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("chat/chat");
+		
+		return mav;
+		
+	}
 }

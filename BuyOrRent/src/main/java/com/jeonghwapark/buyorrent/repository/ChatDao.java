@@ -42,10 +42,6 @@ public class ChatDao {
 	
 	// 메세지 삽입 
 	public void insertMessage(MessageVO mvo) {
-		System.out.println(mvo.getChatroomId());
-		System.out.println(mvo.getMessageSender());
-		System.out.println(mvo.getMessageReceiver());
-		System.out.println(mvo.getMessage());
 		sql.insert("chat.insertMessage" , mvo);
 	}
 	
