@@ -23,7 +23,7 @@
 								<input type="hidden" id="artiId" name="artiId" value="${article.articleId}"/>
 								<input type="text" id="title" name="title" class="title font-20" maxlength="200" autocomplete="off" value="${article.title}"/>
 							</c:if>
-							<input type="hidden" id="author" name="author" value="${sessionScope.username}" />
+							<input type="hidden" id="author" name="author" value="${sessionScope.userId}" />
 							<input type="hidden" id="boardId" name="boardId" value="${boardId}" />
 							<c:if test="${sessionScope.level eq 1}"> <!-- auth로 변경 -->
 							    <input type="hidden" id="articleType" name="articleType" value="general" />

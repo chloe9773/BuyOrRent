@@ -60,6 +60,9 @@
 }
 
 /* color */
+.divider {
+	color: #E9E9E9;
+}
 .gray-light {
     color: #D1D3D8;
 }
@@ -138,6 +141,12 @@
 }
 
 /* width */
+.w-10 {
+	width : 10%;	
+}
+.w-15 {
+	width : 15%;	
+}
 .w-20 {
 	width : 20%;	
 }

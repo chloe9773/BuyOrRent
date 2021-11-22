@@ -152,7 +152,7 @@
 							</div>
 						</c:if>
 						<div class="table-cell t-right">
-							<a href="article-my-article.html">
+							<a href="${path}/board/my-article">
 								<button class="my-article bg-white">내글보기</button>
 							</a>
 						</div>

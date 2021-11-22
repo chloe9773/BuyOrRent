@@ -18,15 +18,19 @@
 					<div class="article-btn-grp d-flex justify-bw btn-bottom pb-10 mb-30">
 						<div class="btn-left">
 							<button class="btn-to-article">
-								<a href="freeboard.html">목록</a>
+								<a href="${path}/board?board_id=${boardId}">목록</a>
 							</button>
-							<button class="btn-to-previos">
-								<a href="#">이전글</a>
-							</button>
+							<c:if test="${article.prev != 0}">
+								<button class="btn-to-previos">
+									<a href="${path}/article/article-detail?article_id=${article.prev}">이전글</a>
+								</button>
+							</c:if>
 							<!-- 첫 게시글에는 보이지 않게 -->
-							<button class="btn-to-previos">
-								<a href="#">다음글</a>
-							</button>
+							<c:if test="${article.next != 0}">
+								<button class="btn-to-previos">
+									<a href="${path}/article/article-detail?article_id=${article.next}">다음글</a>
+								</button>
+							</c:if>
 						</div>
 						<div class="btn-right">
 							<button class="btn-to-reply">
@@ -113,7 +117,7 @@
 												</div>
 												<div class="comment font-13 pb-10">
 													<%-- <p id="comment-origin-${status.index}">${commentList.cContent}</p> --%>
-													<input type="text" id="comment-origin-${status.index}" value="${commentList.cContent}"/ >
+													<input type="text" class="bg-gray-v-light" id="comment-origin-${status.index}" value="${commentList.cContent}" readOnly/>
 												</div>
 												<div class="comment-edit-wrap comment-edit-${status.index} border-1 p-5 bg-white d-none">
 												<form id="comment-reply-form-${commentList.cid}">

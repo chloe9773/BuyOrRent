@@ -57,6 +57,7 @@ public class ArticleController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("article", avo);
 		mav.addObject("boardName", bvo.getBoardName());
+		mav.addObject("boardId", bvo.getBoardId());
 		mav.addObject("commentList", aSrv.getArticleComments(id));
 		mav.setViewName("/board/articleDetail");
 		

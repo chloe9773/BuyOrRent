@@ -58,4 +58,9 @@ public class BoardController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("/my-article")
+	public String getArticlesbyMe() {
+		return "/board/articleByme";
+	}
 }

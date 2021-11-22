@@ -14,18 +14,22 @@
 	
 	<!-- 게시글 하나 불러오기 -->
 	<select id="getArticleOne" parameterType="int" resultType="articlevo">
-		SELECT
-			a.board_id as boardId,  
-			a.article_id as articleId,
-			a.article_type as articleType,
-			a.article_title as title,
-			a.article_author as author,
-			a.article_date as uploadDate,
-			a.article_update as updateDate,
-			a.article_hit as hit,
-			(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
-			content 
-		FROM article a WHERE a.article_id = #{articleId}
+		<![CDATA[ 
+			SELECT
+				a.board_id as boardId,  
+				a.article_id as articleId,
+				a.article_type as articleType,
+				a.article_title as title,
+				(SELECT usernick FROM member WHERE user_id = a.article_author) as author,
+				a.article_date as uploadDate,
+				a.article_update as updateDate,
+				a.article_hit as hit,
+				(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
+				content,
+				(SELECT article_id FROM article WHERE article_id < #{articleId} ORDER BY article_id DESC LIMIT 1) AS prev,
+				(SELECT article_id FROM article WHERE article_id > #{articleId} ORDER BY article_id LIMIT 1) AS next 
+			FROM article a WHERE a.article_id = #{articleId}
+		]]>
 	</select>
 	
 	<!-- 게시판별 게시글 불러오기(공지게시글) -->
@@ -34,7 +38,7 @@
 			a.article_id as articleId,
 			a.article_type as articleType,
 			a.article_title as title,
-			a.article_author as author,
+			(SELECT usernick FROM member WHERE user_id = a.article_author) as author,
 			a.article_date as uploadDate,
 			a.article_hit as hit,
 			(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
@@ -48,7 +52,7 @@
 			a.article_id as articleId,
 			a.article_type as articleType,
 			a.article_title as title,
-			a.article_author as author,
+			(SELECT usernick FROM member WHERE user_id = a.article_author) as author,
 			a.article_date as uploadDate,
 			a.article_hit as hit,
 			(SELECT COUNT(*) FROM comments WHERE aid = a.article_id) as commentTotal,
@@ -108,15 +112,19 @@
 	<!-- 게시글 댓글 가져오기 -->
 	<select id="getArticleComments" parameterType="int" resultType="commentvo">
 		SELECT 
-			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate, ref, ref_order as refOrder    
-		FROM comments WHERE aid = #{articleId} ORDER BY ref, ref_order ASC 
+			cid, aid, 
+			(SELECT usernick FROM member WHERE user_id = c.author) AS author, 
+			content as cContent, regdate as regDate, update_date as updateDate, ref, ref_order as refOrder    
+		FROM comments c WHERE aid = #{articleId} ORDER BY ref, ref_order ASC 
 	</select>
 	
 	<!-- 댓글 정보 가져오기 -->
 	<select id="getCommentOne" parameterType="int" resultType="commentvo">
 		SELECT 
-			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate, ref, ref_order as refOrder    
-		FROM comments WHERE cid = #{cid} 
+			cid, aid, 
+			(SELECT usernick FROM member WHERE user_id = c.author) AS author, 
+			content as cContent, regdate as regDate, update_date as updateDate, ref, ref_order as refOrder    
+		FROM comments c WHERE cid = #{cid} 
 	</select>
 	
 	<!-- 연결 댓글 카운트 -->
@@ -127,8 +135,9 @@
 	<!-- 게시글 댓글 카운트 -->
 	<select id="getArticleCommentsTotal" parameterType="int" resultType="int">
 		SELECT 
-			cid, aid, author, content as cContent, regdate as regDate, update_date as updateDate 
-		FROM comments WHERE aid = #{articleId}
+			cid, aid, (SELECT usernick FROM member WHERE user_id = c.author) AS author, 
+			content as cContent, regdate as regDate, update_date as updateDate 
+		FROM comments c WHERE aid = #{articleId}
 	</select>
 	
 	<!-- 댓글 삭제 -->

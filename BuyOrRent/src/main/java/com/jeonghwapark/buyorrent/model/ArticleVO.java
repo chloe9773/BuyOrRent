@@ -20,6 +20,8 @@ public class ArticleVO {
 	private String content;
 	private int start;
 	private int end;
+	private int prev;
+	private int next;
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 	
@@ -95,5 +97,17 @@ public class ArticleVO {
 	}
 	public void setEnd(int end) {
 		this.end = end;
+	}
+	public int getPrev() {
+		return prev;
+	}
+	public void setPrev(int prev) {
+		this.prev = prev;
+	}
+	public int getNext() {
+		return next;
+	}
+	public void setNext(int next) {
+		this.next = next;
 	}
 }
