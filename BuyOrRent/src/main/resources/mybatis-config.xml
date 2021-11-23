@@ -11,5 +11,6 @@
 		<typeAlias type="com.jeonghwapark.buyorrent.model.TradeArticleVO" alias="tradevo" />
 		<typeAlias type="com.jeonghwapark.buyorrent.model.MessageVO" alias="messagevo" />
 		<typeAlias type="com.jeonghwapark.buyorrent.model.ChatroomVO" alias="chatroomvo" />
+		<typeAlias type="com.jeonghwapark.buyorrent.model.AddressVO" alias="addressvo" />
 	</typeAliases>
 </configuration>

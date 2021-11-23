@@ -33,6 +33,8 @@ public class TradeBoardController {
 	public ModelAndView getTradeBoard(@RequestParam("board_id") int bid) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("bid", bid);
+		mav.addObject("sidoList", tSrv.getsidoLarge());
+		mav.addObject("sidogunList", tSrv.getsido());
 		mav.setViewName("/tradeBoard/tradeBoardMain");
 		
 		return mav;

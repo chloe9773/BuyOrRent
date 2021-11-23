@@ -152,9 +152,16 @@
 							</div>
 						</c:if>
 						<div class="table-cell t-right">
-							<a href="${path}/board/my-article">
-								<button class="my-article bg-white">내글보기</button>
-							</a>
+							<c:if test = "${sessionScope.username == null}">
+								<a href="${path}/board/my-article">
+									<button class="my-article bg-white" disabled>내글보기</button>
+								</a>
+							</c:if>
+							<c:if test = "${sessionScope.username != null}">
+								<a href="${path}/board/my-article">
+									<button class="my-article bg-white">내글보기</button>
+								</a>
+							</c:if>
 						</div>
 					</div>
 					<div class="article-search m-center d-flex justify-center pb-r-2">

@@ -127,14 +127,16 @@ table {
 
 .tab:first-child {
     border-right: 1px solid transparent;
-}
+}*/
 
 .tab.focus {
-    border-top: 1px solid #E9E9E9;
+    /* border-top: 1px solid #E9E9E9;
     border-left: 1px solid #E9E9E9;
     border-right: 1px solid #E9E9E9;
-    border-bottom: 1px solid #fff;
-} */
+    border-bottom: 1px solid #fff; */
+   	background-color: #fff;
+    font-weight: 700px;
+} 
 
 .content-table-sub {
     padding: 2px;

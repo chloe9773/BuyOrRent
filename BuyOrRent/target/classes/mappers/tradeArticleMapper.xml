@@ -33,4 +33,17 @@
 			update_date = now() 
 		WHERE tid = #{tid}
 	</update>
+	
+	<!-- 도시 db 작은단위 -->
+	<select id="getsido" resultType="addressvo">
+		SELECT 
+			l.sid, l.sido, s.addr_id AS addrId, s.sigun, s.updong, s.li 
+		FROM sido l, sigudong s 
+		WHERE l.sid = s.sido_id
+	</select>
+	
+	<!-- 도시 db 큰단위 -->
+	<select id="getsidoLarge" resultType="addressvo">
+		SELECT * FROM sido
+	</select>
 </mapper> 

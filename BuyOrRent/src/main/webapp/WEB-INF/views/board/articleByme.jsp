@@ -44,8 +44,8 @@
 					-->
 					<table class="content-table-tab w-100 cursor">
 						<tr>
-							<td class="tab w-15 focus">내가 쓴 게시글</td>
-							<td class="tab w-15">내가 쓴 댓글</td>
+							<td class="w-15 tab focus">내가 쓴 게시글</td>
+							<td class="w-15 tab">내가 쓴 댓글</td>
 							<td class="w-70 blank"></td>
 						</tr>
 					</table>

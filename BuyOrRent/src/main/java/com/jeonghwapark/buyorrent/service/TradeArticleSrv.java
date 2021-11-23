@@ -1,8 +1,11 @@
 package com.jeonghwapark.buyorrent.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jeonghwapark.buyorrent.model.AddressVO;
 import com.jeonghwapark.buyorrent.model.TradeArticleVO;
 import com.jeonghwapark.buyorrent.repository.TradeArticleDao;
 
@@ -24,5 +27,15 @@ public class TradeArticleSrv {
 	// 게시글 수정
 	public void updateArticle(TradeArticleVO tvo) {
 		tDao.updateArticle(tvo);
+	}
+	
+	// 주소 db
+	public List<AddressVO> getsido() {
+		return tDao.getsido();
+	}
+	
+	// 라지 주소 Db
+	public List<AddressVO> getsidoLarge() {
+		return tDao.getsidoLarge();
 	}
 }

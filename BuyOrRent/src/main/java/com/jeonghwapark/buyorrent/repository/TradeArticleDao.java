@@ -1,9 +1,12 @@
 package com.jeonghwapark.buyorrent.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.jeonghwapark.buyorrent.model.AddressVO;
 import com.jeonghwapark.buyorrent.model.TradeArticleVO;
 
 @Repository
@@ -24,5 +27,15 @@ public class TradeArticleDao {
 	// 게시글 수정
 	public void updateArticle(TradeArticleVO tvo) {
 		sql.update("trade.updateArticle", tvo);
+	}
+	
+	// 주소 db
+	public List<AddressVO> getsido() {
+		return sql.selectList("trade.getsido");
+	}
+	
+	// 라지 주소 Db
+	public List<AddressVO> getsidoLarge() {
+		return sql.selectList("trade.getsidoLarge");
 	}
 }

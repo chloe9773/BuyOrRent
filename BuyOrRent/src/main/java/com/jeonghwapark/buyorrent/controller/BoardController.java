@@ -34,7 +34,6 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/freeboard");
 		mav.addObject("boardId", bvo.getBoardId());
-		mav.addObject("boardName", bvo.getBoardName());
 		mav.addObject("notiList", aSrv.getNotiArticleForBoard(id));
 		mav.addObject("articleList", aSrv.getAllArticleForBoard(id, start, end));
 		mav.addObject("count", count);
