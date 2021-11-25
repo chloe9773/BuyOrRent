@@ -38,4 +38,14 @@ public class TradeArticleDao {
 	public List<AddressVO> getsidoLarge() {
 		return sql.selectList("trade.getsidoLarge");
 	}
+	
+	// 작은 주소 Db
+	public List<AddressVO> getSigun(int sid) {
+		return sql.selectList("trade.getSigun", sid);
+	}
+	
+	// 제일 작은 주소 Db
+	public List<AddressVO> getDong(AddressVO avo) {
+		return sql.selectList("trade.getDong", avo);
+	}
 }

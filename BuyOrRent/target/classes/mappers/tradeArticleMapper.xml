@@ -46,4 +46,22 @@
 	<select id="getsidoLarge" resultType="addressvo">
 		SELECT * FROM sido
 	</select>
+	
+	<!-- 도시 db 작은단위 -->
+	<select id="getSigun" parameterType="int" resultType="addressvo">
+		SELECT 
+			DISTINCT(sigun)
+		FROM sigudong 
+		WHERE sido_id = #{sid}
+	</select>
+	
+	<!-- 도시 db 제일작은단위 -->
+	<select id="getDong" parameterType="addressvo" resultType="addressvo">
+		SELECT 
+			addr_id AS addrId, 
+			sido_id AS sidoId, 
+			dong 
+		FROM sigudong 
+		WHERE sido_id = #{sid} and sigun = #{sigun}
+	</select>
 </mapper> 
