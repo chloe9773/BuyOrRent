@@ -80,7 +80,7 @@ public class TradeBoardController {
 	@ResponseBody
 	@RequestMapping(value="/sigun", method=RequestMethod.POST)
 	public List<AddressVO> getSigun(@RequestParam("sid") int sid) {
-		System.out.println(sid);
+		//System.out.println(sid);
 		List<AddressVO> addr = new ArrayList<>();
 		addr = tSrv.getSigun(sid);
 		
@@ -91,6 +91,7 @@ public class TradeBoardController {
 	@ResponseBody
 	@RequestMapping(value="/dong", method=RequestMethod.POST)
 	public List<AddressVO> getDong(@RequestParam("sid") int sid, @RequestParam("sigun") String sigun) {
+		System.out.println(sigun);
 		AddressVO avo = new AddressVO();
 		avo.setSid(sid);
 		avo.setSigun(sigun);

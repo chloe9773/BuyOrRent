@@ -60,7 +60,7 @@
 		SELECT 
 			addr_id AS addrId, 
 			sido_id AS sidoId, 
-			dong 
+			updong 
 		FROM sigudong 
 		WHERE sido_id = #{sid} and sigun = #{sigun}
 	</select>

@@ -28,23 +28,6 @@
 						</select>
 						<select name="region3" id="region3" onchange="changeRegion('r3', this.value);" class="location-select d-none">
 							<option value="">동을 선택하세요</option>
-							<option value="서울특별시">서울특별시</option>
-							<option value="부산광역시">부산광역시</option>
-							<option value="대구광역시">대구광역시</option>
-							<option value="인천광역시">인천광역시</option>
-							<option value="광주광역시">광주광역시</option>
-							<option value="대전광역시">대전광역시</option>
-							<option value="울산광역시">울산광역시</option>
-							<option value="세종특별자치시">세종특별자치시</option>
-							<option value="경기도">경기도</option>
-							<option value="강원도">강원도</option>
-							<option value="충청북도">충청북도</option>
-							<option value="충청남도">충청남도</option>
-							<option value="전라북도">전라북도</option>
-							<option value="전라남도">전라남도</option>
-							<option value="경상북도">경상북도</option>
-							<option value="경상남도">경상남도</option>
-							<option value="제주특별자치도">제주특별자치도</option>
 						</select>
 					</div>
 				</div>
@@ -151,7 +134,16 @@ function changeRegion(type, region) {
 			url: "${pageContext.request.contextPath}/trade/sigun",
 			data: formData,
 			success: function(resData) {
-				console.log(resData);
+				$('#region2').empty();
+				
+				var option = $("<option value=''>동네를 선택하세요</option>");
+                $('#region2').append(option);
+				//console.log(resData[0].sigun);
+				for(var i = 0; i < resData.length; i++){
+					//console.log(resData[i].sigun);
+	                var option = $("<option value='" + resData[i].sigun + "'>"+ resData[i].sigun +"</option>");
+	                $('#region2').append(option);
+	            }
 			},
 			error: function() {
 				alert("주소 오류");
@@ -163,6 +155,32 @@ function changeRegion(type, region) {
 
     if(type == 'r2') {
         if (region.length > 0) {
+        	var formData = {
+        			sid : $("#region1 option:selected").val(),
+        			sigun : $("#region2 option:selected").val()
+        			};
+        	
+        	$.ajax({
+        		type: "POST",
+    			url: "${pageContext.request.contextPath}/trade/dong",
+    			data: formData,
+    			success: function(resData) {
+    				$('#region3').empty();
+    				
+    				var option = $("<option value=''>동을 선택하세요</option>");
+                    $('#region3').append(option);
+    				//console.log(resData[0].sigun);
+    				for(var i = 0; i < resData.length; i++){
+    					//console.log(resData[i].sigun);
+    	                var option = $("<option value='" + resData[i].updong + "'>"+ resData[i].updong +"</option>");
+    	                $('#region3').append(option);
+    	            }
+    			},
+    			error: function() {
+    				alert("주소 오류");
+    			}
+        		
+        	});
             $("#region3").removeClass('d-none');
         } else if(region.length == 0) {
             $("#region3").addClass('d-none');
