@@ -165,7 +165,7 @@
 					</div>
 				</div>
 				<div class="rent-hot-more weight-700 cursor">
-					<a href="rent.html"><u>인기대여품 더 보기</u></a>
+					<a href="${path}/trade?board_id=3"><u>인기대여품 더 보기</u></a>
 				</div>
 			</div>
 		</div>
@@ -315,7 +315,7 @@
 					</div>
 				</div>
 				<div class="rent-hot-more weight-700 cursor">
-					<a href="sell.html"><u>인기매물 더 보기</u></a>
+					<a href="${path}/trade?board_id=2"><u>인기매물 더 보기</u></a>
 				</div>
 			</div>
 		</div>
