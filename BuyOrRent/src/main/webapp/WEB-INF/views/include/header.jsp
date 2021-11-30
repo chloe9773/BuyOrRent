@@ -10,7 +10,7 @@
 	<!-- css -->
 	<link href="${path}/css/reset.css" rel="stylesheet"/>
 	<link href="${path}/css/common.css" rel="stylesheet"/>
-	<link href="${path}/css/home.css" rel="stylesheet"/>
+	<%-- <link href="${path}/css/home.css" rel="stylesheet"/> --%>
 	
 	<!-- 제이쿼리, 폰트어썸 -->
 	<script src="https://kit.fontawesome.com/64f7ef32af.js" crossorigin="anonymous"></script>

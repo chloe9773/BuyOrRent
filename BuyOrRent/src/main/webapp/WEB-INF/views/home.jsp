@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
+<link href="${path}/css/home.css" rel="stylesheet"/>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenu.jsp" %>
 	<c:if test = "${sessionScope.name == null}">
