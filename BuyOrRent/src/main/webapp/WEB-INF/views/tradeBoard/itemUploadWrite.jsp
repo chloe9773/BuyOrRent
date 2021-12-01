@@ -75,18 +75,19 @@
 			</div>
 		</div>
 	</div>
-	<div class="pop-wrap">
-		<div class="pop-top">잠깐, 여기 계신가요?</div>
+	<div class="pop-wrap t-center font-15">
+		<div class="pop-top pop-title p-10">잠깐, 여기 계신가요?</div>
 		<div class="pop-main">
 			<div id="map" style="width:100%;height:200px;"></div>
 		</div>
 		<div class="pop-bottom">
-			<div class="pop-btn-wrap d-flex">
-				<div class="pop-btn-no">아니요</div>
-				<div class="pop-btn-yes">네</div>
+			<div class="pop-btn-wrap">
+				<div class="pop-btn pop-btn-yes p-10">네</div>
+				<div class="pop-btn pop-btn-no p-10">아니요</div>
 			</div>
 		</div>
 	</div>
+	<div id="modal" class="modal"></div>
 	<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>
@@ -166,13 +167,22 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 if (navigator.geolocation) {
     //위치 정보를 얻기
     navigator.geolocation.getCurrentPosition (function(pos) {
-        var lat = pos.coords.latitude;     // 위도
+    	var lat = pos.coords.latitude;     // 위도
         var lon = pos.coords.longitude; // 경도
         
-        var locPostion = new kakao.maps.LatLng(lat, lon), //마커가 표시될 위치를 geolocation 좌표로 생성합니다.
-        message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다.
+        var locPostion = new kakao.maps.LatLng(lat, lon);//, //마커가 표시될 위치를 geolocation 좌표로 생성합니다.
+        //message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다.
         
-        displayMarker(locPostion,message);
+        //displayMarker(locPostion,message);
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+        	map: map,
+        	position: locPostion
+        });
+        
+        map.setCenter(locPostion);
+        // 마커가 지도 위에 표시되도록 설정합니다
+        //marker.setMap(map);
     });
 } else {
     alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
