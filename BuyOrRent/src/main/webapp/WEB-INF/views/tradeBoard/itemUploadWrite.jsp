@@ -82,8 +82,8 @@
 		</div>
 		<div class="pop-bottom">
 			<div class="pop-btn-wrap">
-				<div class="pop-btn pop-btn-yes p-10">네</div>
-				<div class="pop-btn pop-btn-no p-10">아니요</div>
+				<div class="pop-btn pop-btn-yes p-10 cursor" onclick="setLocation('y');">네</div>
+				<div class="pop-btn pop-btn-no p-10 cursor" onclick="setLocation('n');">아니요</div>
 			</div>
 		</div>
 	</div>
@@ -212,4 +212,9 @@ function displayMarker(locPostion, message) {
     // 지도 중심좌표를 접속위치로 변경합니다.
     map.setCenter(locPostion);
 }
+</script>
+<script>
+	function setLocation(val) {
+		alert(val);
+	}
 </script>
