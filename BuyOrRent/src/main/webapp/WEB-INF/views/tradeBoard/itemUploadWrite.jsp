@@ -215,6 +215,18 @@ function displayMarker(locPostion, message) {
 </script>
 <script>
 	function setLocation(val) {
-		alert(val);
+		if(val == 'y') {
+			$.ajax({
+				type: "POST",
+				url: "",
+				data: formData,
+				success: function() {
+					
+				},
+				error: function() {}
+			 });
+		} else {
+			
+		}
 	}
 </script>
