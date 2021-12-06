@@ -6,6 +6,7 @@
 <link href="${path}/css/trade.css" rel="stylesheet"/>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenuWithOutSearch.jsp" %>
+	<input type="hidden" id="position" />
 	<div class="main-content w-100">
 		<div class="section-wrap bg-white">
 			<div class="board-wrap w-50 m-center pt-r-8">
@@ -19,6 +20,7 @@
 					<form id="item-upload-form" method="post" enctype="multipart/form-data" action="${path}/trade/item-upload">
 						<!--  <input type="hidden" name="bid" value="${bid}" />-->
 						<input type="hidden" name="author" value="${sessionScope.username}" />
+						<input type="hidden" id="userid" value="${sessionScope.userId}" />
 						<div class="photo-upload-wrap d-flex mb-16">
 							<input type="file" name="files" id="file" class="fileUpload d-none" multiple/>
 							<div class="item-photo-wrap icon-color t-center cursor" onclick="fileUpload();">
@@ -75,7 +77,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="pop-wrap t-center font-15">
+	<div id="pop-wrap" class="pop-wrap t-center font-15">
 		<div class="pop-top pop-title p-10">잠깐, 여기 계신가요?</div>
 		<div class="pop-main">
 			<div id="map" style="width:100%;height:200px;"></div>
@@ -155,7 +157,8 @@ $("#back").click(function(e){
 });
 </script>
 <script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
 mapOption = { 
     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
     level: 3 // 지도의 확대 레벨
@@ -163,6 +166,9 @@ mapOption = {
 
 //지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
 
 if (navigator.geolocation) {
     //위치 정보를 얻기
@@ -183,6 +189,9 @@ if (navigator.geolocation) {
         map.setCenter(locPostion);
         // 마커가 지도 위에 표시되도록 설정합니다
         //marker.setMap(map);
+        
+        // 행정동 정보 
+        searchAddrFromCoords(map.getCenter(), displayCenterInfo);
     });
 } else {
     alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
@@ -212,16 +221,48 @@ function displayMarker(locPostion, message) {
     // 지도 중심좌표를 접속위치로 변경합니다.
     map.setCenter(locPostion);
 }
+
+//중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'idle', function() {
+    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+});
+
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청합니다
+    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+}
+
+//지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+function displayCenterInfo(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+        for(var i = 0; i < result.length; i++) {
+            // 행정동의 region_type 값은 'H' 이므로
+            if (result[i].region_type === 'H') {
+            	$("#position").val(result[i].address_name);     
+            	break;
+            }
+        }
+    }    
+}
 </script>
 <script>
 	function setLocation(val) {
 		if(val == 'y') {
+			var addr = $("#position").val().split(" ");
+			var formData = {
+					addrSido : addr[0],
+					addrGu : addr[1],
+					addrDong : addr[2],
+					userId : $("#userid").val() 
+			};
+			
 			$.ajax({
 				type: "POST",
-				url: "",
+				url: "${pageContext.request.contextPath}/set-addr",
 				data: formData,
-				success: function() {
-					
+				success: function(resData) {
+					$("#pop-wrap").addClass("d-none");
+					$("#modal").addClass("d-none");
 				},
 				error: function() {}
 			 });

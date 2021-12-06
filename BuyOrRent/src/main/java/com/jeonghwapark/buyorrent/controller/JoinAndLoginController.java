@@ -74,4 +74,13 @@ public class JoinAndLoginController {
 			return "success";
 		}
 	}
+	
+	// 회원 주소 설정 
+	@ResponseBody
+	@RequestMapping(value = "/set-addr", method = RequestMethod.POST)
+	public String setAddr(@ModelAttribute MemberVO mvo) {
+		jSrv.setAddr(mvo);
+		
+		return "success";
+	}
 }

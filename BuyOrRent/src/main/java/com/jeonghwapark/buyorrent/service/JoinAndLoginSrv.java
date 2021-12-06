@@ -51,4 +51,9 @@ public class JoinAndLoginSrv {
 	public MemberVO getUsernick(int userId) {
 		return jDao.getUsernick(userId);
 	}
+	
+	// 유저 주소 저장  
+	public void setAddr(MemberVO mvo) {
+		jDao.setAddr(mvo);
+	}
 }

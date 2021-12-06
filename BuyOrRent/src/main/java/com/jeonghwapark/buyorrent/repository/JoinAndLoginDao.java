@@ -35,4 +35,9 @@ public class JoinAndLoginDao {
 	public MemberVO getUsernick(int userId) {
 		return sql.selectOne("joinlog.getUsernick", userId);
 	}
+	
+	// 유저 주소 저장  
+	public void setAddr(MemberVO mvo) {
+		sql.update("joinlog.setAddr", mvo);
+	}
 }

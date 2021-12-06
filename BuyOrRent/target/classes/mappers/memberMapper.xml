@@ -29,4 +29,13 @@
 	<select id="getUsernick" parameterType="int" resultType="membervo">
 		SELECT usernick FROM member WHERE user_id = #{userId}
 	</select>
+	
+	<!-- 유저 주소 저장 -->
+	<update id="setAddr" parameterType="membervo">
+		UPDATE member SET 
+			address_sido = #{addrSido},
+			address_gu = #{addrGu},
+			address_dong = #{addrDong} 
+		WHERE user_id = #{userId}
+	</update>
 </mapper>

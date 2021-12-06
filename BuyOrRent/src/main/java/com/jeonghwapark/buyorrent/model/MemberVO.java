@@ -9,6 +9,9 @@ public class MemberVO {
 	private Date regDate;
 	private int level;
 	private String userNick;
+	private String addrSido;
+	private String addrGu;
+	private String addrDong;
 	
 	public int getUserId() {
 		return userId;
@@ -45,5 +48,23 @@ public class MemberVO {
 	}
 	public void setUserNick(String userNick) {
 		this.userNick = userNick;
+	}
+	public String getAddrSido() {
+		return addrSido;
+	}
+	public void setAddrSido(String addrSido) {
+		this.addrSido = addrSido;
+	}
+	public String getAddrGu() {
+		return addrGu;
+	}
+	public void setAddrGu(String addrGu) {
+		this.addrGu = addrGu;
+	}
+	public String getAddrDong() {
+		return addrDong;
+	}
+	public void setAddrDong(String addrDong) {
+		this.addrDong = addrDong;
 	}
 }
