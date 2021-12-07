@@ -78,7 +78,8 @@
 		</div>
 	</div>
 	<div id="pop-wrap" class="pop-wrap t-center font-15">
-		<div class="pop-top pop-title p-10">잠깐, 여기 계신가요?</div>
+		<div id="pos-before" class="pop-top pop-title p-10">잠깐, 여기 계신가요?</div>
+		<div id="pos-after" class="pop-top pop-title p-10 d-none">마우스를 이용해 머물고 계신 위치에 마크를 찍어주세요!</div>
 		<div class="pop-main">
 			<div id="map" style="width:100%;height:200px;"></div>
 		</div>
@@ -192,6 +193,19 @@ if (navigator.geolocation) {
         
         // 행정동 정보 
         searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+        
+        // 지도에 클릭 이벤트를 등록합니다
+     	// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+     	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+    	 	// 클릭한 위도, 경도 정보를 가져옵니다 
+         	var latlng = mouseEvent.latLng; 
+         
+	         // 마커 위치를 클릭한 위치로 옮깁니다
+	         marker.setPosition(latlng);
+	         
+	         removeNone("pos-before");
+	         addNone("pos-after");
+		});
     });
 } else {
     alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
@@ -223,9 +237,9 @@ function displayMarker(locPostion, message) {
 }
 
 //중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-kakao.maps.event.addListener(map, 'idle', function() {
+/* kakao.maps.event.addListener(map, 'idle', function() {
     searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-});
+}); */
 
 function searchAddrFromCoords(coords, callback) {
     // 좌표로 행정동 주소 정보를 요청합니다
@@ -267,7 +281,8 @@ function displayCenterInfo(result, status) {
 				error: function() {}
 			 });
 		} else {
-			
+			addNone("pos-before");
+			removeNone("pos-after");
 		}
 	}
 </script>

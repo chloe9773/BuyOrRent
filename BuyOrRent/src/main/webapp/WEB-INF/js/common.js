@@ -185,7 +185,7 @@ function addDNone(classname) {
     $("." + classname).addClass("d-none");
 }
 /* add d-none by id */
-function addNone(classname) {
+function addNone(id) {
     $("#" + id).addClass("d-none");
 }
 
