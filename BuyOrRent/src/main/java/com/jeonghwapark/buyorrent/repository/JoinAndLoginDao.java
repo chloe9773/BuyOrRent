@@ -40,4 +40,9 @@ public class JoinAndLoginDao {
 	public void setAddr(MemberVO mvo) {
 		sql.update("joinlog.setAddr", mvo);
 	}
+	
+	// 주소 레벨 변경
+	public void updateAddrLevel(int userId) {
+		sql.update("joinlog.updateAddrLevel", userId);
+	}
 }

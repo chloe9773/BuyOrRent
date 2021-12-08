@@ -77,20 +77,22 @@
 			</div>
 		</div>
 	</div>
-	<div id="pop-wrap" class="pop-wrap t-center font-15">
-		<div id="pos-before" class="pop-top pop-title p-10">잠깐, 여기 계신가요?</div>
-		<div id="pos-after" class="pop-top pop-title p-10 d-none">마우스를 이용해 머물고 계신 위치에 마크를 찍어주세요!</div>
-		<div class="pop-main">
-			<div id="map" style="width:100%;height:200px;"></div>
-		</div>
-		<div class="pop-bottom">
-			<div class="pop-btn-wrap">
-				<div class="pop-btn pop-btn-yes p-10 cursor" onclick="setLocation('y');">네</div>
-				<div class="pop-btn pop-btn-no p-10 cursor" onclick="setLocation('n');">아니요</div>
+	<c:if test="${sessionScope.addrLevel eq 0}">
+		<div id="pop-wrap" class="pop-wrap t-center font-15">
+			<div id="pos-before" class="pop-top pop-title p-10">잠깐, 여기 계신가요?</div>
+			<div id="pos-after" class="pop-top pop-title p-10 d-none">마우스를 이용해 머물고 계신 위치에 마크를 찍어주세요!</div>
+			<div class="pop-main">
+				<div id="map" style="width:100%;height:200px;"></div>
+			</div>
+			<div class="pop-bottom">
+				<div class="pop-btn-wrap">
+					<div class="pop-btn pop-btn-yes p-10 cursor" onclick="setLocation('y');">네</div>
+					<div class="pop-btn pop-btn-no p-10 cursor" onclick="setLocation('n');">아니요</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="modal" class="modal"></div>
+		<div id="modal" class="modal"></div>
+	</c:if>	
 	<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

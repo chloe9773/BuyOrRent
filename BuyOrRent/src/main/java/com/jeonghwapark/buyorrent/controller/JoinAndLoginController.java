@@ -80,6 +80,7 @@ public class JoinAndLoginController {
 	@RequestMapping(value = "/set-addr", method = RequestMethod.POST)
 	public String setAddr(@ModelAttribute MemberVO mvo) {
 		jSrv.setAddr(mvo);
+		jSrv.updateAddrLevel(mvo.getUserId());
 		
 		return "success";
 	}

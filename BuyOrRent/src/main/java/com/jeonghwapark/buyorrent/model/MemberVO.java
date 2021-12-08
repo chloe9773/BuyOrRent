@@ -12,6 +12,7 @@ public class MemberVO {
 	private String addrSido;
 	private String addrGu;
 	private String addrDong;
+	private int addrLevel;
 	
 	public int getUserId() {
 		return userId;
@@ -66,5 +67,11 @@ public class MemberVO {
 	}
 	public void setAddrDong(String addrDong) {
 		this.addrDong = addrDong;
+	}
+	public int getAddrLevel() {
+		return addrLevel;
+	}
+	public void setAddrLevel(int addrLevel) {
+		this.addrLevel = addrLevel;
 	}
 }

@@ -22,7 +22,7 @@
 	
 	<!-- 세션 -->
 	<select id="setSessionLogin" parameterType="membervo" resultType="membervo">
-		SELECT user_id as userId, username, regDate, level FROM member WHERE username = #{username} and password = #{password}
+		SELECT user_id as userId, username, regDate, level, addr_level AS addrLevel FROM member WHERE username = #{username} and password = #{password}
 	</select>
 	
 	<!-- 유저닉 -->
@@ -37,5 +37,9 @@
 			address_gu = #{addrGu},
 			address_dong = #{addrDong} 
 		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="updateAddrLevel" parameterType="int">
+		UPDATE member SET addr_level = 1 WHERE user_id = #{userId}
 	</update>
 </mapper>

@@ -37,6 +37,7 @@ public class JoinAndLoginSrv {
 			httpSession.setAttribute("username", result.getUsername());
 			httpSession.setAttribute("regDate", result.getRegDate());
 			httpSession.setAttribute("level", result.getLevel());
+			httpSession.setAttribute("addrLevel", result.getAddrLevel());
 		}
 		
 		return result;
@@ -55,5 +56,10 @@ public class JoinAndLoginSrv {
 	// 유저 주소 저장  
 	public void setAddr(MemberVO mvo) {
 		jDao.setAddr(mvo);
+	}
+	
+	// 주소 레벨 변경
+	public void updateAddrLevel(int userId) {
+		jDao.updateAddrLevel(userId);
 	}
 }
