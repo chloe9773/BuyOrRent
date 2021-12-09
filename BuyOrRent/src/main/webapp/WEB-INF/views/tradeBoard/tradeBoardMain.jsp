@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
+<link href="${path}/css/home.css" rel="stylesheet"/>
 <body>
 	<%@ include file="/WEB-INF/views/include/followingTopMenuWithOutSearch.jsp" %>
 	<div class="main-content w-100">
