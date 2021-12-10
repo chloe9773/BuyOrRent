@@ -324,13 +324,13 @@
 	<div id="home-side-menu" class="follow-navigation d-none">
 		<div class="modal-opt-btn d-none">
 			<div class="modal-opt-rent">
-				<a href="item-upload.html">
+				<a href="${path}/trade/article/item-upload?board_id=3">
 					<span class="modal-opt">대여 글쓰기</span>
 					<i class="fas fa-truck-loading"></i>
 				</a>
 			</div>
 			<div class="modal-opt-sell">
-				<a href="item-upload.html">
+				<a href="${path}/trade/article/item-upload?board_id=2">
 					<span class="modal-opt">중고거래 글쓰기</span>
 					<i class="fas fa-hand-holding-usd"></i>
 				</a>
